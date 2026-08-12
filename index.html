@@ -1,1302 +1,600 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
-user-scalable=no,
-viewport-fit=cover">
+content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 
 <title>我的輪班</title>
 
-<meta name="theme-color" content="#F2F2F7">
-
-<meta name="apple-mobile-web-app-capable"
-content="yes">
-
-<meta name="apple-mobile-web-app-status-bar-style"
-content="default">
-
-<meta name="apple-mobile-web-app-title"
-content="我的輪班">
-
-<link rel="manifest" href="manifest.json">
-
-<link rel="apple-touch-icon"
-href="icon.svg">
+<meta name="theme-color" content="#f2f2f7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="我的輪班">
 
 <style>
 
-/* =====================================================
-   iOS STYLE
-===================================================== */
-
 :root{
-
-    --bg:#F2F2F7;
-
-    --card:#FFFFFF;
-
-    --text:#1C1C1E;
-
-    --secondary:#8E8E93;
-
-    --blue:#007AFF;
-
-    --red:#FF3B30;
-
-    --orange:#FF9500;
-
-    --purple:#AF52DE;
-
-    --indigo:#5856D6;
-
-    --green:#34C759;
-
-    --separator:rgba(60,60,67,.12);
-
+ --bg:#f2f2f7;
+ --card:#ffffff;
+ --text:#1c1c1e;
+ --sub:#8e8e93;
+ --blue:#007aff;
+ --red:#ff3b30;
+ --green:#34c759;
+ --orange:#ff9500;
+ --purple:#af52de;
+ --indigo:#5856d6;
+ --line:rgba(60,60,67,.12);
 }
 
 @media(prefers-color-scheme:dark){
-
-    :root{
-
-        --bg:#000000;
-
-        --card:#1C1C1E;
-
-        --text:#FFFFFF;
-
-        --secondary:#98989D;
-
-        --separator:rgba(84,84,88,.65);
-
-    }
-
+ :root{
+  --bg:#000;
+  --card:#1c1c1e;
+  --text:#fff;
+  --sub:#98989d;
+  --line:rgba(84,84,88,.65);
+ }
 }
-
 
 *{
-
-    box-sizing:border-box;
-
-    -webkit-tap-highlight-color:transparent;
-
+ box-sizing:border-box;
+ -webkit-tap-highlight-color:transparent;
 }
-
-
-html{
-
-    background:var(--bg);
-
-}
-
 
 body{
-
-    margin:0;
-
-    min-height:100vh;
-
-    background:var(--bg);
-
-    color:var(--text);
-
-    font-family:
-
-        -apple-system,
-
-        BlinkMacSystemFont,
-
-        "SF Pro Display",
-
-        "SF Pro Text",
-
-        "PingFang TC",
-
-        "Helvetica Neue",
-
-        sans-serif;
-
-    padding-top:
-
-        env(safe-area-inset-top);
-
-    padding-bottom:
-
-        calc(
-
-            86px +
-
-            env(safe-area-inset-bottom)
-
-        );
-
+ margin:0;
+ background:var(--bg);
+ color:var(--text);
+ font-family:
+ -apple-system,
+ BlinkMacSystemFont,
+ "SF Pro Display",
+ "PingFang TC",
+ "Helvetica Neue",
+ sans-serif;
+ padding:
+ calc(12px + env(safe-area-inset-top))
+ 0
+ calc(90px + env(safe-area-inset-bottom));
 }
-
-
-button,
-
-input,
-
-select{
-
-    font-family:inherit;
-
-}
-
-
-/* =====================================================
-   APP
-===================================================== */
 
 .app{
-
-    max-width:720px;
-
-    margin:auto;
-
+ max-width:720px;
+ margin:auto;
 }
-
-
-/* =====================================================
-   PAGE
-===================================================== */
 
 .page{
-
-    display:none;
-
-    padding:
-
-        18px
-
-        18px
-
-        30px;
-
-    animation:
-
-        pageIn .25s ease;
-
+ display:none;
+ padding:12px 16px 30px;
 }
-
 
 .page.active{
-
-    display:block;
-
+ display:block;
 }
-
-
-@keyframes pageIn{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateY(8px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateY(0);
-
-    }
-
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
 
 .header{
-
-    padding:
-
-        8px
-
-        3px
-
-        5px;
-
+ padding:8px 4px;
 }
 
-
-.header-title{
-
-    font-size:34px;
-
-    line-height:1.1;
-
-    font-weight:800;
-
-    letter-spacing:-1.2px;
-
+.title{
+ font-size:34px;
+ font-weight:800;
+ letter-spacing:-1px;
 }
 
-
-.header-subtitle{
-
-    margin-top:6px;
-
-    color:var(--secondary);
-
-    font-size:15px;
-
+.subtitle{
+ margin-top:5px;
+ color:var(--sub);
+ font-size:15px;
 }
-
-
-/* =====================================================
-   CARD
-===================================================== */
 
 .card{
-
-    background:var(--card);
-
-    border-radius:22px;
-
-    margin-top:18px;
-
-    overflow:hidden;
-
-    box-shadow:
-
-        0 1px 3px
-        rgba(0,0,0,.05);
-
+ background:var(--card);
+ border-radius:22px;
+ margin-top:16px;
+ overflow:hidden;
+ box-shadow:0 1px 3px rgba(0,0,0,.05);
 }
 
-
-/* =====================================================
-   TODAY
-===================================================== */
-
-.today-card{
-
-    text-align:center;
-
-    padding:
-
-        28px
-
-        20px
-
-        26px;
-
+.today{
+ text-align:center;
+ padding:26px 18px;
 }
-
 
 .today-label{
-
-    color:var(--secondary);
-
-    font-size:15px;
-
+ color:var(--sub);
+ font-size:15px;
 }
-
 
 .today-date{
-
-    margin-top:5px;
-
-    font-size:18px;
-
-    font-weight:700;
-
+ font-size:18px;
+ font-weight:700;
+ margin-top:5px;
 }
 
-
-.today-shift{
-
-    width:220px;
-
-    height:135px;
-
-    margin:
-
-        22px auto;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    border-radius:32px;
-
-    font-size:38px;
-
-    font-weight:800;
-
-    letter-spacing:-1px;
-
+.shift-big{
+ width:220px;
+ height:128px;
+ margin:20px auto;
+ border-radius:30px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:36px;
+ font-weight:800;
 }
 
-
-.shift-day{
-
-    color:var(--orange);
-
-    background:
-        rgba(255,149,0,.13);
-
+.day{
+ color:var(--orange);
+ background:rgba(255,149,0,.13);
 }
 
-
-.shift-evening{
-
-    color:var(--indigo);
-
-    background:
-        rgba(88,86,214,.13);
-
+.eve{
+ color:var(--indigo);
+ background:rgba(88,86,214,.13);
 }
 
-
-.shift-night{
-
-    color:var(--purple);
-
-    background:
-        rgba(175,82,222,.13);
-
+.night{
+ color:var(--purple);
+ background:rgba(175,82,222,.13);
 }
 
-
-.shift-rest{
-
-    color:var(--green);
-
-    background:
-        rgba(52,199,89,.13);
-
+.rest{
+ color:var(--green);
+ background:rgba(52,199,89,.13);
 }
 
-
-.tomorrow{
-
-    color:var(--secondary);
-
-    font-size:15px;
-
+.holiday-home{
+ padding:11px 13px;
+ border-radius:14px;
+ background:rgba(255,59,48,.1);
+ color:var(--red);
+ font-weight:700;
+ font-size:14px;
 }
 
-
-.tomorrow strong{
-
-    color:var(--text);
-
-    margin-left:5px;
-
+.makeup-home{
+ padding:11px 13px;
+ border-radius:14px;
+ background:rgba(0,122,255,.1);
+ color:var(--blue);
+ font-weight:700;
+ font-size:14px;
 }
-
-
-/* =====================================================
-   HOLIDAY HOME
-===================================================== */
-
-.today-holiday{
-
-    margin-top:17px;
-
-    padding:
-
-        11px
-
-        13px;
-
-    border-radius:14px;
-
-    background:
-
-        rgba(255,59,48,.10);
-
-    color:var(--red);
-
-    font-weight:700;
-
-    font-size:14px;
-
-}
-
-
-/* =====================================================
-   SECTION
-===================================================== */
 
 .section-title{
-
-    margin:
-
-        28px
-
-        6px
-
-        9px;
-
-    font-size:21px;
-
-    font-weight:800;
-
-    letter-spacing:-.3px;
-
+ font-size:21px;
+ font-weight:800;
+ margin:27px 5px 9px;
 }
 
-
-/* =====================================================
-   UPCOMING LIST
-===================================================== */
-
-.list-row{
-
-    min-height:72px;
-
-    display:flex;
-
-    align-items:center;
-
-    padding:
-
-        0 18px;
-
-    border-bottom:
-
-        1px solid var(--separator);
-
+.row{
+ display:flex;
+ align-items:center;
+ min-height:70px;
+ padding:0 17px;
+ border-bottom:1px solid var(--line);
 }
 
-
-.list-row:last-child{
-
-    border-bottom:none;
-
+.row:last-child{
+ border:0;
 }
 
-
-.date-badge{
-
-    width:45px;
-
-    height:45px;
-
-    flex-shrink:0;
-
-    border-radius:50%;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    margin-right:14px;
-
-    background:
-
-        rgba(0,122,255,.10);
-
-    color:var(--blue);
-
-    font-weight:800;
-
+.badge{
+ width:44px;
+ height:44px;
+ border-radius:50%;
+ background:rgba(0,122,255,.1);
+ color:var(--blue);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:800;
+ margin-right:13px;
 }
 
-
-.list-main{
-
-    flex:1;
-
-    min-width:0;
-
+.main{
+ flex:1;
 }
 
-
-.list-date{
-
-    color:var(--secondary);
-
-    font-size:13px;
-
+.small{
+ color:var(--sub);
+ font-size:13px;
 }
 
-
-.list-shift{
-
-    margin-top:2px;
-
-    font-size:17px;
-
-    font-weight:700;
-
+.shift{
+ font-size:16px;
+ font-weight:700;
+ margin-top:2px;
 }
 
-
-.list-holiday{
-
-    margin-top:2px;
-
-    color:var(--red);
-
-    font-size:11px;
-
-    font-weight:700;
-
+.holiday-mini{
+ color:var(--red);
+ font-size:11px;
+ font-weight:700;
+ margin-top:3px;
 }
 
-
-/* =====================================================
-   CALENDAR
-===================================================== */
-
-.calendar-top{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:
-
-        18px;
-
+.makeup-mini{
+ color:var(--blue);
+ font-size:11px;
+ font-weight:700;
+ margin-top:3px;
 }
 
-
-.calendar-month{
-
-    font-size:22px;
-
-    font-weight:800;
-
+.cal-head{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:17px;
 }
 
-
-.month-controls{
-
-    display:flex;
-
-    gap:8px;
-
+.month{
+ font-size:22px;
+ font-weight:800;
 }
 
-
-.circle-button{
-
-    width:38px;
-
-    height:38px;
-
-    border:0;
-
-    border-radius:50%;
-
-    background:
-
-        rgba(120,120,128,.12);
-
-    color:var(--text);
-
-    font-size:25px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
+.controls{
+ display:flex;
+ gap:8px;
 }
 
-
-.weekdays{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(7,1fr);
-
-    padding:
-
-        0 8px;
-
+.circle{
+ border:0;
+ width:38px;
+ height:38px;
+ border-radius:50%;
+ background:rgba(120,120,128,.12);
+ color:var(--text);
+ font-size:25px;
 }
 
-
-.weekday{
-
-    text-align:center;
-
-    color:var(--secondary);
-
-    font-size:12px;
-
-    font-weight:600;
-
-    padding:
-
-        7px 0;
-
+.week{
+ display:grid;
+ grid-template-columns:repeat(7,1fr);
+ padding:0 7px;
 }
 
-
-.calendar{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(7,1fr);
-
-    padding:
-
-        4px
-
-        8px
-
-        14px;
-
+.week div{
+ text-align:center;
+ color:var(--sub);
+ font-size:12px;
+ font-weight:600;
+ padding:7px 0;
 }
 
-
-.calendar-cell{
-
-    height:75px;
-
-    padding:3px;
-
+.grid{
+ display:grid;
+ grid-template-columns:repeat(7,1fr);
+ padding:4px 7px 13px;
 }
 
-
-.calendar-cell-inner{
-
-    height:69px;
-
-    border-radius:16px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    position:relative;
-
+.cell{
+ height:78px;
+ padding:3px;
 }
 
-
-.calendar-cell.today
-.calendar-cell-inner{
-
-    outline:
-
-        2px solid var(--blue);
-
-    outline-offset:-2px;
-
+.cellin{
+ height:72px;
+ border-radius:16px;
+ position:relative;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
 }
 
-
-.calendar-cell.selected
-.calendar-cell-inner{
-
-    background:
-
-        rgba(0,122,255,.10);
-
+.cell.today .cellin{
+ outline:2px solid var(--blue);
+ outline-offset:-2px;
 }
 
-
-.calendar-number{
-
-    font-size:15px;
-
-    font-weight:700;
-
+.cell.selected .cellin{
+ background:rgba(0,122,255,.1);
 }
 
-
-.calendar-shift{
-
-    margin-top:4px;
-
-    font-size:9px;
-
-    font-weight:800;
-
+.num{
+ font-size:15px;
+ font-weight:700;
 }
 
-
-/* =====================================================
-   HOLIDAY MARK
-===================================================== */
-
-.holiday-dot{
-
-    position:absolute;
-
-    top:5px;
-
-    right:6px;
-
-    width:6px;
-
-    height:6px;
-
-    border-radius:50%;
-
-    background:var(--red);
-
+.cshift{
+ font-size:9px;
+ font-weight:800;
+ margin-top:4px;
 }
 
-
-.holiday-label{
-
-    max-width:52px;
-
-    margin-top:3px;
-
-    color:var(--red);
-
-    font-size:7px;
-
-    font-weight:700;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
+.dot{
+ position:absolute;
+ top:5px;
+ right:6px;
+ width:7px;
+ height:7px;
+ border-radius:50%;
+ background:var(--red);
 }
 
-
-/* =====================================================
-   DETAIL
-===================================================== */
-
-.detail-card{
-
-    padding:20px;
-
+.makeup-dot{
+ position:absolute;
+ top:5px;
+ left:6px;
+ width:7px;
+ height:7px;
+ border-radius:50%;
+ background:var(--blue);
 }
 
+.label{
+ font-size:7px;
+ font-weight:800;
+ max-width:55px;
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ margin-top:3px;
+}
+
+.red{
+ color:var(--red);
+}
+
+.blue{
+ color:var(--blue);
+}
+
+.detail{
+ padding:19px;
+}
 
 .detail-date{
-
-    color:var(--secondary);
-
-    font-size:14px;
-
+ color:var(--sub);
+ font-size:14px;
 }
-
 
 .detail-shift{
-
-    margin-top:5px;
-
-    font-size:30px;
-
-    font-weight:800;
-
+ font-size:29px;
+ font-weight:800;
+ margin-top:4px;
 }
 
-
-.detail-holiday{
-
-    margin-top:18px;
-
-    padding:
-
-        15px;
-
-    border-radius:17px;
-
-    background:
-
-        rgba(255,59,48,.10);
-
+.info{
+ margin-top:16px;
+ padding:14px;
+ border-radius:16px;
+ background:rgba(255,59,48,.1);
 }
 
-
-.detail-holiday-title{
-
-    color:var(--red);
-
-    font-size:17px;
-
-    font-weight:800;
-
+.info.bluebox{
+ background:rgba(0,122,255,.1);
 }
 
-
-.detail-holiday-sub{
-
-    margin-top:5px;
-
-    color:var(--secondary);
-
-    font-size:13px;
-
-    line-height:1.5;
-
+.info.graybox{
+ background:rgba(120,120,128,.09);
 }
 
-
-.detail-note{
-
-    margin-top:15px;
-
-    color:var(--secondary);
-
-    font-size:12px;
-
-    line-height:1.6;
-
+.info-title{
+ font-weight:800;
+ font-size:16px;
 }
 
-
-/* =====================================================
-   BUTTON
-===================================================== */
-
-.action-button{
-
-    width:100%;
-
-    margin-top:13px;
-
-    padding:15px;
-
-    border:0;
-
-    border-radius:15px;
-
-    background:var(--blue);
-
-    color:white;
-
-    font-size:16px;
-
-    font-weight:700;
-
+.info-text{
+ color:var(--sub);
+ font-size:12px;
+ line-height:1.65;
+ margin-top:5px;
 }
 
-
-.action-button.secondary{
-
-    background:
-
-        rgba(120,120,128,.12);
-
-    color:var(--text);
-
+.btn{
+ width:100%;
+ border:0;
+ border-radius:14px;
+ padding:14px;
+ margin-top:12px;
+ background:var(--blue);
+ color:#fff;
+ font-size:16px;
+ font-weight:700;
 }
 
-
-/* =====================================================
-   SETTINGS
-===================================================== */
-
-.settings-card{
-
-    padding:
-
-        0 18px;
-
+.btn.gray{
+ background:rgba(120,120,128,.12);
+ color:var(--text);
 }
-
-
-.setting{
-
-    padding:
-
-        18px 0;
-
-    border-bottom:
-
-        1px solid var(--separator);
-
-}
-
-
-.setting:last-child{
-
-    border-bottom:none;
-
-}
-
-
-.setting-label{
-
-    margin-bottom:10px;
-
-    font-weight:700;
-
-}
-
 
 input,
-
 select{
-
-    width:100%;
-
-    border:0;
-
-    outline:none;
-
-    border-radius:13px;
-
-    padding:13px;
-
-    color:var(--text);
-
-    background:
-
-        rgba(120,120,128,.12);
-
+ width:100%;
+ border:0;
+ outline:0;
+ border-radius:13px;
+ padding:13px;
+ background:rgba(120,120,128,.12);
+ color:var(--text);
+ font:inherit;
 }
 
+.setting{
+ padding:17px 0;
+ border-bottom:1px solid var(--line);
+}
 
-/* =====================================================
-   STATISTICS
-===================================================== */
+.setting:last-child{
+ border:0;
+}
+
+.setting b{
+ display:block;
+ margin-bottom:9px;
+}
+
+.form-note{
+ font-size:12px;
+ color:var(--sub);
+ line-height:1.6;
+ margin-top:9px;
+}
+
+.manage{
+ padding:0 17px;
+}
+
+.manage-item{
+ padding:15px 0;
+ border-bottom:1px solid var(--line);
+}
+
+.manage-item:last-child{
+ border:0;
+}
+
+.manage-name{
+ font-weight:800;
+}
+
+.manage-date{
+ font-size:13px;
+ color:var(--sub);
+ margin-top:3px;
+}
+
+.manage-actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-top:9px;
+}
+
+.mini-btn{
+ border:0;
+ border-radius:10px;
+ padding:8px 11px;
+ font-weight:700;
+ background:rgba(120,120,128,.12);
+ color:var(--text);
+}
+
+.mini-btn.delete{
+ color:var(--red);
+}
 
 .stats{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:10px;
-
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
 }
-
 
 .stat{
-
-    padding:17px;
-
-    background:var(--card);
-
-    border-radius:20px;
-
+ padding:17px;
+ background:var(--card);
+ border-radius:20px;
 }
 
-
-.stat-label{
-
-    color:var(--secondary);
-
-    font-size:13px;
-
+.stat span{
+ color:var(--sub);
+ font-size:13px;
 }
 
-
-.stat-number{
-
-    margin-top:4px;
-
-    font-size:27px;
-
-    font-weight:800;
-
+.stat strong{
+ display:block;
+ font-size:27px;
+ margin-top:3px;
 }
 
-
-/* =====================================================
-   LABOR LAW
-===================================================== */
-
-.labor-card{
-
-    padding:20px;
-
+.tabs{
+ position:fixed;
+ z-index:20;
+ left:0;
+ right:0;
+ bottom:0;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ padding:
+ 7px 18px
+ calc(7px + env(safe-area-inset-bottom));
+ background:rgba(248,248,250,.88);
+ backdrop-filter:blur(25px) saturate(180%);
+ -webkit-backdrop-filter:blur(25px) saturate(180%);
+ border-top:1px solid var(--line);
 }
-
-
-.labor-title{
-
-    font-size:18px;
-
-    font-weight:800;
-
-}
-
-
-.labor-text{
-
-    margin-top:10px;
-
-    color:var(--secondary);
-
-    font-size:13px;
-
-    line-height:1.7;
-
-}
-
-
-/* =====================================================
-   TAB BAR
-===================================================== */
-
-.tabbar{
-
-    position:fixed;
-
-    left:0;
-
-    right:0;
-
-    bottom:0;
-
-    z-index:100;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    padding:
-
-        7px
-
-        18px
-
-        calc(
-            7px +
-            env(safe-area-inset-bottom)
-        );
-
-    background:
-
-        rgba(248,248,250,.88);
-
-    border-top:
-
-        1px solid var(--separator);
-
-    backdrop-filter:
-
-        blur(25px)
-
-        saturate(180%);
-
-    -webkit-backdrop-filter:
-
-        blur(25px)
-
-        saturate(180%);
-
-}
-
 
 @media(prefers-color-scheme:dark){
-
-    .tabbar{
-
-        background:
-
-            rgba(28,28,30,.88);
-
-    }
-
+ .tabs{
+  background:rgba(28,28,30,.88);
+ }
 }
-
 
 .tab{
-
-    border:0;
-
-    background:none;
-
-    color:var(--secondary);
-
-    font-size:11px;
-
-    font-weight:600;
-
-    padding:3px;
-
+ border:0;
+ background:none;
+ color:var(--sub);
+ font-size:11px;
+ font-weight:600;
 }
-
 
 .tab.active{
-
-    color:var(--blue);
-
+ color:var(--blue);
 }
 
-
-.tab-icon{
-
-    display:block;
-
-    margin-bottom:2px;
-
-    font-size:22px;
-
-    line-height:24px;
-
+.ico{
+ display:block;
+ font-size:22px;
+ line-height:24px;
 }
-
-
-/* =====================================================
-   TOAST
-===================================================== */
 
 .toast{
-
-    position:fixed;
-
-    left:50%;
-
-    bottom:
-
-        calc(
-            95px +
-            env(safe-area-inset-bottom)
-        );
-
-    transform:
-        translate(-50%,20px);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    z-index:300;
-
-    padding:
-
-        12px 20px;
-
-    border-radius:15px;
-
-    background:
-        rgba(30,30,30,.90);
-
-    color:white;
-
-    font-size:14px;
-
-    transition:.25s;
-
+ position:fixed;
+ z-index:100;
+ left:50%;
+ bottom:calc(94px + env(safe-area-inset-bottom));
+ transform:translate(-50%,20px);
+ opacity:0;
+ pointer-events:none;
+ background:rgba(30,30,30,.92);
+ color:#fff;
+ padding:11px 18px;
+ border-radius:14px;
+ font-size:14px;
+ transition:.2s;
 }
-
 
 .toast.show{
-
-    opacity:1;
-
-    transform:
-        translate(-50%,0);
-
-}
-
-
-/* =====================================================
-   VERSION
-===================================================== */
-
-.version{
-
-    padding:
-
-        30px
-
-        0
-
-        15px;
-
-    text-align:center;
-
-    color:var(--secondary);
-
-    font-size:12px;
-
+ opacity:1;
+ transform:translate(-50%,0);
 }
 
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="app">
 
+<!-- ================= 首頁 ================= -->
 
-<!-- =================================================
-     HOME
-================================================= -->
-
-<section
-id="home"
-class="page active">
-
+<section id="home" class="page active">
 
 <div class="header">
-
-<div class="header-title">
-我的輪班
+<div class="title">我的輪班</div>
+<div class="subtitle">8 天循環・國假與補假</div>
 </div>
 
-<div class="header-subtitle">
-8 天循環輪班
-</div>
+<div class="card today">
 
-</div>
+<div class="today-label">今天</div>
 
+<div id="todayDate" class="today-date"></div>
 
-<div class="card today-card">
+<div id="todayShift" class="shift-big"></div>
 
-<div class="today-label">
-今天
-</div>
+<div id="todayHoliday"></div>
 
-
-<div
-id="todayDate"
-class="today-date">
-</div>
-
-
-<div
-id="todayShift"
-class="today-shift">
-</div>
-
-
-<div
-id="todayHoliday">
-</div>
-
-
-<div class="tomorrow">
-
+<div style="color:var(--sub);font-size:15px;margin-top:15px">
 明天
-
-<strong
-id="tomorrowShift">
-</strong>
-
+<b id="tomorrowShift"
+style="color:var(--text);margin-left:5px"></b>
 </div>
 
 </div>
@@ -1306,77 +604,52 @@ id="tomorrowShift">
 接下來
 </div>
 
-
-<div
-id="upcoming"
-class="card">
-</div>
+<div id="upcoming" class="card"></div>
 
 
 <div class="section-title">
-勞工國定假日
+國定假日
 </div>
 
+<div class="card detail">
 
-<div class="card labor-card">
-
-<div class="labor-title">
-
-🇹🇼 2026 台灣國定假日
-
+<div style="font-weight:800;font-size:18px">
+🇹🇼 台灣勞工國定假日
 </div>
 
+<div class="info-text">
 
-<div class="labor-text">
+現行勞工國定假日為法定休假日。
 
-依現行規定，勞工每年共有
-16 日國定假日。
+若國定假日碰到你的法定例假或休息日，
+需要依規定補假。
 
-<br><br>
+由於輪班人員的例假、休息日不一定落在
+星期六、日，因此本 App 不會自動把週末
+判定成補假。
 
-國定假日如遇到勞工原約定的
-例假或休息日，原則上應於其他
-工作日補假；補假日期由勞雇雙方
-協商。
-
-<br><br>
-
-國定假日與工作日對調，須經勞工
-本人同意。
-
-<br><br>
-
-實際輪班的例假、休息日不一定
-落在星期六、星期日，因此本 App
-只標示國定假日，不自動判定你的
-補假日期。
+請依你的公司實際排班與勞雇雙方約定，
+自行指定補假日期。
 
 </div>
 
 </div>
-
 
 </section>
 
 
+<!-- ================= 月曆 ================= -->
 
-<!-- =================================================
-     CALENDAR
-================================================= -->
-
-<section
-id="calendarPage"
-class="page">
-
+<section id="calendarPage" class="page">
 
 <div class="header">
 
-<div class="header-title">
+<div class="title">
 月曆
 </div>
 
-<div class="header-subtitle">
-輪班・國定假日
+<div class="subtitle">
+輪班・國假・補假
 </div>
 
 </div>
@@ -1384,27 +657,17 @@ class="page">
 
 <div class="card">
 
+<div class="cal-head">
 
-<div class="calendar-top">
+<div id="monthTitle" class="month"></div>
 
-<div
-id="monthTitle"
-class="calendar-month">
-</div>
+<div class="controls">
 
-
-<div class="month-controls">
-
-<button
-id="prevMonth"
-class="circle-button">
+<button id="prev" class="circle">
 ‹
 </button>
 
-
-<button
-id="nextMonth"
-class="circle-button">
+<button id="next" class="circle">
 ›
 </button>
 
@@ -1413,63 +676,46 @@ class="circle-button">
 </div>
 
 
-<div class="weekdays">
+<div class="week">
 
-<div class="weekday">日</div>
-<div class="weekday">一</div>
-<div class="weekday">二</div>
-<div class="weekday">三</div>
-<div class="weekday">四</div>
-<div class="weekday">五</div>
-<div class="weekday">六</div>
-
-</div>
-
-
-<div
-id="calendarGrid"
-class="calendar">
-</div>
+<div>日</div>
+<div>一</div>
+<div>二</div>
+<div>三</div>
+<div>四</div>
+<div>五</div>
+<div>六</div>
 
 </div>
 
 
-<button
-id="todayButton"
-class="action-button">
+<div id="grid" class="grid"></div>
 
+</div>
+
+
+<button id="todayBtn" class="btn">
 回到今天
-
 </button>
 
 
-<div
-id="detail"
-class="card detail-card">
-</div>
-
+<div id="detail" class="card detail"></div>
 
 </section>
 
 
+<!-- ================= 設定 ================= -->
 
-<!-- =================================================
-     SETTINGS
-================================================= -->
-
-<section
-id="settingsPage"
-class="page">
-
+<section id="settingsPage" class="page">
 
 <div class="header">
 
-<div class="header-title">
+<div class="title">
 設定
 </div>
 
-<div class="header-subtitle">
-輪班與 App 設定
+<div class="subtitle">
+輪班與國假管理
 </div>
 
 </div>
@@ -1479,15 +725,13 @@ class="page">
 輪班設定
 </div>
 
-
-<div class="card settings-card">
-
+<div class="card" style="padding:0 17px">
 
 <div class="setting">
 
-<div class="setting-label">
+<b>
 基準日期
-</div>
+</b>
 
 <input
 id="baseDate"
@@ -1498,206 +742,205 @@ type="date">
 
 <div class="setting">
 
-<div class="setting-label">
+<b>
 基準日期班別
-</div>
+</b>
 
 <select id="baseShift">
 
-<option value="0">
-白天1
-</option>
-
-<option value="1">
-白天2
-</option>
-
-<option value="2">
-小夜1
-</option>
-
-<option value="3">
-小夜2
-</option>
-
-<option value="4">
-休息
-</option>
-
-<option value="5">
-大夜1
-</option>
-
-<option value="6">
-大夜2
-</option>
-
-<option value="7">
-休息
-</option>
+<option value="0">白天1</option>
+<option value="1">白天2</option>
+<option value="2">小夜1</option>
+<option value="3">小夜2</option>
+<option value="4">休息</option>
+<option value="5">大夜1</option>
+<option value="6">大夜2</option>
+<option value="7">休息</option>
 
 </select>
 
 </div>
 
 
-<button
-id="saveSettings"
-class="action-button">
-
-儲存設定
-
+<button id="save" class="btn">
+儲存輪班設定
 </button>
 
-
-<button
-id="resetSettings"
-class="action-button secondary">
-
+<button id="reset" class="btn gray">
 恢復預設
-
 </button>
 
 </div>
 
 
+<!-- 新增國假 -->
 
 <div class="section-title">
-本月統計
+新增國假
 </div>
 
+<div class="card" style="padding:0 17px">
+
+<div class="setting">
+
+<b>
+國假日期
+</b>
+
+<input
+id="holidayDate"
+type="date">
+
+</div>
+
+
+<div class="setting">
+
+<b>
+國假名稱
+</b>
+
+<input
+id="holidayName"
+type="text"
+placeholder="例如：公司紀念日">
+
+</div>
+
+
+<button id="addHoliday" class="btn">
+＋ 新增國假
+</button>
+
+</div>
+
+
+<!-- 指定補假 -->
+
+<div class="section-title">
+指定補假
+</div>
+
+<div class="card" style="padding:0 17px">
+
+<div class="setting">
+
+<b>
+選擇國假
+</b>
+
+<select id="holidaySelect"></select>
+
+</div>
+
+
+<div class="setting">
+
+<b>
+補假日期
+</b>
+
+<input
+id="makeupDate"
+type="date">
+
+</div>
+
+
+<div class="setting">
+
+<b>
+補假備註
+</b>
+
+<input
+id="makeupNote"
+type="text"
+placeholder="例如：公司排班補休">
+
+</div>
+
+
+<button id="addMakeup" class="btn">
+＋ 指定補假
+</button>
+
+
+<div class="form-note">
+
+補假日期請依你的公司實際排班與勞雇雙方
+約定設定。
+
+設定後月曆會顯示：
+
+<span style="color:var(--red);font-weight:bold">
+紅色＝國假
+</span>
+
+<br>
+
+<span style="color:var(--blue);font-weight:bold">
+藍色＝補假
+</span>
+
+</div>
+
+</div>
+
+
+<!-- 國假管理 -->
+
+<div class="section-title">
+我的國假
+</div>
+
+<div id="holidayList" class="card manage"></div>
+
+
+<!-- 統計 -->
+
+<div class="section-title">
+本月輪班統計
+</div>
 
 <div class="stats">
 
+<div class="stat">
+<span>白天班</span>
+<strong id="cDay">0</strong>
+</div>
 
 <div class="stat">
-
-<div class="stat-label">
-白天班
+<span>小夜班</span>
+<strong id="cEve">0</strong>
 </div>
-
-<div
-id="dayCount"
-class="stat-number">
-0
-</div>
-
-</div>
-
 
 <div class="stat">
-
-<div class="stat-label">
-小夜班
+<span>大夜班</span>
+<strong id="cNight">0</strong>
 </div>
-
-<div
-id="eveningCount"
-class="stat-number">
-0
-</div>
-
-</div>
-
 
 <div class="stat">
-
-<div class="stat-label">
-大夜班
-</div>
-
-<div
-id="nightCount"
-class="stat-number">
-0
+<span>休息</span>
+<strong id="cRest">0</strong>
 </div>
 
 </div>
-
-
-<div class="stat">
-
-<div class="stat-label">
-休息
-</div>
-
-<div
-id="restCount"
-class="stat-number">
-0
-</div>
-
-</div>
-
-
-</div>
-
-
-
-<div class="section-title">
-勞動法規
-</div>
-
-
-<div class="card labor-card">
-
-<div class="labor-title">
-
-國定假日提醒
-
-</div>
-
-
-<div class="labor-text">
-
-本 App 的國定假日資料以 2026
-年度規定為基礎。
-
-<br><br>
-
-國定假日遇到你的例假或休息日，
-補假日期可能依你的輪班制度及
-勞雇協商而不同。
-
-<br><br>
-
-因此「國定假日」與「你的輪班休息日」
-在 App 中會分開顯示。
-
-</div>
-
-</div>
-
-
-<div class="version">
-
-我的輪班 · PWA v3.0
-
-</div>
-
 
 </section>
 
-
 </div>
 
 
+<!-- ================= 底部 Tab ================= -->
 
-<!-- =================================================
-     TAB BAR
-================================================= -->
-
-<nav class="tabbar">
-
+<nav class="tabs">
 
 <button
 class="tab active"
 data-page="home">
 
-<span class="tab-icon">
-⌂
-</span>
-
+<span class="ico">⌂</span>
 首頁
 
 </button>
@@ -1707,10 +950,7 @@ data-page="home">
 class="tab"
 data-page="calendarPage">
 
-<span class="tab-icon">
-▦
-</span>
-
+<span class="ico">▦</span>
 月曆
 
 </button>
@@ -1720,1415 +960,1404 @@ data-page="calendarPage">
 class="tab"
 data-page="settingsPage">
 
-<span class="tab-icon">
-⚙
-</span>
-
+<span class="ico">⚙</span>
 設定
 
 </button>
 
-
 </nav>
 
 
-
-<div
-id="toast"
-class="toast">
-</div>
-
+<div id="toast" class="toast"></div>
 
 
 <script>
 
-/* =====================================================
-   DEFAULT
-===================================================== */
+/* =========================================================
+   基本設定
+========================================================= */
 
 const DEFAULT = {
 
-    baseDate:
-        "2026-08-12",
+ baseDate:"2026-08-12",
 
-    baseShift:3,
+ baseShift:3,
 
-    shifts:[
-
-        "白天1",
-
-        "白天2",
-
-        "小夜1",
-
-        "小夜2",
-
-        "休息",
-
-        "大夜1",
-
-        "大夜2",
-
-        "休息"
-
-    ]
+ shifts:[
+  "白天1",
+  "白天2",
+  "小夜1",
+  "小夜2",
+  "休息",
+  "大夜1",
+  "大夜2",
+  "休息"
+ ]
 
 };
 
 
-/* =====================================================
-   2026 台灣國定假日
-===================================================== */
+/* =========================================================
+   2026 國定假日
+========================================================= */
 
-/*
+const DEFAULT_HOLIDAYS = {
 
-  注意：
+ "2026-01-01":"中華民國開國紀念日",
 
-  這裡標示的是「國定假日／補假日」，
-  不是單純政府機關所有連假日期。
+ "2026-02-15":"小年夜",
+ "2026-02-16":"除夕",
+ "2026-02-17":"春節",
+ "2026-02-18":"春節",
+ "2026-02-19":"春節",
 
-  輪班勞工的例假、休息日可能與
-  週六、週日不同，因此 App 不會
-  自動把所有連假日期視為國定假日。
+ "2026-02-28":"和平紀念日",
 
-*/
+ "2026-04-04":"兒童節",
+ "2026-04-05":"清明節",
 
-const TAIWAN_HOLIDAYS = {
+ "2026-05-01":"勞動節",
 
-    "2026-01-01":
-        "中華民國開國紀念日",
+ "2026-06-19":"端午節",
 
-    /*
-      春節：
-      小年夜 2/15
-      除夕 2/16
-      初一 2/17
-      初二 2/18
-      初三 2/19
+ "2026-09-25":"中秋節",
 
-      2/15 適逢星期日，
-      對固定週休二日且比照政府
-      辦公日曆者，補假可排 2/20。
+ "2026-09-28":"孔子誕辰紀念日／教師節",
 
-      因此 2/20 也標示為補假。
-    */
+ "2026-10-10":"國慶日",
 
-    "2026-02-15":
-        "小年夜",
+ "2026-10-25":"臺灣光復暨金門古寧頭大捷紀念日",
 
-    "2026-02-16":
-        "除夕",
-
-    "2026-02-17":
-        "春節 初一",
-
-    "2026-02-18":
-        "春節 初二",
-
-    "2026-02-19":
-        "春節 初三",
-
-    "2026-02-20":
-        "小年夜補假",
-
-    "2026-02-28":
-        "和平紀念日",
-
-    "2026-04-04":
-        "兒童節",
-
-    "2026-04-05":
-        "清明節",
-
-    "2026-05-01":
-        "勞動節",
-
-    "2026-06-19":
-        "端午節",
-
-    "2026-09-25":
-        "中秋節",
-
-    "2026-09-28":
-        "孔子誕辰紀念日／教師節",
-
-    "2026-10-10":
-        "國慶日",
-
-    "2026-10-25":
-        "臺灣光復暨金門古寧頭大捷紀念日",
-
-    "2026-12-25":
-        "行憲紀念日"
+ "2026-12-25":"行憲紀念日"
 
 };
 
 
-/* =====================================================
-   LOAD CONFIG
-===================================================== */
-
-function loadConfig(){
-
-    try{
-
-        const saved =
-            localStorage.getItem(
-                "shift-app-settings"
-            );
-
-        if(saved){
-
-            return {
-
-                ...DEFAULT,
-
-                ...JSON.parse(saved)
-
-            };
-
-        }
-
-    }catch(e){}
-
-    return {
-
-        ...DEFAULT,
-
-        shifts:[
-            ...DEFAULT.shifts
-        ]
-
-    };
-
-}
-
+/* =========================================================
+   LocalStorage
+========================================================= */
 
 let config =
-    loadConfig();
+JSON.parse(
+ localStorage.getItem("shift-config")
+ || "null"
+)
+|| {...DEFAULT};
 
 
-let calendarDate =
-    new Date();
+let customHolidays =
+JSON.parse(
+ localStorage.getItem("custom-holidays")
+ || "null"
+)
+|| [];
 
 
-let selectedDate =
-    new Date();
+let makeups =
+JSON.parse(
+ localStorage.getItem("shift-makeups")
+ || "null"
+)
+|| [];
 
 
+let cal = new Date();
 
-/* =====================================================
-   DATE
-===================================================== */
-
-function dateOnly(date){
-
-    return new Date(
-
-        date.getFullYear(),
-
-        date.getMonth(),
-
-        date.getDate()
-
-    );
-
-}
+let selected = new Date();
 
 
-function diffDays(a,b){
+/* =========================================================
+   儲存
+========================================================= */
 
-    return Math.round(
+function saveAll(){
 
-        (
+ localStorage.setItem(
+  "shift-config",
+  JSON.stringify(config)
+ );
 
-            dateOnly(a)
-            -
-            dateOnly(b)
+ localStorage.setItem(
+  "custom-holidays",
+  JSON.stringify(customHolidays)
+ );
 
-        )
-
-        /
-
-        86400000
-
-    );
-
-}
-
-
-function sameDate(a,b){
-
-    return (
-
-        a.getFullYear()
-        ===
-        b.getFullYear()
-
-        &&
-
-        a.getMonth()
-        ===
-        b.getMonth()
-
-        &&
-
-        a.getDate()
-        ===
-        b.getDate()
-
-    );
+ localStorage.setItem(
+  "shift-makeups",
+  JSON.stringify(makeups)
+ );
 
 }
 
 
-function formatDate(date){
+/* =========================================================
+   日期工具
+========================================================= */
 
-    return (
+function dateKey(d){
 
-        date.getFullYear()
-
-        + "/"
-
-        +
-
-        String(
-            date.getMonth()+1
-        ).padStart(2,"0")
-
-        + "/"
-
-        +
-
-        String(
-            date.getDate()
-        ).padStart(2,"0")
-
-    );
+ return d.getFullYear()
+ + "-"
+ + String(d.getMonth()+1).padStart(2,"0")
+ + "-"
+ + String(d.getDate()).padStart(2,"0");
 
 }
 
 
-function chineseDate(date){
+function parseDate(s){
 
-    const week = [
-
-        "星期日",
-
-        "星期一",
-
-        "星期二",
-
-        "星期三",
-
-        "星期四",
-
-        "星期五",
-
-        "星期六"
-
-    ];
-
-
-    return (
-
-        date.getFullYear()
-
-        + "年"
-
-        +
-
-        (date.getMonth()+1)
-
-        + "月"
-
-        +
-
-        date.getDate()
-
-        + "日 · "
-
-        +
-
-        week[date.getDay()]
-
-    );
+ return new Date(s+"T00:00:00");
 
 }
 
 
-/* =====================================================
-   HOLIDAY
-===================================================== */
+function same(a,b){
 
-function getHoliday(date){
-
-    const key =
-
-        date.getFullYear()
-
-        + "-"
-
-        +
-
-        String(
-            date.getMonth()+1
-        ).padStart(2,"0")
-
-        + "-"
-
-        +
-
-        String(
-            date.getDate()
-        ).padStart(2,"0");
-
-
-    return TAIWAN_HOLIDAYS[key]
-        || null;
+ return(
+  a.getFullYear()===b.getFullYear()
+  &&
+  a.getMonth()===b.getMonth()
+  &&
+  a.getDate()===b.getDate()
+ );
 
 }
 
 
-/* =====================================================
-   SHIFT
-===================================================== */
+function diff(a,b){
 
-function getShift(date){
+ const aa =
+ new Date(
+  a.getFullYear(),
+  a.getMonth(),
+  a.getDate()
+ );
 
-    const base =
+ const bb =
+ new Date(
+  b.getFullYear(),
+  b.getMonth(),
+  b.getDate()
+ );
 
-        new Date(
-            config.baseDate
-            + "T00:00:00"
-        );
-
-
-    let index =
-
-        (
-
-            config.baseShift
-
-            +
-
-            diffDays(
-                date,
-                base
-            )
-
-        )
-
-        %
-
-        config.shifts.length;
-
-
-    if(index < 0){
-
-        index +=
-            config.shifts.length;
-
-    }
-
-
-    return config.shifts[index];
+ return Math.round(
+  (aa-bb)/86400000
+ );
 
 }
 
 
-/* =====================================================
-   SHIFT COLOR
-===================================================== */
+function fmt(d){
 
-function shiftClass(shift){
-
-    if(
-        shift.startsWith("白天")
-    ){
-
-        return "shift-day";
-
-    }
-
-
-    if(
-        shift.startsWith("小夜")
-    ){
-
-        return "shift-evening";
-
-    }
-
-
-    if(
-        shift.startsWith("大夜")
-    ){
-
-        return "shift-night";
-
-    }
-
-
-    return "shift-rest";
+ return(
+  d.getFullYear()
+  +"/"
+  +String(d.getMonth()+1).padStart(2,"0")
+  +"/"
+  +String(d.getDate()).padStart(2,"0")
+ );
 
 }
 
 
-function shiftColor(shift){
+function zhDate(d){
 
-    if(
-        shift.startsWith("白天")
-    ){
-
-        return "var(--orange)";
-
-    }
-
-
-    if(
-        shift.startsWith("小夜")
-    ){
-
-        return "var(--indigo)";
-
-    }
-
-
-    if(
-        shift.startsWith("大夜")
-    ){
-
-        return "var(--purple)";
-
-    }
-
-
-    return "var(--green)";
+ return(
+  d.getFullYear()
+  +"年"
+  +(d.getMonth()+1)
+  +"月"
+  +d.getDate()
+  +"日・星期"
+  +"日一二三四五六"[d.getDay()]
+ );
 
 }
 
 
-/* =====================================================
-   HOME
-===================================================== */
+/* =========================================================
+   輪班
+========================================================= */
+
+function shift(d){
+
+ let i =
+ (
+  config.baseShift
+  +
+  diff(
+   d,
+   parseDate(config.baseDate)
+  )
+ ) % 8;
+
+ if(i<0) i+=8;
+
+ return config.shifts[i];
+
+}
+
+
+function shiftClass(s){
+
+ if(s.startsWith("白天"))
+  return "day";
+
+ if(s.startsWith("小夜"))
+  return "eve";
+
+ if(s.startsWith("大夜"))
+  return "night";
+
+ return "rest";
+
+}
+
+
+function shiftColor(s){
+
+ if(s.startsWith("白天"))
+  return "var(--orange)";
+
+ if(s.startsWith("小夜"))
+  return "var(--indigo)";
+
+ if(s.startsWith("大夜"))
+  return "var(--purple)";
+
+ return "var(--green)";
+
+}
+
+
+/* =========================================================
+   國假
+========================================================= */
+
+function holidayMap(){
+
+ let map={
+  ...DEFAULT_HOLIDAYS
+ };
+
+ customHolidays.forEach(x=>{
+  map[x.date]=x.name;
+ });
+
+ return map;
+
+}
+
+
+function holiday(d){
+
+ return holidayMap()[dateKey(d)] || null;
+
+}
+
+
+/* =========================================================
+   補假
+========================================================= */
+
+function makeupFor(d){
+
+ return makeups.find(
+  x=>x.date===dateKey(d)
+ );
+
+}
+
+
+function holidayForMakeup(d){
+
+ const m=makeupFor(d);
+
+ if(!m)
+  return null;
+
+ return holidayMap()[m.holiday]
+ || m.holiday;
+
+}
+
+
+/* =========================================================
+   Toast
+========================================================= */
+
+function toast(message){
+
+ const e=
+ document.getElementById("toast");
+
+ e.textContent=message;
+
+ e.classList.add("show");
+
+ setTimeout(()=>{
+  e.classList.remove("show");
+ },1800);
+
+}
+
+
+/* =========================================================
+   首頁
+========================================================= */
 
 function renderHome(){
 
-    const today =
-        new Date();
+ const today=new Date();
+
+ const tomorrow=new Date(today);
+
+ tomorrow.setDate(
+  tomorrow.getDate()+1
+ );
 
 
-    const tomorrow =
-        new Date(today);
+ document.getElementById("todayDate")
+ .textContent=zhDate(today);
 
 
-    tomorrow.setDate(
-        tomorrow.getDate()+1
-    );
+ const s=shift(today);
+
+ const big=
+ document.getElementById("todayShift");
+
+ big.textContent=s;
+
+ big.className=
+ "shift-big "
+ +shiftClass(s);
 
 
-    const shift =
-        getShift(today);
+ const h=holiday(today);
+
+ const mk=makeupFor(today);
+
+ const box=
+ document.getElementById("todayHoliday");
 
 
-    document.getElementById(
-        "todayDate"
-    ).textContent =
-        chineseDate(today);
+ if(h){
+
+  box.innerHTML=
+  `<div class="holiday-home">
+   🇹🇼 ${h}
+  </div>`;
+
+ }
+
+ else if(mk){
+
+  box.innerHTML=
+  `<div class="makeup-home">
+   🔵 補假
+   ${holidayForMakeup(today)
+    ?"："+holidayForMakeup(today)
+    :""}
+  </div>`;
+
+ }
+
+ else{
+
+  box.innerHTML="";
+
+ }
 
 
-    const badge =
-        document.getElementById(
-            "todayShift"
-        );
+ document.getElementById(
+  "tomorrowShift"
+ ).textContent=shift(tomorrow);
 
 
-    badge.textContent =
-        shift;
+ const upcoming=
+ document.getElementById("upcoming");
+
+ upcoming.innerHTML="";
 
 
-    badge.className =
-        "today-shift "
-        +
-        shiftClass(shift);
+ for(let i=1;i<=7;i++){
+
+  const d=new Date(today);
+
+  d.setDate(
+   d.getDate()+i
+  );
+
+  const ss=shift(d);
+
+  const hh=holiday(d);
+
+  const mm=makeupFor(d);
+
+  const row=
+  document.createElement("div");
+
+  row.className="row";
 
 
-    const holiday =
-        getHoliday(today);
+  row.innerHTML=`
 
+   <div class="badge">
+    ${d.getDate()}
+   </div>
 
-    const holidayBox =
-        document.getElementById(
-            "todayHoliday"
-        );
+   <div class="main">
 
+    <div class="small">
+     ${fmt(d)}
+    </div>
 
-    if(holiday){
+    <div
+     class="shift"
+     style="color:${shiftColor(ss)}">
 
-        holidayBox.innerHTML = `
+     ${ss}
 
-            <div class="today-holiday">
+    </div>
 
-                🇹🇼 ${holiday}
-
-            </div>
-
-        `;
-
-    }else{
-
-        holidayBox.innerHTML = "";
-
+    ${
+     hh
+     ?
+     `<div class="holiday-mini">
+       🇹🇼 ${hh}
+      </div>`
+     :""
     }
 
-
-    document.getElementById(
-        "tomorrowShift"
-    ).textContent =
-        getShift(tomorrow);
-
-
-    const container =
-        document.getElementById(
-            "upcoming"
-        );
-
-
-    container.innerHTML = "";
-
-
-    for(
-        let i=1;
-        i<=7;
-        i++
-    ){
-
-        const date =
-            new Date(today);
-
-
-        date.setDate(
-            date.getDate()+i
-        );
-
-
-        const shift =
-            getShift(date);
-
-
-        const holiday =
-            getHoliday(date);
-
-
-        const row =
-            document.createElement(
-                "div"
-            );
-
-
-        row.className =
-            "list-row";
-
-
-        row.innerHTML = `
-
-            <div class="date-badge">
-
-                ${date.getDate()}
-
-            </div>
-
-
-            <div class="list-main">
-
-                <div class="list-date">
-
-                    ${formatDate(date)}
-
-                </div>
-
-
-                <div
-                    class="list-shift"
-                    style="
-                    color:${shiftColor(shift)}
-                    ">
-
-                    ${shift}
-
-                </div>
-
-
-                ${
-                    holiday
-
-                    ?
-
-                    `<div class="list-holiday">
-                        🇹🇼 ${holiday}
-                    </div>`
-
-                    :
-
-                    ""
-                }
-
-            </div>
-
-        `;
-
-
-        container.appendChild(row);
-
+    ${
+     mm
+     ?
+     `<div class="makeup-mini">
+       🔵 補假：
+       ${holidayForMakeup(d)||""}
+      </div>`
+     :""
     }
+
+   </div>
+
+  `;
+
+
+  upcoming.appendChild(row);
+
+ }
 
 }
 
 
-/* =====================================================
-   CALENDAR
-===================================================== */
+/* =========================================================
+   月曆
+========================================================= */
 
 function renderCalendar(){
 
-    const year =
-        calendarDate.getFullYear();
+ document.getElementById(
+  "monthTitle"
+ ).textContent=
+ cal.getFullYear()
+ +"年"
+ +(cal.getMonth()+1)
+ +"月";
 
 
-    const month =
-        calendarDate.getMonth();
+ const grid=
+ document.getElementById("grid");
+
+ grid.innerHTML="";
 
 
-    document.getElementById(
-        "monthTitle"
-    ).textContent =
-
-        `${year}年${month+1}月`;
-
-
-    const grid =
-        document.getElementById(
-            "calendarGrid"
-        );
+ const first=
+ new Date(
+  cal.getFullYear(),
+  cal.getMonth(),
+  1
+ );
 
 
-    grid.innerHTML = "";
+ const total=
+ new Date(
+  cal.getFullYear(),
+  cal.getMonth()+1,
+  0
+ ).getDate();
 
 
-    const first =
-        new Date(
-            year,
-            month,
-            1
-        );
+ for(
+  let i=0;
+  i<first.getDay();
+  i++
+ ){
+
+  grid.appendChild(
+   document.createElement("div")
+  );
+
+ }
 
 
-    const total =
-        new Date(
-            year,
-            month+1,
-            0
-        ).getDate();
+ for(
+  let day=1;
+  day<=total;
+  day++
+ ){
+
+  const d=
+  new Date(
+   cal.getFullYear(),
+   cal.getMonth(),
+   day
+  );
 
 
-    for(
-        let i=0;
-        i<first.getDay();
-        i++
-    ){
+  const s=shift(d);
 
-        const empty =
-            document.createElement(
-                "div"
-            );
+  const h=holiday(d);
+
+  const mk=makeupFor(d);
 
 
-        empty.className =
-            "calendar-cell";
+  const cell=
+  document.createElement("div");
+
+  cell.className="cell";
 
 
-        grid.appendChild(empty);
+  if(same(d,new Date()))
+   cell.classList.add("today");
 
+
+  if(same(d,selected))
+   cell.classList.add("selected");
+
+
+  cell.innerHTML=`
+
+   <div class="cellin">
+
+    ${
+     h
+     ?
+     `<div class="dot"></div>`
+     :""
     }
 
-
-    for(
-        let day=1;
-        day<=total;
-        day++
-    ){
-
-        const date =
-            new Date(
-                year,
-                month,
-                day
-            );
-
-
-        const shift =
-            getShift(date);
-
-
-        const holiday =
-            getHoliday(date);
-
-
-        const cell =
-            document.createElement(
-                "div"
-            );
-
-
-        cell.className =
-            "calendar-cell";
-
-
-        if(
-            sameDate(
-                date,
-                new Date()
-            )
-        ){
-
-            cell.classList.add(
-                "today"
-            );
-
-        }
-
-
-        if(
-            sameDate(
-                date,
-                selectedDate
-            )
-        ){
-
-            cell.classList.add(
-                "selected"
-            );
-
-        }
-
-
-        cell.innerHTML = `
-
-            <div
-                class="calendar-cell-inner">
-
-
-                ${
-                    holiday
-
-                    ?
-
-                    `<div class="holiday-dot"></div>`
-
-                    :
-
-                    ""
-
-                }
-
-
-                <div
-                    class="calendar-number">
-
-                    ${day}
-
-                </div>
-
-
-                <div
-                    class="calendar-shift"
-                    style="
-                    color:${shiftColor(shift)}
-                    ">
-
-                    ${shift}
-
-                </div>
-
-
-                ${
-                    holiday
-
-                    ?
-
-                    `<div class="holiday-label">
-                        ${holiday}
-                    </div>`
-
-                    :
-
-                    ""
-
-                }
-
-
-            </div>
-
-        `;
-
-
-        cell.onclick = () => {
-
-            selectedDate =
-                new Date(date);
-
-
-            renderCalendar();
-
-            renderDetail();
-
-        };
-
-
-        grid.appendChild(cell);
-
+    ${
+     mk
+     ?
+     `<div class="makeup-dot"></div>`
+     :""
     }
 
+    <div class="num">
+     ${day}
+    </div>
 
-    renderStats();
+    <div
+     class="cshift"
+     style="color:${shiftColor(s)}">
+
+     ${s}
+
+    </div>
+
+    ${
+     h
+     ?
+     `<div class="label red">
+       國假
+      </div>`
+     :""
+    }
+
+    ${
+     mk
+     ?
+     `<div class="label blue">
+       補假
+      </div>`
+     :""
+    }
+
+   </div>
+
+  `;
+
+
+  cell.onclick=()=>{
+
+   selected=new Date(d);
+
+   renderCalendar();
+
+   renderDetail();
+
+  };
+
+
+  grid.appendChild(cell);
+
+ }
+
+
+ renderStats();
 
 }
 
 
-/* =====================================================
-   DETAIL
-===================================================== */
+/* =========================================================
+   日期詳細資訊
+========================================================= */
 
 function renderDetail(){
 
-    const shift =
-        getShift(selectedDate);
+ const h=holiday(selected);
+
+ const mk=makeupFor(selected);
+
+ const s=shift(selected);
+
+ let extra="";
 
 
-    const holiday =
-        getHoliday(selectedDate);
+ if(h){
+
+  extra+=`
+
+   <div class="info">
+
+    <div class="info-title">
+     🇹🇼 ${h}
+    </div>
+
+    <div class="info-text">
+
+     國定假日。
+
+     若該日恰為你的法定例假或休息日，
+     應依規定於其他工作日補假。
+
+    </div>
+
+   </div>
+
+  `;
+
+ }
 
 
-    let holidayHTML = "";
+ if(mk){
+
+  extra+=`
+
+   <div class="info bluebox">
+
+    <div class="info-title">
+     🔵 補假
+    </div>
+
+    <div class="info-text">
+
+     ${holidayForMakeup(selected)||mk.holiday}
+
+     <br>
+
+     補假日期：
+     ${fmt(selected)}
+
+     ${
+      mk.note
+      ?
+      `<br>備註：${mk.note}`
+      :""
+     }
+
+    </div>
+
+   </div>
+
+  `;
+
+ }
 
 
-    if(holiday){
+ if(!extra){
 
-        holidayHTML = `
+  extra=`
 
-            <div
-                class="detail-holiday">
+   <div class="info graybox">
 
+    <div class="info-title">
+     沒有國假或補假
+    </div>
 
-                <div
-                    class="detail-holiday-title">
+    <div class="info-text">
+     此日期只有輪班資訊。
+    </div>
 
-                    🇹🇼 ${holiday}
+   </div>
 
-                </div>
+  `;
 
-
-                <div
-                    class="detail-holiday-sub">
-
-                    國定假日
-
-                </div>
+ }
 
 
-            </div>
+ document.getElementById(
+  "detail"
+ ).innerHTML=`
 
+  <div class="detail-date">
+   ${zhDate(selected)}
+  </div>
 
-            <div
-                class="detail-note">
+  <div
+   class="detail-shift"
+   style="color:${shiftColor(s)}">
 
-                國定假日若遇到你的例假或
-                休息日，原則上應於其他
-                工作日補假；實際補假日期
-                需依你的勞動契約、排班及
-                勞雇協商確認。
+   ${s}
 
-                <br><br>
+  </div>
 
-                若國定假日原本是你的工作日，
-                經依法徵得同意出勤，工資
-                依《勞動基準法》相關規定
-                辦理。
+  ${extra}
 
-                <br><br>
-
-                本 App 不會自動判斷你公司的
-                補假日期。
-
-            </div>
-
-        `;
-
-    }
-
-
-    document.getElementById(
-        "detail"
-    ).innerHTML = `
-
-        <div class="detail-date">
-
-            ${chineseDate(selectedDate)}
-
-        </div>
-
-
-        <div
-            class="detail-shift"
-            style="
-            color:${shiftColor(shift)}
-            ">
-
-            ${shift}
-
-        </div>
-
-
-        ${holidayHTML}
-
-    `;
+ `;
 
 }
 
 
-/* =====================================================
-   STATISTICS
-===================================================== */
+/* =========================================================
+   月曆統計
+========================================================= */
 
 function renderStats(){
 
-    const year =
-        calendarDate.getFullYear();
+ const y=cal.getFullYear();
+
+ const m=cal.getMonth();
+
+ const total=
+ new Date(
+  y,
+  m+1,
+  0
+ ).getDate();
 
 
-    const month =
-        calendarDate.getMonth();
+ let count=[
+  0,
+  0,
+  0,
+  0
+ ];
 
 
-    const total =
-        new Date(
-            year,
-            month+1,
-            0
-        ).getDate();
+ for(
+  let i=1;
+  i<=total;
+  i++
+ ){
+
+  const s=
+  shift(
+   new Date(y,m,i)
+  );
 
 
-    let day=0;
+  if(s.startsWith("白天"))
+   count[0]++;
 
-    let evening=0;
+  else if(s.startsWith("小夜"))
+   count[1]++;
 
-    let night=0;
+  else if(s.startsWith("大夜"))
+   count[2]++;
 
-    let rest=0;
+  else
+   count[3]++;
 
-
-    for(
-        let i=1;
-        i<=total;
-        i++
-    ){
-
-        const shift =
-            getShift(
-                new Date(
-                    year,
-                    month,
-                    i
-                )
-            );
+ }
 
 
-        if(
-            shift.startsWith("白天")
-        ){
+ document.getElementById("cDay")
+ .textContent=count[0];
 
-            day++;
+ document.getElementById("cEve")
+ .textContent=count[1];
 
-        }
+ document.getElementById("cNight")
+ .textContent=count[2];
 
-        else if(
-            shift.startsWith("小夜")
-        ){
-
-            evening++;
-
-        }
-
-        else if(
-            shift.startsWith("大夜")
-        ){
-
-            night++;
-
-        }
-
-        else{
-
-            rest++;
-
-        }
-
-    }
-
-
-    document.getElementById(
-        "dayCount"
-    ).textContent = day;
-
-
-    document.getElementById(
-        "eveningCount"
-    ).textContent = evening;
-
-
-    document.getElementById(
-        "nightCount"
-    ).textContent = night;
-
-
-    document.getElementById(
-        "restCount"
-    ).textContent = rest;
+ document.getElementById("cRest")
+ .textContent=count[3];
 
 }
 
 
-/* =====================================================
-   SETTINGS
-===================================================== */
+/* =========================================================
+   設定頁
+========================================================= */
 
 function renderSettings(){
 
-    document.getElementById(
-        "baseDate"
-    ).value =
-        config.baseDate;
+ document.getElementById(
+  "baseDate"
+ ).value=config.baseDate;
 
 
-    document.getElementById(
-        "baseShift"
-    ).value =
-        config.baseShift;
+ document.getElementById(
+  "baseShift"
+ ).value=config.baseShift;
+
+
+ const select=
+ document.getElementById(
+  "holidaySelect"
+ );
+
+
+ select.innerHTML="";
+
+
+ Object.entries(
+  holidayMap()
+ )
+ .sort()
+ .forEach(([date,name])=>{
+
+  const option=
+  document.createElement("option");
+
+  option.value=date;
+
+  option.textContent=
+  date+"｜"+name;
+
+  select.appendChild(option);
+
+ });
+
+
+ const list=
+ document.getElementById(
+  "holidayList"
+ );
+
+ list.innerHTML="";
+
+
+ Object.entries(
+  holidayMap()
+ )
+ .sort()
+ .forEach(([date,name])=>{
+
+  const isCustom=
+  customHolidays.some(
+   x=>x.date===date
+  );
+
+
+  const related=
+  makeups.filter(
+   x=>x.holiday===date
+  );
+
+
+  const item=
+  document.createElement("div");
+
+  item.className=
+  "manage-item";
+
+
+  item.innerHTML=`
+
+   <div class="manage-name">
+
+    ${name}
+
+    ${
+     isCustom
+     ?
+     `<span style="
+      color:var(--blue);
+      font-size:11px">
+      自訂
+      </span>`
+     :""
+    }
+
+   </div>
+
+
+   <div class="manage-date">
+
+    ${date}
+
+    ${
+     related.length
+     ?
+     " · 補假："+
+
+     related
+     .map(x=>x.date)
+     .join("、")
+     :""
+    }
+
+   </div>
+
+
+   <div class="manage-actions">
+
+    ${
+     isCustom
+     ?
+     `<button
+       class="mini-btn delete"
+       data-del="${date}">
+       刪除國假
+      </button>`
+     :""
+    }
+
+
+    ${
+     related
+     .map(x=>
+      `<button
+       class="mini-btn delete"
+       data-mk="${x.id}">
+       刪除補假
+       ${x.date}
+       </button>`
+     )
+     .join("")
+    }
+
+   </div>
+
+  `;
+
+
+  list.appendChild(item);
+
+ });
+
+
+ document
+ .querySelectorAll("[data-del]")
+ .forEach(button=>{
+
+  button.onclick=()=>{
+
+   const date=
+   button.dataset.del;
+
+
+   customHolidays=
+   customHolidays.filter(
+    x=>x.date!==date
+   );
+
+
+   makeups=
+   makeups.filter(
+    x=>x.holiday!==date
+   );
+
+
+   saveAll();
+
+   renderSettings();
+
+   renderHome();
+
+   renderCalendar();
+
+   renderDetail();
+
+   toast("已刪除國假");
+
+  };
+
+ });
+
+
+ document
+ .querySelectorAll("[data-mk]")
+ .forEach(button=>{
+
+  button.onclick=()=>{
+
+   const id=
+   button.dataset.mk;
+
+
+   makeups=
+   makeups.filter(
+    x=>x.id!==id
+   );
+
+
+   saveAll();
+
+   renderSettings();
+
+   renderHome();
+
+   renderCalendar();
+
+   renderDetail();
+
+   toast("已刪除補假");
+
+  };
+
+ });
 
 }
 
 
+/* =========================================================
+   儲存輪班
+========================================================= */
+
 document.getElementById(
-    "saveSettings"
-).onclick = () => {
+ "save"
+).onclick=()=>{
 
-    config.baseDate =
-        document.getElementById(
-            "baseDate"
-        ).value;
-
-
-    config.baseShift =
-        Number(
-            document.getElementById(
-                "baseShift"
-            ).value
-        );
+ config.baseDate=
+ document.getElementById(
+  "baseDate"
+ ).value;
 
 
-    localStorage.setItem(
-
-        "shift-app-settings",
-
-        JSON.stringify(config)
-
-    );
-
-
-    renderHome();
-
-    renderCalendar();
-
-    renderDetail();
+ config.baseShift=
+ Number(
+  document.getElementById(
+   "baseShift"
+  ).value
+ );
 
 
-    showToast(
-        "已儲存輪班設定"
-    );
+ saveAll();
+
+ renderHome();
+
+ renderCalendar();
+
+ renderDetail();
+
+ toast("輪班設定已儲存");
+
+};
+
+
+/* =========================================================
+   恢復預設
+========================================================= */
+
+document.getElementById(
+ "reset"
+).onclick=()=>{
+
+ config={
+  ...DEFAULT
+ };
+
+ saveAll();
+
+ renderSettings();
+
+ renderHome();
+
+ renderCalendar();
+
+ renderDetail();
+
+ toast("已恢復預設");
+
+};
+
+
+/* =========================================================
+   新增國假
+========================================================= */
+
+document.getElementById(
+ "addHoliday"
+).onclick=()=>{
+
+ const date=
+ document.getElementById(
+  "holidayDate"
+ ).value;
+
+
+ const name=
+ document.getElementById(
+  "holidayName"
+ ).value.trim();
+
+
+ if(!date || !name){
+
+  toast("請填寫國假日期與名稱");
+
+  return;
+
+ }
+
+
+ if(holidayMap()[date]){
+
+  toast("這一天已經有國假");
+
+  return;
+
+ }
+
+
+ customHolidays.push({
+  date:date,
+  name:name
+ });
+
+
+ saveAll();
+
+
+ document.getElementById(
+  "holidayName"
+ ).value="";
+
+
+ renderSettings();
+
+ renderHome();
+
+ renderCalendar();
+
+ renderDetail();
+
+ toast("國假已新增");
+
+};
+
+
+/* =========================================================
+   新增補假
+========================================================= */
+
+document.getElementById(
+ "addMakeup"
+).onclick=()=>{
+
+ const holiday=
+ document.getElementById(
+  "holidaySelect"
+ ).value;
+
+
+ const date=
+ document.getElementById(
+  "makeupDate"
+ ).value;
+
+
+ const note=
+ document.getElementById(
+  "makeupNote"
+ ).value.trim();
+
+
+ if(!holiday || !date){
+
+  toast("請選擇國假與補假日期");
+
+  return;
+
+ }
+
+
+ if(
+  makeups.some(
+   x=>x.date===date
+  )
+ ){
+
+  toast("這一天已經設定補假");
+
+  return;
+
+ }
+
+
+ makeups.push({
+
+  id:
+  Date.now().toString(),
+
+  holiday:holiday,
+
+  date:date,
+
+  note:note
+
+ });
+
+
+ saveAll();
+
+
+ document.getElementById(
+  "makeupNote"
+ ).value="";
+
+
+ renderSettings();
+
+ renderHome();
+
+ renderCalendar();
+
+ renderDetail();
+
+ toast("補假已設定");
+
+};
+
+
+/* =========================================================
+   月曆切換
+========================================================= */
+
+document.getElementById(
+ "prev"
+).onclick=()=>{
+
+ cal=
+ new Date(
+  cal.getFullYear(),
+  cal.getMonth()-1,
+  1
+ );
+
+ renderCalendar();
+
+ renderDetail();
 
 };
 
 
 document.getElementById(
-    "resetSettings"
-).onclick = () => {
+ "next"
+).onclick=()=>{
 
-    if(
-        !confirm(
-            "確定恢復預設輪班？"
-        )
-    ){
+ cal=
+ new Date(
+  cal.getFullYear(),
+  cal.getMonth()+1,
+  1
+ );
 
-        return;
+ renderCalendar();
 
-    }
-
-
-    config = {
-
-        ...DEFAULT,
-
-        shifts:[
-            ...DEFAULT.shifts
-        ]
-
-    };
-
-
-    localStorage.setItem(
-
-        "shift-app-settings",
-
-        JSON.stringify(config)
-
-    );
-
-
-    renderSettings();
-
-    renderHome();
-
-    renderCalendar();
-
-    renderDetail();
-
-
-    showToast(
-        "已恢復預設"
-    );
-
-};
-
-
-/* =====================================================
-   MONTH
-===================================================== */
-
-document.getElementById(
-    "prevMonth"
-).onclick = () => {
-
-    calendarDate =
-        new Date(
-
-            calendarDate.getFullYear(),
-
-            calendarDate.getMonth()-1,
-
-            1
-
-        );
-
-
-    renderCalendar();
-
-    renderDetail();
+ renderDetail();
 
 };
 
 
 document.getElementById(
-    "nextMonth"
-).onclick = () => {
+ "todayBtn"
+).onclick=()=>{
 
-    calendarDate =
-        new Date(
+ const d=new Date();
 
-            calendarDate.getFullYear(),
+ cal=
+ new Date(
+  d.getFullYear(),
+  d.getMonth(),
+  1
+ );
 
-            calendarDate.getMonth()+1,
+ selected=d;
 
-            1
+ renderCalendar();
 
-        );
-
-
-    renderCalendar();
-
-    renderDetail();
-
-};
-
-
-document.getElementById(
-    "todayButton"
-).onclick = () => {
-
-    const today =
-        new Date();
-
-
-    calendarDate =
-        new Date(
-
-            today.getFullYear(),
-
-            today.getMonth(),
-
-            1
-
-        );
-
-
-    selectedDate =
-        new Date(today);
-
-
-    renderCalendar();
-
-    renderDetail();
+ renderDetail();
 
 };
 
 
-/* =====================================================
-   TAB BAR
-===================================================== */
+/* =========================================================
+   Tab
+========================================================= */
 
 document
 .querySelectorAll(".tab")
-.forEach(tab => {
+.forEach(tab=>{
 
-    tab.onclick = () => {
+ tab.onclick=()=>{
 
-        document
-        .querySelectorAll(".page")
-        .forEach(page => {
-
-            page.classList.remove(
-                "active"
-            );
-
-        });
+  document
+  .querySelectorAll(".page")
+  .forEach(
+   p=>p.classList.remove("active")
+  );
 
 
-        document
-        .getElementById(
-            tab.dataset.page
-        )
-        .classList.add(
-            "active"
-        );
+  document
+  .getElementById(
+   tab.dataset.page
+  )
+  .classList.add("active");
 
 
-        document
-        .querySelectorAll(".tab")
-        .forEach(t => {
-
-            t.classList.remove(
-                "active"
-            );
-
-        });
+  document
+  .querySelectorAll(".tab")
+  .forEach(
+   t=>t.classList.remove("active")
+  );
 
 
-        tab.classList.add(
-            "active"
-        );
+  tab.classList.add("active");
 
 
-        if(
-            tab.dataset.page
-            ===
-            "calendarPage"
-        ){
+  if(
+   tab.dataset.page==="calendarPage"
+  ){
 
-            renderCalendar();
+   renderCalendar();
 
-            renderDetail();
+   renderDetail();
 
-        }
+  }
 
 
-        if(
-            tab.dataset.page
-            ===
-            "settingsPage"
-        ){
+  if(
+   tab.dataset.page==="settingsPage"
+  ){
 
-            renderSettings();
+   renderSettings();
 
-        }
+  }
 
-    };
+ };
 
 });
 
 
-/* =====================================================
-   TOAST
-===================================================== */
-
-function showToast(message){
-
-    const toast =
-        document.getElementById(
-            "toast"
-        );
-
-
-    toast.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    setTimeout(() => {
-
-        toast.classList.remove(
-            "show"
-        );
-
-    },1800);
-
-}
-
-
-/* =====================================================
-   SERVICE WORKER
-===================================================== */
-
-if(
-    "serviceWorker"
-    in navigator
-){
-
-    window.addEventListener(
-        "load",
-        () => {
-
-            navigator
-            .serviceWorker
-            .register(
-                "service-worker.js"
-            )
-            .catch(
-                console.error
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
+/* =========================================================
+   啟動
+========================================================= */
 
 renderHome();
 
