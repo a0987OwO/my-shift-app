@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1,
+               maximum-scale=1,
+               viewport-fit=cover">
+
+<meta name="theme-color" content="#f5f5f7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="我的輪班">
+
+<title>我的輪班</title>
+
+<style>
+
+:root {
+    --bg: #f5f5f7;
+    --card: #ffffff;
+    --text: #111111;
+    --secondary: #777777;
+    --border: rgba(0,0,0,0.08);
+
+    --blue: #007aff;
+
+    --day: #ff9500;
+    --night: #5856d6;
+    --late: #af52de;
+    --rest: #34c759;
+}
+
+@media (prefers-color-scheme: dark) {
+
+    :root {
+        --bg: #000000;
+        --card: #1c1c1e;
+        --text: #ffffff;
+        --secondary: #98989d;
+        --border: rgba(255,255,255,0.1);
+    }
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    background: var(--bg);
+}
+
+body {
+    margin: 0;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "PingFang TC",
+        "Noto Sans TC",
+        sans-serif;
+
+    padding:
+        calc(18px + env(safe-area-inset-top))
+        16px
+        calc(90px + env(safe-area-inset-bottom));
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    -webkit-appearance: none;
+}
+
+.app {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.title {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+
+    margin-top: 6px;
+}
+
+.subtitle {
+    color: var(--secondary);
+    font-size: 15px;
+    margin-top: 4px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    background: var(--card);
+
+    border-radius: 26px;
+
+    padding: 22px;
+
+    margin-top: 20px;
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.06);
+}
+
+/* =========================
+   TODAY
+========================= */
+
+.hero {
+    text-align: center;
+}
+
+.today-label {
+    color: var(--secondary);
+    font-size: 15px;
+}
+
+.today-date {
+    margin-top: 5px;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.shift-badge {
+
+    display: inline-flex;
+
+    min-width: 200px;
+    height: 115px;
+
+    margin:
+        22px
+        0
+        12px;
+
+    border-radius: 32px;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.shift-day {
+    color: var(--day);
+    background: rgba(255,149,0,0.12);
+}
+
+.shift-night {
+    color: var(--night);
+    background: rgba(88,86,214,0.12);
+}
+
+.shift-late {
+    color: var(--late);
+    background: rgba(175,82,222,0.12);
+}
+
+.shift-rest {
+    color: var(--rest);
+    background: rgba(52,199,89,0.12);
+}
+
+.tomorrow {
+    color: var(--secondary);
+}
+
+.tomorrow strong {
+    color: var(--text);
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section-title {
+
+    font-size: 21px;
+    font-weight: 800;
+
+    margin:
+        28px
+        3px
+        10px;
+}
+
+/* =========================
+   UPCOMING
+========================= */
+
+.upcoming-row {
+
+    display: flex;
+    align-items: center;
+
+    min-height: 65px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.upcoming-row:last-child {
+    border-bottom: none;
+}
+
+.date-circle {
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: rgba(0,122,255,0.1);
+    color: var(--blue);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 800;
+
+    margin-right: 14px;
+}
+
+.grow {
+    flex: 1;
+}
+
+.small {
+    color: var(--secondary);
+    font-size: 13px;
+}
+
+.shift-text {
+    font-size: 17px;
+    font-weight: 800;
+
+    margin-top: 2px;
+}
+
+/* =========================
+   CALENDAR
+========================= */
+
+.calendar-header {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.month-title {
+
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.month-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.icon-button {
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(120,120,128,0.12);
+
+    color: var(--text);
+
+    font-size: 24px;
+}
+
+.weekdays,
+.calendar-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7,1fr);
+}
+
+.weekday {
+
+    text-align: center;
+
+    color: var(--secondary);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    padding:
+        14px
+        0
+        7px;
+}
+
+.calendar-day {
+
+    height: 68px;
+
+    padding: 3px;
+}
+
+.calendar-inner {
+
+    height: 62px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-day.today
+.calendar-inner {
+
+    outline:
+        2px solid var(--blue);
+
+    outline-offset:
+        -2px;
+}
+
+.calendar-day.selected
+.calendar-inner {
+
+    background:
+        rgba(0,122,255,0.1);
+}
+
+.day-number {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.day-shift {
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    margin-top: 5px;
+
+    white-space: nowrap;
+}
+
+/* =========================
+   DETAIL
+========================= */
+
+.detail-date {
+
+    color: var(--secondary);
+
+    font-size: 14px;
+}
+
+.detail-shift {
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    margin-top: 5px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.primary-button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 15px;
+
+    padding: 14px;
+
+    margin-top: 12px;
+
+    background:
+        var(--blue);
+
+    color: white;
+
+    font-weight: 800;
+}
+
+.secondary-button {
+
+    background:
+        rgba(120,120,128,0.12);
+
+    color:
+        var(--text);
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+.setting-row {
+
+    padding: 17px 0;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.setting-row:last-child {
+    border-bottom: none;
+}
+
+.setting-label {
+
+    font-weight: 700;
+
+    margin-bottom: 9px;
+}
+
+input,
+select {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 13px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(120,120,128,0.1);
+
+    color:
+        var(--text);
+
+    outline: none;
+}
+
+.shift-order {
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 8px 0;
+}
+
+.order-number {
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(120,120,128,0.12);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 10px;
+
+    color:
+        var(--secondary);
+
+    font-size: 12px;
+}
+
+/* =========================
+   STATISTICS
+========================= */
+
+.statistics {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 10px;
+}
+
+.stat {
+
+    background:
+        rgba(120,120,128,0.1);
+
+    padding: 16px;
+
+    border-radius: 18px;
+}
+
+.stat-label {
+
+    color:
+        var(--secondary);
+
+    font-size: 13px;
+}
+
+.stat-value {
+
+    font-size: 24px;
+
+    font-weight: 800;
+
+    margin-top: 4px;
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav {
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 100;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    padding:
+        7px
+        15px
+        calc(7px + env(safe-area-inset-bottom));
+
+    background:
+        rgba(248,248,250,0.9);
+
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+
+    border-top:
+        1px solid var(--border);
+}
+
+@media (prefers-color-scheme: dark) {
+
+    .bottom-nav {
+        background:
+            rgba(28,28,30,0.9);
+    }
+}
+
+.nav-button {
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--secondary);
+
+    padding: 5px;
+
+    font-size: 12px;
+}
+
+.nav-button.active {
+
+    color:
+        var(--blue);
+
+    font-weight: 800;
+}
+
+.nav-icon {
+
+    display: block;
+
+    font-size: 22px;
+
+    margin-bottom: 3px;
+}
+
+/* =========================
+   VERSION
+========================= */
+
+.version {
+
+    text-align: center;
+
+    color:
+        var(--secondary);
+
+    font-size: 12px;
+
+    margin: 30px 0 10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =========================
+     HOME
+========================= -->
+
+<section id="homePage" class="page active">
+
+    <div class="title">
+        我的輪班
+    </div>
+
+    <div class="subtitle">
+        8 天循環輪班日曆
+    </div>
+
+    <div class="card hero">
+
+        <div class="today-label">
+            今天
+        </div>
+
+        <div
+            id="todayDate"
+            class="today-date">
+        </div>
+
+        <div
+            id="todayShift"
+            class="shift-badge">
+        </div>
+
+        <div class="tomorrow">
+
+            明天
+
+            <strong id="tomorrowShift">
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-title">
+        接下來
+    </div>
+
+    <div
+        id="upcoming"
+        class="card">
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CALENDAR
+========================= -->
+
+<section
+    id="calendarPage"
+    class="page">
+
+    <div class="title">
+        月曆
+    </div>
+
+    <div class="subtitle">
+        查看每天的輪班
+    </div>
+
+
+    <div class="card">
+
+        <div class="calendar-header">
+
+            <div
+                id="monthTitle"
+                class="month-title">
+            </div>
+
+            <div class="month-buttons">
+
+                <button
+                    id="prevMonth"
+                    class="icon-button">
+                    ‹
+                </button>
+
+                <button
+                    id="nextMonth"
+                    class="icon-button">
+                    ›
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="weekdays">
+
+            <div class="weekday">日</div>
+            <div class="weekday">一</div>
+            <div class="weekday">二</div>
+            <div class="weekday">三</div>
+            <div class="weekday">四</div>
+            <div class="weekday">五</div>
+            <div class="weekday">六</div>
+
+        </div>
+
+
+        <div
+            id="calendarGrid"
+            class="calendar-grid">
+        </div>
+
+    </div>
+
+
+    <button
+        id="todayButton"
+        class="primary-button">
+
+        回到今天
+
+    </button>
+
+
+    <div
+        id="calendarDetail"
+        class="card">
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SETTINGS
+========================= -->
+
+<section
+    id="settingsPage"
+    class="page">
+
+    <div class="title">
+        設定
+    </div>
+
+    <div class="subtitle">
+        管理你的輪班週期
+    </div>
+
+
+    <div class="card">
+
+        <div class="setting-row">
+
+            <div class="setting-label">
+                基準日期
+            </div>
+
+            <input
+                id="baseDateInput"
+                type="date">
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-label">
+                基準日的班別
+            </div>
+
+            <select id="baseShiftInput">
+
+                <option value="0">
+                    白天1
+                </option>
+
+                <option value="1">
+                    白天2
+                </option>
+
+                <option value="2">
+                    小夜1
+                </option>
+
+                <option value="3">
+                    小夜2
+                </option>
+
+                <option value="4">
+                    休息
+                </option>
+
+                <option value="5">
+                    大夜1
+                </option>
+
+                <option value="6">
+                    大夜2
+                </option>
+
+                <option value="7">
+                    休息
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-label">
+                輪班順序
+            </div>
+
+            <div id="shiftList">
+            </div>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <button
+                id="saveSettings"
+                class="primary-button">
+
+                儲存輪班設定
+
+            </button>
+
+
+            <button
+                id="resetSettings"
+                class="primary-button secondary-button">
+
+                恢復預設設定
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-title">
+        本月統計
+    </div>
+
+
+    <div class="statistics">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                白天班
+            </div>
+
+            <div
+                id="dayCount"
+                class="stat-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                小夜班
+            </div>
+
+            <div
+                id="eveningCount"
+                class="stat-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                大夜班
+            </div>
+
+            <div
+                id="lateCount"
+                class="stat-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                休息
+            </div>
+
+            <div
+                id="restCount"
+                class="stat-value">
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="version">
+        我的輪班 v1.0
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav class="bottom-nav">
+
+    <button
+        class="nav-button active"
+        data-page="homePage">
+
+        <span class="nav-icon">
+            ⌂
+        </span>
+
+        首頁
+
+    </button>
+
+
+    <button
+        class="nav-button"
+        data-page="calendarPage">
+
+        <span class="nav-icon">
+            ▦
+        </span>
+
+        月曆
+
+    </button>
+
+
+    <button
+        class="nav-button"
+        data-page="settingsPage">
+
+        <span class="nav-icon">
+            ⚙
+        </span>
+
+        設定
+
+    </button>
+
+</nav>
+
+
+<script>
+
+/* ======================================
+   預設輪班設定
+====================================== */
+
+const DEFAULT_SETTINGS = {
+
+    baseDate:
+        "2026-08-12",
+
+    baseShiftIndex:
+        3,
+
+    shifts: [
+
+        "白天1",
+        "白天2",
+        "小夜1",
+        "小夜2",
+        "休息",
+        "大夜1",
+        "大夜2",
+        "休息"
+
+    ]
+
+};
+
+
+/* ======================================
+   讀取設定
+====================================== */
+
+function loadSettings() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                "myShiftSettings"
+            );
+
+        if (!saved) {
+
+            return {
+                ...DEFAULT_SETTINGS,
+                shifts:
+                    [...DEFAULT_SETTINGS.shifts]
+            };
+
+        }
+
+        const data =
+            JSON.parse(saved);
+
+        return {
+
+            ...DEFAULT_SETTINGS,
+
+            ...data,
+
+            shifts:
+                data.shifts ||
+                [...DEFAULT_SETTINGS.shifts]
+
+        };
+
+    } catch {
+
+        return {
+
+            ...DEFAULT_SETTINGS,
+
+            shifts:
+                [...DEFAULT_SETTINGS.shifts]
+
+        };
+
+    }
+
+}
+
+
+let settings =
+    loadSettings();
+
+
+/* ======================================
+   月曆狀態
+====================================== */
+
+let calendarDate =
+    new Date();
+
+let selectedDate =
+    new Date();
+
+
+/* ======================================
+   工具
+====================================== */
+
+function dateOnly(date) {
+
+    return new Date(
+
+        date.getFullYear(),
+
+        date.getMonth(),
+
+        date.getDate()
+
+    );
+
+}
+
+
+function daysBetween(
+    date1,
+    date2
+) {
+
+    return Math.round(
+
+        (
+            dateOnly(date1)
+            -
+            dateOnly(date2)
+        )
+        /
+        86400000
+
+    );
+
+}
+
+
+function sameDate(
+    a,
+    b
+) {
+
+    return (
+
+        a.getFullYear()
+        ===
+        b.getFullYear()
+
+        &&
+
+        a.getMonth()
+        ===
+        b.getMonth()
+
+        &&
+
+        a.getDate()
+        ===
+        b.getDate()
+
+    );
+
+}
+
+
+function formatDate(date) {
+
+    return (
+
+        date.getFullYear()
+        +
+        "/"
+        +
+        (date.getMonth() + 1)
+        +
+        "/"
+        +
+        date.getDate()
+
+    );
+
+}
+
+
+function formatChineseDate(
+    date
+) {
+
+    const week = [
+
+        "星期日",
+        "星期一",
+        "星期二",
+        "星期三",
+        "星期四",
+        "星期五",
+        "星期六"
+
+    ];
+
+    return (
+
+        date.getFullYear()
+        +
+        "年"
+        +
+        (date.getMonth() + 1)
+        +
+        "月"
+        +
+        date.getDate()
+        +
+        "日 "
+        +
+        week[date.getDay()]
+
+    );
+
+}
+
+
+/* ======================================
+   計算輪班
+====================================== */
+
+function getShift(date) {
+
+    const base =
+        new Date(
+            settings.baseDate
+            +
+            "T00:00:00"
+        );
+
+    const difference =
+        daysBetween(
+            date,
+            base
+        );
+
+    const length =
+        settings.shifts.length;
+
+    let index =
+        (
+            settings.baseShiftIndex
+            +
+            difference
+        )
+        %
+        length;
+
+
+    if (index < 0) {
+
+        index += length;
+
+    }
+
+
+    return settings.shifts[index];
+
+}
+
+
+/* ======================================
+   班別 CSS
+====================================== */
+
+function getShiftClass(
+    shift
+) {
+
+    if (
+        shift === "白天1"
+        ||
+        shift === "白天2"
+    ) {
+
+        return "shift-day";
+
+    }
+
+
+    if (
+        shift === "小夜1"
+        ||
+        shift === "小夜2"
+    ) {
+
+        return "shift-night";
+
+    }
+
+
+    if (
+        shift === "大夜1"
+        ||
+        shift === "大夜2"
+    ) {
+
+        return "shift-late";
+
+    }
+
+
+    return "shift-rest";
+
+}
+
+
+function getShiftColor(
+    shift
+) {
+
+    if (
+        shift === "白天1"
+        ||
+        shift === "白天2"
+    ) {
+
+        return "var(--day)";
+
+    }
+
+
+    if (
+        shift === "小夜1"
+        ||
+        shift === "小夜2"
+    ) {
+
+        return "var(--night)";
+
+    }
+
+
+    if (
+        shift === "大夜1"
+        ||
+        shift === "大夜2"
+    ) {
+
+        return "var(--late)";
+
+    }
+
+
+    return "var(--rest)";
+
+}
+
+
+/* ======================================
+   首頁
+====================================== */
+
+function renderHome() {
+
+    const today =
+        new Date();
+
+    const tomorrow =
+        new Date(today);
+
+    tomorrow.setDate(
+        tomorrow.getDate() + 1
+    );
+
+
+    const todayShift =
+        getShift(today);
+
+    const todayElement =
+        document.getElementById(
+            "todayShift"
+        );
+
+
+    document.getElementById(
+        "todayDate"
+    ).textContent =
+        formatChineseDate(
+            today
+        );
+
+
+    todayElement.textContent =
+        todayShift;
+
+
+    todayElement.className =
+        "shift-badge "
+        +
+        getShiftClass(
+            todayShift
+        );
+
+
+    document.getElementById(
+        "tomorrowShift"
+    ).textContent =
+        getShift(tomorrow);
+
+
+    const container =
+        document.getElementById(
+            "upcoming"
+        );
+
+
+    container.innerHTML = "";
+
+
+    for (
+        let i = 1;
+        i <= 7;
+        i++
+    ) {
+
+        const date =
+            new Date(today);
+
+        date.setDate(
+            date.getDate() + i
+        );
+
+
+        const shift =
+            getShift(date);
+
+
+        const row =
+            document.createElement(
+                "div"
+            );
+
+
+        row.className =
+            "upcoming-row";
+
+
+        row.innerHTML = `
+
+            <div class="date-circle">
+                ${date.getDate()}
+            </div>
+
+            <div class="grow">
+
+                <div class="small">
+                    ${formatDate(date)}
+                </div>
+
+                <div
+                    class="shift-text"
+                    style="
+                        color:${getShiftColor(shift)}
+                    "
+                >
+                    ${shift}
+                </div>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(row);
+
+    }
+
+}
+
+
+/* ======================================
+   月曆
+====================================== */
+
+function renderCalendar() {
+
+    const year =
+        calendarDate.getFullYear();
+
+    const month =
+        calendarDate.getMonth();
+
+
+    document.getElementById(
+        "monthTitle"
+    ).textContent =
+        `${year}年${month + 1}月`;
+
+
+    const grid =
+        document.getElementById(
+            "calendarGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        );
+
+
+    const days =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    for (
+        let i = 0;
+        i < firstDay.getDay();
+        i++
+    ) {
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "calendar-day";
+
+        grid.appendChild(empty);
+
+    }
+
+
+    for (
+        let day = 1;
+        day <= days;
+        day++
+    ) {
+
+        const date =
+            new Date(
+                year,
+                month,
+                day
+            );
+
+
+        const shift =
+            getShift(date);
+
+
+        const cell =
+            document.createElement(
+                "div"
+            );
+
+
+        cell.className =
+            "calendar-day";
+
+
+        if (
+            sameDate(
+                date,
+                new Date()
+            )
+        ) {
+
+            cell.classList.add(
+                "today"
+            );
+
+        }
+
+
+        if (
+            sameDate(
+                date,
+                selectedDate
+            )
+        ) {
+
+            cell.classList.add(
+                "selected"
+            );
+
+        }
+
+
+        cell.innerHTML = `
+
+            <div class="calendar-inner">
+
+                <div class="day-number">
+                    ${day}
+                </div>
+
+                <div
+                    class="day-shift"
+                    style="
+                        color:${getShiftColor(shift)}
+                    "
+                >
+                    ${shift}
+                </div>
+
+            </div>
+
+        `;
+
+
+        cell.addEventListener(
+            "click",
+            function() {
+
+                selectedDate =
+                    new Date(date);
+
+                renderCalendar();
+
+                renderCalendarDetail();
+
+            }
+        );
+
+
+        grid.appendChild(cell);
+
+    }
+
+
+    renderStatistics();
+
+}
+
+
+/* ======================================
+   月曆詳細
+====================================== */
+
+function renderCalendarDetail() {
+
+    const shift =
+        getShift(
+            selectedDate
+        );
+
+
+    document.getElementById(
+        "calendarDetail"
+    ).innerHTML = `
+
+        <div class="small">
+            ${formatChineseDate(selectedDate)}
+        </div>
+
+        <div
+            class="detail-shift"
+            style="
+                color:${getShiftColor(shift)}
+            "
+        >
+            ${shift}
+        </div>
+
+    `;
+
+}
+
+
+/* ======================================
+   統計
+====================================== */
+
+function renderStatistics() {
+
+    const year =
+        calendarDate.getFullYear();
+
+    const month =
+        calendarDate.getMonth();
+
+
+    const days =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    let dayCount = 0;
+    let eveningCount = 0;
+    let lateCount = 0;
+    let restCount = 0;
+
+
+    for (
+        let day = 1;
+        day <= days;
+        day++
+    ) {
+
+        const shift =
+            getShift(
+                new Date(
+                    year,
+                    month,
+                    day
+                )
+            );
+
+
+        if (
+            shift === "白天1"
+            ||
+            shift === "白天2"
+        ) {
+
+            dayCount++;
+
+        }
+
+        else if (
+            shift === "小夜1"
+            ||
+            shift === "小夜2"
+        ) {
+
+            eveningCount++;
+
+        }
+
+        else if (
+            shift === "大夜1"
+            ||
+            shift === "大夜2"
+        ) {
+
+            lateCount++;
+
+        }
+
+        else {
+
+            restCount++;
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "dayCount"
+    ).textContent =
+        dayCount;
+
+
+    document.getElementById(
+        "eveningCount"
+    ).textContent =
+        eveningCount;
+
+
+    document.getElementById(
+        "lateCount"
+    ).textContent =
+        lateCount;
+
+
+    document.getElementById(
+        "restCount"
+    ).textContent =
+        restCount;
+
+}
+
+
+/* ======================================
+   設定頁
+====================================== */
+
+function renderSettings() {
+
+    document.getElementById(
+        "baseDateInput"
+    ).value =
+        settings.baseDate;
+
+
+    document.getElementById(
+        "baseShiftInput"
+    ).value =
+        settings.baseShiftIndex;
+
+
+    const list =
+        document.getElementById(
+            "shiftList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    settings.shifts.forEach(
+        function(shift, index) {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "shift-order";
+
+
+            row.innerHTML = `
+
+                <div class="order-number">
+                    ${index + 1}
+                </div>
+
+                <div>
+                    ${shift}
+                </div>
+
+            `;
+
+
+            list.appendChild(row);
+
+        }
+    );
+
+}
+
+
+/* ======================================
+   上一個月
+====================================== */
+
+document.getElementById(
+    "prevMonth"
+).addEventListener(
+    "click",
+    function() {
+
+        calendarDate =
+            new Date(
+                calendarDate.getFullYear(),
+                calendarDate.getMonth() - 1,
+                1
+            );
+
+        renderCalendar();
+
+    }
+);
+
+
+/* ======================================
+   下一個月
+====================================== */
+
+document.getElementById(
+    "nextMonth"
+).addEventListener(
+    "click",
+    function() {
+
+        calendarDate =
+            new Date(
+                calendarDate.getFullYear(),
+                calendarDate.getMonth() + 1,
+                1
+            );
+
+        renderCalendar();
+
+    }
+);
+
+
+/* ======================================
+   回到今天
+====================================== */
+
+document.getElementById(
+    "todayButton"
+).addEventListener(
+    "click",
+    function() {
+
+        const today =
+            new Date();
+
+
+        calendarDate =
+            new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                1
+            );
+
+
+        selectedDate =
+            new Date(today);
+
+
+        renderCalendar();
+
+        renderCalendarDetail();
+
+    }
+);
+
+
+/* ======================================
+   儲存設定
+====================================== */
+
+document.getElementById(
+    "saveSettings"
+).addEventListener(
+    "click",
+    function() {
+
+        settings.baseDate =
+            document.getElementById(
+                "baseDateInput"
+            ).value;
+
+
+        settings.baseShiftIndex =
+            Number(
+                document.getElementById(
+                    "baseShiftInput"
+                ).value
+            );
+
+
+        localStorage.setItem(
+            "myShiftSettings",
+            JSON.stringify(settings)
+        );
+
+
+        renderHome();
+
+        renderCalendar();
+
+        renderCalendarDetail();
+
+
+        alert(
+            "輪班設定已儲存"
+        );
+
+    }
+);
+
+
+/* ======================================
+   恢復預設
+====================================== */
+
+document.getElementById(
+    "resetSettings"
+).addEventListener(
+    "click",
+    function() {
+
+        if (
+            !confirm(
+                "確定恢復預設輪班設定？"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        settings = {
+
+            ...DEFAULT_SETTINGS,
+
+            shifts:
+                [
+                    ...DEFAULT_SETTINGS.shifts
+                ]
+
+        };
+
+
+        localStorage.setItem(
+            "myShiftSettings",
+            JSON.stringify(settings)
+        );
+
+
+        renderSettings();
+
+        renderHome();
+
+        renderCalendar();
+
+        renderCalendarDetail();
+
+
+        alert(
+            "已恢復預設設定"
+        );
+
+    }
+);
+
+
+/* ======================================
+   底部導航
+====================================== */
+
+document
+    .querySelectorAll(
+        ".nav-button"
+    )
+    .forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    document
+                        .querySelectorAll(
+                            ".page"
+                        )
+                        .forEach(
+                            function(page) {
+
+                                page.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                    document
+                        .getElementById(
+                            button.dataset.page
+                        )
+                        .classList.add(
+                            "active"
+                        );
+
+
+                    document
+                        .querySelectorAll(
+                            ".nav-button"
+                        )
+                        .forEach(
+                            function(btn) {
+
+                                btn.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    if (
+                        button.dataset.page
+                        ===
+                        "calendarPage"
+                    ) {
+
+                        renderCalendar();
+
+                        renderCalendarDetail();
+
+                    }
+
+
+                    if (
+                        button.dataset.page
+                        ===
+                        "settingsPage"
+                    ) {
+
+                        renderSettings();
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+/* ======================================
+   初始化
+====================================== */
+
+renderHome();
+
+renderCalendar();
+
+renderCalendarDetail();
+
+renderSettings();
+
+</script>
+
+</body>
+</html>
