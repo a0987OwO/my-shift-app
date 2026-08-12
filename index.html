@@ -100,69 +100,118 @@ body{
 }
 
 .today{
- text-align:center;
- padding:26px 18px;
+ padding:24px 16px;
 }
 
 .today-label{
  color:var(--sub);
  font-size:15px;
+ text-align:center;
 }
 
 .today-date{
  font-size:18px;
  font-weight:700;
  margin-top:5px;
+ text-align:center;
 }
 
-.shift-big{
- width:220px;
- height:128px;
- margin:20px auto;
- border-radius:30px;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:36px;
+.my-shift{
+ margin:18px auto 22px;
+ padding:20px;
+ border-radius:24px;
+ text-align:center;
+ background:rgba(0,122,255,.1);
+ color:var(--blue);
+}
+
+.my-label{
+ font-size:14px;
+ font-weight:700;
+}
+
+.my-shift-name{
+ font-size:34px;
+ font-weight:800;
+ margin-top:4px;
+}
+
+.team-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+}
+
+.team-card{
+ padding:17px 12px;
+ border-radius:20px;
+ text-align:center;
+ background:rgba(120,120,128,.08);
+ position:relative;
+}
+
+.team-card.mine{
+ background:rgba(0,122,255,.11);
+ outline:2px solid rgba(0,122,255,.25);
+}
+
+.team-name{
+ font-size:14px;
+ color:var(--sub);
+ font-weight:700;
+}
+
+.team-shift{
+ margin-top:7px;
+ font-size:21px;
+ font-weight:800;
+}
+
+.mine-badge{
+ position:absolute;
+ top:8px;
+ right:8px;
+ color:var(--blue);
+ font-size:10px;
  font-weight:800;
 }
 
 .day{
  color:var(--orange);
- background:rgba(255,149,0,.13);
 }
 
 .eve{
  color:var(--indigo);
- background:rgba(88,86,214,.13);
 }
 
 .night{
  color:var(--purple);
- background:rgba(175,82,222,.13);
 }
 
 .rest{
  color:var(--green);
- background:rgba(52,199,89,.13);
 }
 
 .holiday-home{
+ margin-top:16px;
  padding:11px 13px;
  border-radius:14px;
  background:rgba(255,59,48,.1);
  color:var(--red);
  font-weight:700;
  font-size:14px;
+ text-align:center;
 }
 
 .makeup-home{
+ margin-top:8px;
  padding:11px 13px;
  border-radius:14px;
  background:rgba(0,122,255,.1);
  color:var(--blue);
  font-weight:700;
  font-size:14px;
+ text-align:center;
 }
 
 .section-title{
@@ -171,21 +220,22 @@ body{
  margin:27px 5px 9px;
 }
 
-.row{
- display:flex;
+.next-row{
+ display:grid;
+ grid-template-columns:55px 1fr;
  align-items:center;
  min-height:70px;
- padding:0 17px;
+ padding:12px 17px;
  border-bottom:1px solid var(--line);
 }
 
-.row:last-child{
- border:0;
+.next-row:last-child{
+ border-bottom:0;
 }
 
-.badge{
- width:44px;
- height:44px;
+.next-date{
+ width:43px;
+ height:43px;
  border-radius:50%;
  background:rgba(0,122,255,.1);
  color:var(--blue);
@@ -193,29 +243,42 @@ body{
  align-items:center;
  justify-content:center;
  font-weight:800;
- margin-right:13px;
 }
 
-.main{
- flex:1;
+.next-info{
+ min-width:0;
 }
 
-.small{
+.next-date-text{
  color:var(--sub);
- font-size:13px;
+ font-size:12px;
 }
 
-.shift{
- font-size:16px;
+.next-team{
+ display:flex;
+ flex-wrap:wrap;
+ gap:5px;
+ margin-top:5px;
+}
+
+.mini-shift{
+ padding:4px 7px;
+ border-radius:8px;
+ background:rgba(120,120,128,.09);
+ font-size:11px;
  font-weight:700;
- margin-top:2px;
+}
+
+.mini-shift.mine{
+ background:rgba(0,122,255,.12);
+ color:var(--blue);
 }
 
 .holiday-mini{
  color:var(--red);
  font-size:11px;
  font-weight:700;
- margin-top:3px;
+ margin-top:4px;
 }
 
 .makeup-mini{
@@ -269,22 +332,19 @@ body{
 .grid{
  display:grid;
  grid-template-columns:repeat(7,1fr);
- padding:4px 7px 13px;
+ padding:4px 5px 13px;
 }
 
 .cell{
- height:78px;
- padding:3px;
+ height:104px;
+ padding:2px;
 }
 
 .cellin{
- height:72px;
- border-radius:16px;
+ height:99px;
+ border-radius:15px;
  position:relative;
- display:flex;
- flex-direction:column;
- justify-content:center;
- align-items:center;
+ padding:5px;
 }
 
 .cell.today .cellin{
@@ -293,21 +353,28 @@ body{
 }
 
 .cell.selected .cellin{
- background:rgba(0,122,255,.1);
+ background:rgba(0,122,255,.08);
 }
 
 .num{
- font-size:15px;
- font-weight:700;
-}
-
-.cshift{
- font-size:9px;
+ font-size:14px;
  font-weight:800;
- margin-top:4px;
+ margin-bottom:3px;
 }
 
-.dot{
+.cal-shift{
+ font-size:8px;
+ font-weight:700;
+ line-height:1.45;
+ white-space:nowrap;
+}
+
+.cal-shift.mine{
+ color:var(--blue);
+ font-weight:900;
+}
+
+.holiday-dot{
  position:absolute;
  top:5px;
  right:6px;
@@ -327,24 +394,6 @@ body{
  background:var(--blue);
 }
 
-.label{
- font-size:7px;
- font-weight:800;
- max-width:55px;
- white-space:nowrap;
- overflow:hidden;
- text-overflow:ellipsis;
- margin-top:3px;
-}
-
-.red{
- color:var(--red);
-}
-
-.blue{
- color:var(--blue);
-}
-
 .detail{
  padding:19px;
 }
@@ -354,10 +403,38 @@ body{
  font-size:14px;
 }
 
-.detail-shift{
- font-size:29px;
+.detail-title{
+ font-size:27px;
  font-weight:800;
  margin-top:4px;
+}
+
+.detail-team{
+ margin-top:15px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:9px;
+}
+
+.detail-team-card{
+ padding:14px;
+ border-radius:15px;
+ background:rgba(120,120,128,.08);
+}
+
+.detail-team-card.mine{
+ background:rgba(0,122,255,.1);
+}
+
+.detail-team-name{
+ color:var(--sub);
+ font-size:12px;
+}
+
+.detail-team-shift{
+ font-size:18px;
+ font-weight:800;
+ margin-top:3px;
 }
 
 .info{
@@ -577,31 +654,76 @@ select{
 <section id="home" class="page active">
 
 <div class="header">
-<div class="title">我的輪班</div>
-<div class="subtitle">8 天循環・國假與補假</div>
+
+<div class="title">
+我的輪班
 </div>
+
+<div class="subtitle">
+四班輪班・8 天循環
+</div>
+
+</div>
+
 
 <div class="card today">
 
-<div class="today-label">今天</div>
+<div class="today-label">
+今天
+</div>
 
 <div id="todayDate" class="today-date"></div>
 
-<div id="todayShift" class="shift-big"></div>
+
+<div class="my-shift">
+
+<div class="my-label">
+我的班
+</div>
+
+<div
+id="myShift"
+class="my-shift-name">
+</div>
+
+</div>
+
+
+<div class="team-grid">
+
+<div id="teamA" class="team-card"></div>
+
+<div id="teamB" class="team-card"></div>
+
+<div id="teamC" class="team-card"></div>
+
+<div id="teamD" class="team-card"></div>
+
+</div>
+
 
 <div id="todayHoliday"></div>
 
-<div style="color:var(--sub);font-size:15px;margin-top:15px">
-明天
-<b id="tomorrowShift"
-style="color:var(--text);margin-left:5px"></b>
+
+<div style="
+color:var(--sub);
+font-size:14px;
+text-align:center;
+margin-top:16px">
+
+明天我的班：
+<b
+id="tomorrowShift"
+style="color:var(--text)">
+</b>
+
 </div>
 
 </div>
 
 
 <div class="section-title">
-接下來
+接下來 7 天
 </div>
 
 <div id="upcoming" class="card"></div>
@@ -613,23 +735,23 @@ style="color:var(--text);margin-left:5px"></b>
 
 <div class="card detail">
 
-<div style="font-weight:800;font-size:18px">
+<div style="
+font-weight:800;
+font-size:18px">
+
 🇹🇼 台灣勞工國定假日
+
 </div>
 
 <div class="info-text">
 
-現行勞工國定假日為法定休假日。
+本 App 提供國定假日標記，
+並讓你自行指定公司實際補假日期。
 
-若國定假日碰到你的法定例假或休息日，
-需要依規定補假。
+輪班人員的例假、休息日不一定落在週六、
+週日，因此補假不由 App 自動判定。
 
-由於輪班人員的例假、休息日不一定落在
-星期六、日，因此本 App 不會自動把週末
-判定成補假。
-
-請依你的公司實際排班與勞雇雙方約定，
-自行指定補假日期。
+請依公司排班及勞雇雙方約定設定。
 
 </div>
 
@@ -649,7 +771,7 @@ style="color:var(--text);margin-left:5px"></b>
 </div>
 
 <div class="subtitle">
-輪班・國假・補假
+A / B / C / D 四班
 </div>
 
 </div>
@@ -715,14 +837,59 @@ style="color:var(--text);margin-left:5px"></b>
 </div>
 
 <div class="subtitle">
-輪班與國假管理
+四班輪班與國假管理
 </div>
 
 </div>
 
 
 <div class="section-title">
-輪班設定
+我的班
+</div>
+
+<div class="card" style="padding:0 17px">
+
+<div class="setting">
+
+<b>
+我是幾班？
+</b>
+
+<select id="myTeam">
+
+<option value="A">
+A班
+</option>
+
+<option value="B">
+B班
+</option>
+
+<option value="C">
+C班
+</option>
+
+<option value="D">
+D班
+</option>
+
+</select>
+
+</div>
+
+<button
+id="saveTeam"
+class="btn">
+
+儲存我的班
+
+</button>
+
+</div>
+
+
+<div class="section-title">
+輪班基準
 </div>
 
 <div class="card" style="padding:0 17px">
@@ -740,40 +907,122 @@ type="date">
 </div>
 
 
+<div class="form-note">
+
+2026/8/12 已設定為基準日期。
+
+</div>
+
+
 <div class="setting">
 
 <b>
-基準日期班別
+A班 2026/8/12
 </b>
 
-<select id="baseShift">
+<select id="shiftA">
 
 <option value="0">白天1</option>
 <option value="1">白天2</option>
 <option value="2">小夜1</option>
 <option value="3">小夜2</option>
-<option value="4">休息</option>
+<option value="4">小休</option>
 <option value="5">大夜1</option>
 <option value="6">大夜2</option>
-<option value="7">休息</option>
+<option value="7">大休</option>
 
 </select>
 
 </div>
 
 
-<button id="save" class="btn">
+<div class="setting">
+
+<b>
+B班 2026/8/12
+</b>
+
+<select id="shiftB">
+
+<option value="0">白天1</option>
+<option value="1">白天2</option>
+<option value="2">小夜1</option>
+<option value="3">小夜2</option>
+<option value="4">小休</option>
+<option value="5">大夜1</option>
+<option value="6">大夜2</option>
+<option value="7">大休</option>
+
+</select>
+
+</div>
+
+
+<div class="setting">
+
+<b>
+C班 2026/8/12
+</b>
+
+<select id="shiftC">
+
+<option value="0">白天1</option>
+<option value="1">白天2</option>
+<option value="2">小夜1</option>
+<option value="3">小夜2</option>
+<option value="4">小休</option>
+<option value="5">大夜1</option>
+<option value="6">大夜2</option>
+<option value="7">大休</option>
+
+</select>
+
+</div>
+
+
+<div class="setting">
+
+<b>
+D班 2026/8/12
+</b>
+
+<select id="shiftD">
+
+<option value="0">白天1</option>
+<option value="1">白天2</option>
+<option value="2">小夜1</option>
+<option value="3">小夜2</option>
+<option value="4">小休</option>
+<option value="5">大夜1</option>
+<option value="6">大夜2</option>
+<option value="7">大休</option>
+
+</select>
+
+</div>
+
+
+<button
+id="saveConfig"
+class="btn">
+
 儲存輪班設定
+
 </button>
 
-<button id="reset" class="btn gray">
-恢復預設
+
+<button
+id="resetConfig"
+class="btn gray">
+
+恢復你的預設設定
+
 </button>
 
 </div>
 
 
-<!-- 新增國假 -->
+<!-- ================= 新增國假 ================= -->
 
 <div class="section-title">
 新增國假
@@ -808,14 +1057,18 @@ placeholder="例如：公司紀念日">
 </div>
 
 
-<button id="addHoliday" class="btn">
+<button
+id="addHoliday"
+class="btn">
+
 ＋ 新增國假
+
 </button>
 
 </div>
 
 
-<!-- 指定補假 -->
+<!-- ================= 補假 ================= -->
 
 <div class="section-title">
 指定補假
@@ -861,43 +1114,36 @@ placeholder="例如：公司排班補休">
 </div>
 
 
-<button id="addMakeup" class="btn">
-＋ 指定補假
-</button>
+<button
+id="addMakeup"
+class="btn">
 
+＋ 指定補假
+
+</button>
 
 <div class="form-note">
 
-補假日期請依你的公司實際排班與勞雇雙方
-約定設定。
-
-設定後月曆會顯示：
-
-<span style="color:var(--red);font-weight:bold">
-紅色＝國假
-</span>
+🔴 紅色＝國假
 
 <br>
 
-<span style="color:var(--blue);font-weight:bold">
-藍色＝補假
-</span>
+🔵 藍色＝補假
 
 </div>
 
 </div>
 
-
-<!-- 國假管理 -->
 
 <div class="section-title">
 我的國假
 </div>
 
-<div id="holidayList" class="card manage"></div>
+<div
+id="holidayList"
+class="card manage">
+</div>
 
-
-<!-- 統計 -->
 
 <div class="section-title">
 本月輪班統計
@@ -906,23 +1152,23 @@ placeholder="例如：公司排班補休">
 <div class="stats">
 
 <div class="stat">
-<span>白天班</span>
-<strong id="cDay">0</strong>
+<span>A班工作日</span>
+<strong id="statA">0</strong>
 </div>
 
 <div class="stat">
-<span>小夜班</span>
-<strong id="cEve">0</strong>
+<span>B班工作日</span>
+<strong id="statB">0</strong>
 </div>
 
 <div class="stat">
-<span>大夜班</span>
-<strong id="cNight">0</strong>
+<span>C班工作日</span>
+<strong id="statC">0</strong>
 </div>
 
 <div class="stat">
-<span>休息</span>
-<strong id="cRest">0</strong>
+<span>D班工作日</span>
+<strong id="statD">0</strong>
 </div>
 
 </div>
@@ -932,7 +1178,7 @@ placeholder="例如：公司排班補休">
 </div>
 
 
-<!-- ================= 底部 Tab ================= -->
+<!-- ================= Tab ================= -->
 
 <nav class="tabs">
 
@@ -940,7 +1186,10 @@ placeholder="例如：公司排班補休">
 class="tab active"
 data-page="home">
 
-<span class="ico">⌂</span>
+<span class="ico">
+⌂
+</span>
+
 首頁
 
 </button>
@@ -950,7 +1199,10 @@ data-page="home">
 class="tab"
 data-page="calendarPage">
 
-<span class="ico">▦</span>
+<span class="ico">
+▦
+</span>
+
 月曆
 
 </button>
@@ -960,7 +1212,10 @@ data-page="calendarPage">
 class="tab"
 data-page="settingsPage">
 
-<span class="ico">⚙</span>
+<span class="ico">
+⚙
+</span>
+
 設定
 
 </button>
@@ -974,24 +1229,45 @@ data-page="settingsPage">
 <script>
 
 /* =========================================================
-   基本設定
+   四班輪班設定
 ========================================================= */
 
 const DEFAULT = {
 
  baseDate:"2026-08-12",
 
- baseShift:3,
+ myTeam:"B",
+
+ teams:{
+
+  A:1,
+
+  B:3,
+
+  C:5,
+
+  D:7
+
+ },
 
  shifts:[
+
   "白天1",
+
   "白天2",
+
   "小夜1",
+
   "小夜2",
-  "休息",
+
+  "小休",
+
   "大夜1",
+
   "大夜2",
-  "休息"
+
+  "大休"
+
  ]
 
 };
@@ -1003,32 +1279,53 @@ const DEFAULT = {
 
 const DEFAULT_HOLIDAYS = {
 
- "2026-01-01":"中華民國開國紀念日",
+ "2026-01-01":
+ "中華民國開國紀念日",
 
- "2026-02-15":"小年夜",
- "2026-02-16":"除夕",
- "2026-02-17":"春節",
- "2026-02-18":"春節",
- "2026-02-19":"春節",
+ "2026-02-15":
+ "小年夜",
 
- "2026-02-28":"和平紀念日",
+ "2026-02-16":
+ "除夕",
 
- "2026-04-04":"兒童節",
- "2026-04-05":"清明節",
+ "2026-02-17":
+ "春節",
 
- "2026-05-01":"勞動節",
+ "2026-02-18":
+ "春節",
 
- "2026-06-19":"端午節",
+ "2026-02-19":
+ "春節",
 
- "2026-09-25":"中秋節",
+ "2026-02-28":
+ "和平紀念日",
 
- "2026-09-28":"孔子誕辰紀念日／教師節",
+ "2026-04-04":
+ "兒童節",
 
- "2026-10-10":"國慶日",
+ "2026-04-05":
+ "清明節",
 
- "2026-10-25":"臺灣光復暨金門古寧頭大捷紀念日",
+ "2026-05-01":
+ "勞動節",
 
- "2026-12-25":"行憲紀念日"
+ "2026-06-19":
+ "端午節",
+
+ "2026-09-25":
+ "中秋節",
+
+ "2026-09-28":
+ "孔子誕辰紀念日／教師節",
+
+ "2026-10-10":
+ "國慶日",
+
+ "2026-10-25":
+ "臺灣光復暨金門古寧頭大捷紀念日",
+
+ "2026-12-25":
+ "行憲紀念日"
 
 };
 
@@ -1039,10 +1336,10 @@ const DEFAULT_HOLIDAYS = {
 
 let config =
 JSON.parse(
- localStorage.getItem("shift-config")
+ localStorage.getItem("shift-four-config")
  || "null"
 )
-|| {...DEFAULT};
+|| JSON.parse(JSON.stringify(DEFAULT));
 
 
 let customHolidays =
@@ -1061,9 +1358,9 @@ JSON.parse(
 || [];
 
 
-let cal = new Date();
+let cal=new Date();
 
-let selected = new Date();
+let selected=new Date();
 
 
 /* =========================================================
@@ -1073,7 +1370,7 @@ let selected = new Date();
 function saveAll(){
 
  localStorage.setItem(
-  "shift-config",
+  "shift-four-config",
   JSON.stringify(config)
  );
 
@@ -1091,16 +1388,16 @@ function saveAll(){
 
 
 /* =========================================================
-   日期工具
+   日期
 ========================================================= */
 
 function dateKey(d){
 
  return d.getFullYear()
- + "-"
- + String(d.getMonth()+1).padStart(2,"0")
- + "-"
- + String(d.getDate()).padStart(2,"0");
+ +"-"
+ +String(d.getMonth()+1).padStart(2,"0")
+ +"-"
+ +String(d.getDate()).padStart(2,"0");
 
 }
 
@@ -1127,14 +1424,14 @@ function same(a,b){
 
 function diff(a,b){
 
- const aa =
+ const aa=
  new Date(
   a.getFullYear(),
   a.getMonth(),
   a.getDate()
  );
 
- const bb =
+ const bb=
  new Date(
   b.getFullYear(),
   b.getMonth(),
@@ -1150,41 +1447,37 @@ function diff(a,b){
 
 function fmt(d){
 
- return(
-  d.getFullYear()
-  +"/"
-  +String(d.getMonth()+1).padStart(2,"0")
-  +"/"
-  +String(d.getDate()).padStart(2,"0")
- );
+ return d.getFullYear()
+ +"/"
+ +String(d.getMonth()+1).padStart(2,"0")
+ +"/"
+ +String(d.getDate()).padStart(2,"0");
 
 }
 
 
 function zhDate(d){
 
- return(
-  d.getFullYear()
-  +"年"
-  +(d.getMonth()+1)
-  +"月"
-  +d.getDate()
-  +"日・星期"
-  +"日一二三四五六"[d.getDay()]
- );
+ return d.getFullYear()
+ +"年"
+ +(d.getMonth()+1)
+ +"月"
+ +d.getDate()
+ +"日・星期"
+ +"日一二三四五六"[d.getDay()];
 
 }
 
 
 /* =========================================================
-   輪班
+   班別
 ========================================================= */
 
-function shift(d){
+function teamShift(team,d){
 
- let i =
+ let index=
  (
-  config.baseShift
+  config.teams[team]
   +
   diff(
    d,
@@ -1192,9 +1485,12 @@ function shift(d){
   )
  ) % 8;
 
- if(i<0) i+=8;
 
- return config.shifts[i];
+ if(index<0)
+  index+=8;
+
+
+ return config.shifts[index];
 
 }
 
@@ -1252,7 +1548,7 @@ function holidayMap(){
 
 function holiday(d){
 
- return holidayMap()[dateKey(d)] || null;
+ return holidayMap()[dateKey(d)]||null;
 
 }
 
@@ -1278,7 +1574,7 @@ function holidayForMakeup(d){
   return null;
 
  return holidayMap()[m.holiday]
- || m.holiday;
+ ||m.holiday;
 
 }
 
@@ -1304,6 +1600,51 @@ function toast(message){
 
 
 /* =========================================================
+   班組卡片
+========================================================= */
+
+function teamCardHTML(team,d){
+
+ const s=teamShift(team,d);
+
+ const mine=
+ team===config.myTeam;
+
+ return `
+
+ <div class="
+  team-card
+  ${mine?"mine":""}
+ ">
+
+  ${
+   mine
+   ?
+   `<div class="mine-badge">
+     我的班
+    </div>`
+   :""
+  }
+
+  <div class="team-name">
+   ${team}班
+  </div>
+
+  <div
+   class="team-shift ${shiftClass(s)}">
+
+   ${s}
+
+  </div>
+
+ </div>
+
+ `;
+
+}
+
+
+/* =========================================================
    首頁
 ========================================================= */
 
@@ -1318,20 +1659,47 @@ function renderHome(){
  );
 
 
- document.getElementById("todayDate")
- .textContent=zhDate(today);
+ document.getElementById(
+  "todayDate"
+ ).textContent=
+ zhDate(today);
 
 
- const s=shift(today);
+ const my=
+ teamShift(
+  config.myTeam,
+  today
+ );
 
- const big=
- document.getElementById("todayShift");
 
- big.textContent=s;
+ const myElement=
+ document.getElementById("myShift");
 
- big.className=
- "shift-big "
- +shiftClass(s);
+ myElement.textContent=my;
+
+ myElement.className=
+ "my-shift-name "
+ +shiftClass(my);
+
+
+ document.getElementById("teamA")
+ .outerHTML=
+ `<div id="teamA" class="team-card">
+  ${teamCardHTML("A",today)
+   .replace(/^<div class="team-card">|^<div class="team-card mine">|<\/div>$/g,"")}
+ </div>`;
+
+
+ renderTeamCards(today);
+
+
+ document.getElementById(
+  "tomorrowShift"
+ ).textContent=
+ teamShift(
+  config.myTeam,
+  tomorrow
+ );
 
 
  const h=holiday(today);
@@ -1339,7 +1707,9 @@ function renderHome(){
  const mk=makeupFor(today);
 
  const box=
- document.getElementById("todayHoliday");
+ document.getElementById(
+  "todayHoliday"
+ );
 
 
  if(h){
@@ -1355,10 +1725,8 @@ function renderHome(){
 
   box.innerHTML=
   `<div class="makeup-home">
-   🔵 補假
-   ${holidayForMakeup(today)
-    ?"："+holidayForMakeup(today)
-    :""}
+   🔵 補假：
+   ${holidayForMakeup(today)||""}
   </div>`;
 
  }
@@ -1370,15 +1738,78 @@ function renderHome(){
  }
 
 
+ renderUpcoming();
+
+}
+
+
+/* =========================================================
+   四班首頁
+========================================================= */
+
+function renderTeamCards(d){
+
+ ["A","B","C","D"]
+ .forEach(team=>{
+
+  const element=
+  document.getElementById(
+   "team"+team
+  );
+
+  const s=
+  teamShift(team,d);
+
+  const mine=
+  team===config.myTeam;
+
+  element.className=
+  "team-card"
+  +(mine?" mine":"");
+
+  element.innerHTML=`
+
+   ${
+    mine
+    ?
+    `<div class="mine-badge">
+      我的班
+     </div>`
+    :""
+   }
+
+   <div class="team-name">
+    ${team}班
+   </div>
+
+   <div
+    class="team-shift ${shiftClass(s)}">
+
+    ${s}
+
+   </div>
+
+  `;
+
+ });
+
+}
+
+
+/* =========================================================
+   接下來
+========================================================= */
+
+function renderUpcoming(){
+
+ const today=new Date();
+
+ const box=
  document.getElementById(
-  "tomorrowShift"
- ).textContent=shift(tomorrow);
+  "upcoming"
+ );
 
-
- const upcoming=
- document.getElementById("upcoming");
-
- upcoming.innerHTML="";
+ box.innerHTML="";
 
 
  for(let i=1;i<=7;i++){
@@ -1389,49 +1820,75 @@ function renderHome(){
    d.getDate()+i
   );
 
-  const ss=shift(d);
-
-  const hh=holiday(d);
-
-  const mm=makeupFor(d);
 
   const row=
   document.createElement("div");
 
-  row.className="row";
+  row.className="next-row";
+
+
+  let shifts="";
+
+
+  ["A","B","C","D"]
+  .forEach(team=>{
+
+   const s=
+   teamShift(team,d);
+
+   const mine=
+   team===config.myTeam;
+
+
+   shifts+=`
+
+    <span
+     class="mini-shift
+     ${mine?"mine":""}">
+
+     ${team}
+     ${mine?"★":""}
+     ${s}
+
+    </span>
+
+   `;
+
+  });
+
+
+  const h=holiday(d);
+
+  const mk=makeupFor(d);
 
 
   row.innerHTML=`
 
-   <div class="badge">
+   <div class="next-date">
     ${d.getDate()}
    </div>
 
-   <div class="main">
+   <div class="next-info">
 
-    <div class="small">
+    <div class="next-date-text">
      ${fmt(d)}
     </div>
 
-    <div
-     class="shift"
-     style="color:${shiftColor(ss)}">
-
-     ${ss}
-
+    <div class="next-team">
+     ${shifts}
     </div>
 
     ${
-     hh
+     h
      ?
      `<div class="holiday-mini">
-       🇹🇼 ${hh}
+       🇹🇼 ${h}
       </div>`
      :""
     }
 
     ${
-     mm
+     mk
      ?
      `<div class="makeup-mini">
        🔵 補假：
@@ -1445,7 +1902,7 @@ function renderHome(){
   `;
 
 
-  upcoming.appendChild(row);
+  box.appendChild(row);
 
  }
 
@@ -1516,8 +1973,6 @@ function renderCalendar(){
   );
 
 
-  const s=shift(d);
-
   const h=holiday(d);
 
   const mk=makeupFor(d);
@@ -1537,6 +1992,42 @@ function renderCalendar(){
    cell.classList.add("selected");
 
 
+  let shiftHTML="";
+
+
+  ["A","B","C","D"]
+  .forEach(team=>{
+
+   const s=
+   teamShift(team,d);
+
+   const mine=
+   team===config.myTeam;
+
+
+   shiftHTML+=`
+
+    <div
+     class="
+      cal-shift
+      ${mine?"mine":""}
+     "
+     style="
+      color:${mine
+       ?"var(--blue)"
+       :shiftColor(s)}
+     ">
+
+     ${team}${mine?"★":""}
+     ${s}
+
+    </div>
+
+   `;
+
+  });
+
+
   cell.innerHTML=`
 
    <div class="cellin">
@@ -1544,7 +2035,7 @@ function renderCalendar(){
     ${
      h
      ?
-     `<div class="dot"></div>`
+     `<div class="holiday-dot"></div>`
      :""
     }
 
@@ -1559,31 +2050,7 @@ function renderCalendar(){
      ${day}
     </div>
 
-    <div
-     class="cshift"
-     style="color:${shiftColor(s)}">
-
-     ${s}
-
-    </div>
-
-    ${
-     h
-     ?
-     `<div class="label red">
-       國假
-      </div>`
-     :""
-    }
-
-    ${
-     mk
-     ?
-     `<div class="label blue">
-       補假
-      </div>`
-     :""
-    }
+    ${shiftHTML}
 
    </div>
 
@@ -1592,7 +2059,8 @@ function renderCalendar(){
 
   cell.onclick=()=>{
 
-   selected=new Date(d);
+   selected=
+   new Date(d);
 
    renderCalendar();
 
@@ -1612,7 +2080,7 @@ function renderCalendar(){
 
 
 /* =========================================================
-   日期詳細資訊
+   日期詳細
 ========================================================= */
 
 function renderDetail(){
@@ -1621,7 +2089,51 @@ function renderDetail(){
 
  const mk=makeupFor(selected);
 
- const s=shift(selected);
+
+ let teamHTML="";
+
+
+ ["A","B","C","D"]
+ .forEach(team=>{
+
+  const s=
+  teamShift(team,selected);
+
+  const mine=
+  team===config.myTeam;
+
+
+  teamHTML+=`
+
+   <div
+    class="
+     detail-team-card
+     ${mine?"mine":""}
+    ">
+
+    <div class="detail-team-name">
+
+     ${team}班
+     ${mine?"・我的班":""}
+
+    </div>
+
+    <div
+     class="detail-team-shift"
+     style="color:${mine
+      ?"var(--blue)"
+      :shiftColor(s)}">
+
+     ${s}
+
+    </div>
+
+   </div>
+
+  `;
+
+ });
+
 
  let extra="";
 
@@ -1640,8 +2152,8 @@ function renderDetail(){
 
      國定假日。
 
-     若該日恰為你的法定例假或休息日，
-     應依規定於其他工作日補假。
+     若該日依你的排班屬於需要補假的情況，
+     可到「設定」自行指定補假日期。
 
     </div>
 
@@ -1697,10 +2209,6 @@ function renderDetail(){
      沒有國假或補假
     </div>
 
-    <div class="info-text">
-     此日期只有輪班資訊。
-    </div>
-
    </div>
 
   `;
@@ -1716,12 +2224,12 @@ function renderDetail(){
    ${zhDate(selected)}
   </div>
 
-  <div
-   class="detail-shift"
-   style="color:${shiftColor(s)}">
+  <div class="detail-title">
+   四班輪班
+  </div>
 
-   ${s}
-
+  <div class="detail-team">
+   ${teamHTML}
   </div>
 
   ${extra}
@@ -1732,7 +2240,7 @@ function renderDetail(){
 
 
 /* =========================================================
-   月曆統計
+   統計
 ========================================================= */
 
 function renderStats(){
@@ -1749,61 +2257,50 @@ function renderStats(){
  ).getDate();
 
 
- let count=[
-  0,
-  0,
-  0,
-  0
- ];
+ ["A","B","C","D"]
+ .forEach(team=>{
+
+  let work=0;
 
 
- for(
-  let i=1;
-  i<=total;
-  i++
- ){
+  for(
+   let i=1;
+   i<=total;
+   i++
+  ){
 
-  const s=
-  shift(
-   new Date(y,m,i)
-  );
-
-
-  if(s.startsWith("白天"))
-   count[0]++;
-
-  else if(s.startsWith("小夜"))
-   count[1]++;
-
-  else if(s.startsWith("大夜"))
-   count[2]++;
-
-  else
-   count[3]++;
-
- }
+   const s=
+   teamShift(
+    team,
+    new Date(y,m,i)
+   );
 
 
- document.getElementById("cDay")
- .textContent=count[0];
+   if(!s.includes("休"))
+    work++;
 
- document.getElementById("cEve")
- .textContent=count[1];
+  }
 
- document.getElementById("cNight")
- .textContent=count[2];
 
- document.getElementById("cRest")
- .textContent=count[3];
+  document.getElementById(
+   "stat"+team
+  ).textContent=work;
+
+ });
 
 }
 
 
 /* =========================================================
-   設定頁
+   設定
 ========================================================= */
 
 function renderSettings(){
+
+ document.getElementById(
+  "myTeam"
+ ).value=config.myTeam;
+
 
  document.getElementById(
   "baseDate"
@@ -1811,15 +2308,29 @@ function renderSettings(){
 
 
  document.getElementById(
-  "baseShift"
- ).value=config.baseShift;
+  "shiftA"
+ ).value=config.teams.A;
+
+
+ document.getElementById(
+  "shiftB"
+ ).value=config.teams.B;
+
+
+ document.getElementById(
+  "shiftC"
+ ).value=config.teams.C;
+
+
+ document.getElementById(
+  "shiftD"
+ ).value=config.teams.D;
 
 
  const select=
  document.getElementById(
   "holidaySelect"
  );
-
 
  select.innerHTML="";
 
@@ -1857,7 +2368,7 @@ function renderSettings(){
  .sort()
  .forEach(([date,name])=>{
 
-  const isCustom=
+  const custom=
   customHolidays.some(
    x=>x.date===date
   );
@@ -1883,7 +2394,7 @@ function renderSettings(){
     ${name}
 
     ${
-     isCustom
+     custom
      ?
      `<span style="
       color:var(--blue);
@@ -1904,7 +2415,6 @@ function renderSettings(){
      related.length
      ?
      " · 補假："+
-
      related
      .map(x=>x.date)
      .join("、")
@@ -1917,7 +2427,7 @@ function renderSettings(){
    <div class="manage-actions">
 
     ${
-     isCustom
+     custom
      ?
      `<button
        class="mini-btn delete"
@@ -1934,8 +2444,7 @@ function renderSettings(){
       `<button
        class="mini-btn delete"
        data-mk="${x.id}">
-       刪除補假
-       ${x.date}
+       刪除補假 ${x.date}
        </button>`
      )
      .join("")
@@ -2026,11 +2535,38 @@ function renderSettings(){
 
 
 /* =========================================================
-   儲存輪班
+   儲存我的班
 ========================================================= */
 
 document.getElementById(
- "save"
+ "saveTeam"
+).onclick=()=>{
+
+ config.myTeam=
+ document.getElementById(
+  "myTeam"
+ ).value;
+
+
+ saveAll();
+
+ renderHome();
+
+ renderCalendar();
+
+ renderDetail();
+
+ toast("我的班已設定");
+
+};
+
+
+/* =========================================================
+   儲存四班輪班
+========================================================= */
+
+document.getElementById(
+ "saveConfig"
 ).onclick=()=>{
 
  config.baseDate=
@@ -2039,10 +2575,34 @@ document.getElementById(
  ).value;
 
 
- config.baseShift=
+ config.teams.A=
  Number(
   document.getElementById(
-   "baseShift"
+   "shiftA"
+  ).value
+ );
+
+
+ config.teams.B=
+ Number(
+  document.getElementById(
+   "shiftB"
+  ).value
+ );
+
+
+ config.teams.C=
+ Number(
+  document.getElementById(
+   "shiftC"
+  ).value
+ );
+
+
+ config.teams.D=
+ Number(
+  document.getElementById(
+   "shiftD"
   ).value
  );
 
@@ -2055,7 +2615,7 @@ document.getElementById(
 
  renderDetail();
 
- toast("輪班設定已儲存");
+ toast("四班輪班設定已儲存");
 
 };
 
@@ -2065,12 +2625,14 @@ document.getElementById(
 ========================================================= */
 
 document.getElementById(
- "reset"
+ "resetConfig"
 ).onclick=()=>{
 
- config={
-  ...DEFAULT
- };
+ config=
+ JSON.parse(
+  JSON.stringify(DEFAULT)
+ );
+
 
  saveAll();
 
@@ -2107,9 +2669,11 @@ document.getElementById(
  ).value.trim();
 
 
- if(!date || !name){
+ if(!date||!name){
 
-  toast("請填寫國假日期與名稱");
+  toast(
+   "請填寫國假日期與名稱"
+  );
 
   return;
 
@@ -2118,7 +2682,9 @@ document.getElementById(
 
  if(holidayMap()[date]){
 
-  toast("這一天已經有國假");
+  toast(
+   "這一天已經有國假"
+  );
 
   return;
 
@@ -2178,9 +2744,11 @@ document.getElementById(
  ).value.trim();
 
 
- if(!holiday || !date){
+ if(!holiday||!date){
 
-  toast("請選擇國假與補假日期");
+  toast(
+   "請選擇國假與補假日期"
+  );
 
   return;
 
@@ -2193,7 +2761,9 @@ document.getElementById(
   )
  ){
 
-  toast("這一天已經設定補假");
+  toast(
+   "這一天已經設定補假"
+  );
 
   return;
 
@@ -2236,7 +2806,7 @@ document.getElementById(
 
 
 /* =========================================================
-   月曆切換
+   月曆
 ========================================================= */
 
 document.getElementById(
