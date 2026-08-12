@@ -13,8 +13,7 @@ viewport-fit=cover">
 
 <title>我的輪班</title>
 
-<meta name="theme-color"
-content="#F2F2F7">
+<meta name="theme-color" content="#F2F2F7">
 
 <meta name="apple-mobile-web-app-capable"
 content="yes">
@@ -25,18 +24,20 @@ content="default">
 <meta name="apple-mobile-web-app-title"
 content="我的輪班">
 
-<link rel="manifest"
-href="manifest.json">
+<link rel="manifest" href="manifest.json">
 
 <link rel="apple-touch-icon"
 href="icon.svg">
 
-
 <style>
+
+/* =====================================================
+   iOS STYLE
+===================================================== */
 
 :root{
 
-    --background:#F2F2F7;
+    --bg:#F2F2F7;
 
     --card:#FFFFFF;
 
@@ -46,6 +47,8 @@ href="icon.svg">
 
     --blue:#007AFF;
 
+    --red:#FF3B30;
+
     --orange:#FF9500;
 
     --purple:#AF52DE;
@@ -54,27 +57,25 @@ href="icon.svg">
 
     --green:#34C759;
 
-    --separator:
-        rgba(60,60,67,.12);
+    --separator:rgba(60,60,67,.12);
 
 }
 
 @media(prefers-color-scheme:dark){
 
-:root{
+    :root{
 
-    --background:#000000;
+        --bg:#000000;
 
-    --card:#1C1C1E;
+        --card:#1C1C1E;
 
-    --text:#FFFFFF;
+        --text:#FFFFFF;
 
-    --secondary:#98989D;
+        --secondary:#98989D;
 
-    --separator:
-        rgba(84,84,88,.65);
+        --separator:rgba(84,84,88,.65);
 
-}
+    }
 
 }
 
@@ -83,16 +84,14 @@ href="icon.svg">
 
     box-sizing:border-box;
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color:transparent;
 
 }
 
 
 html{
 
-    background:
-        var(--background);
+    background:var(--bg);
 
 }
 
@@ -101,38 +100,61 @@ body{
 
     margin:0;
 
+    min-height:100vh;
+
+    background:var(--bg);
+
     color:var(--text);
 
-    background:
-        var(--background);
-
     font-family:
+
         -apple-system,
+
         BlinkMacSystemFont,
+
         "SF Pro Display",
+
         "SF Pro Text",
+
         "PingFang TC",
+
         "Helvetica Neue",
+
         sans-serif;
 
     padding-top:
+
         env(safe-area-inset-top);
 
     padding-bottom:
-        calc(82px + env(safe-area-inset-bottom));
 
-    min-height:100vh;
+        calc(
+
+            86px +
+
+            env(safe-area-inset-bottom)
+
+        );
 
 }
 
 
-/* =========================
+button,
+
+input,
+
+select{
+
+    font-family:inherit;
+
+}
+
+
+/* =====================================================
    APP
-========================= */
+===================================================== */
 
 .app{
-
-    width:100%;
 
     max-width:720px;
 
@@ -141,20 +163,24 @@ body{
 }
 
 
-/* =========================
+/* =====================================================
    PAGE
-========================= */
+===================================================== */
 
 .page{
 
     display:none;
 
     padding:
+
         18px
+
         18px
-        25px;
+
+        30px;
 
     animation:
+
         pageIn .25s ease;
 
 }
@@ -190,16 +216,19 @@ body{
 }
 
 
-/* =========================
+/* =====================================================
    HEADER
-========================= */
+===================================================== */
 
 .header{
 
     padding:
+
         8px
+
         3px
-        4px;
+
+        5px;
 
 }
 
@@ -207,6 +236,8 @@ body{
 .header-title{
 
     font-size:34px;
+
+    line-height:1.1;
 
     font-weight:800;
 
@@ -217,24 +248,22 @@ body{
 
 .header-subtitle{
 
-    margin-top:3px;
+    margin-top:6px;
+
+    color:var(--secondary);
 
     font-size:15px;
-
-    color:
-        var(--secondary);
 
 }
 
 
-/* =========================
+/* =====================================================
    CARD
-========================= */
+===================================================== */
 
 .card{
 
-    background:
-        var(--card);
+    background:var(--card);
 
     border-radius:22px;
 
@@ -243,23 +272,27 @@ body{
     overflow:hidden;
 
     box-shadow:
+
         0 1px 3px
         rgba(0,0,0,.05);
 
 }
 
 
-/* =========================
-   TODAY CARD
-========================= */
+/* =====================================================
+   TODAY
+===================================================== */
 
 .today-card{
 
     text-align:center;
 
     padding:
+
         28px
+
         20px
+
         26px;
 
 }
@@ -267,41 +300,41 @@ body{
 
 .today-label{
 
-    font-size:15px;
+    color:var(--secondary);
 
-    color:
-        var(--secondary);
+    font-size:15px;
 
 }
 
 
 .today-date{
 
+    margin-top:5px;
+
     font-size:18px;
 
     font-weight:700;
-
-    margin-top:5px;
 
 }
 
 
 .today-shift{
 
-    width:210px;
+    width:220px;
 
-    height:130px;
+    height:135px;
 
     margin:
-        22px auto;
 
-    border-radius:32px;
+        22px auto;
 
     display:flex;
 
+    align-items:center;
+
     justify-content:center;
 
-    align-items:center;
+    border-radius:32px;
 
     font-size:38px;
 
@@ -314,8 +347,7 @@ body{
 
 .shift-day{
 
-    color:
-        var(--orange);
+    color:var(--orange);
 
     background:
         rgba(255,149,0,.13);
@@ -325,8 +357,7 @@ body{
 
 .shift-evening{
 
-    color:
-        var(--indigo);
+    color:var(--indigo);
 
     background:
         rgba(88,86,214,.13);
@@ -336,8 +367,7 @@ body{
 
 .shift-night{
 
-    color:
-        var(--purple);
+    color:var(--purple);
 
     background:
         rgba(175,82,222,.13);
@@ -347,8 +377,7 @@ body{
 
 .shift-rest{
 
-    color:
-        var(--green);
+    color:var(--green);
 
     background:
         rgba(52,199,89,.13);
@@ -358,8 +387,7 @@ body{
 
 .tomorrow{
 
-    color:
-        var(--secondary);
+    color:var(--secondary);
 
     font-size:15px;
 
@@ -368,23 +396,54 @@ body{
 
 .tomorrow strong{
 
-    color:
-        var(--text);
+    color:var(--text);
 
     margin-left:5px;
 
 }
 
 
-/* =========================
-   SECTION TITLE
-========================= */
+/* =====================================================
+   HOLIDAY HOME
+===================================================== */
+
+.today-holiday{
+
+    margin-top:17px;
+
+    padding:
+
+        11px
+
+        13px;
+
+    border-radius:14px;
+
+    background:
+
+        rgba(255,59,48,.10);
+
+    color:var(--red);
+
+    font-weight:700;
+
+    font-size:14px;
+
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
 
 .section-title{
 
     margin:
+
         28px
+
         6px
+
         9px;
 
     font-size:21px;
@@ -396,22 +455,24 @@ body{
 }
 
 
-/* =========================
-   LIST
-========================= */
+/* =====================================================
+   UPCOMING LIST
+===================================================== */
 
 .list-row{
 
-    min-height:70px;
+    min-height:72px;
 
     display:flex;
 
     align-items:center;
 
     padding:
+
         0 18px;
 
     border-bottom:
+
         1px solid var(--separator);
 
 }
@@ -430,6 +491,8 @@ body{
 
     height:45px;
 
+    flex-shrink:0;
+
     border-radius:50%;
 
     display:flex;
@@ -441,10 +504,10 @@ body{
     margin-right:14px;
 
     background:
-        rgba(0,122,255,.1);
 
-    color:
-        var(--blue);
+        rgba(0,122,255,.10);
+
+    color:var(--blue);
 
     font-weight:800;
 
@@ -455,13 +518,14 @@ body{
 
     flex:1;
 
+    min-width:0;
+
 }
 
 
 .list-date{
 
-    color:
-        var(--secondary);
+    color:var(--secondary);
 
     font-size:13px;
 
@@ -470,18 +534,31 @@ body{
 
 .list-shift{
 
+    margin-top:2px;
+
     font-size:17px;
 
     font-weight:700;
 
+}
+
+
+.list-holiday{
+
     margin-top:2px;
+
+    color:var(--red);
+
+    font-size:11px;
+
+    font-weight:700;
 
 }
 
 
-/* =========================
+/* =====================================================
    CALENDAR
-========================= */
+===================================================== */
 
 .calendar-top{
 
@@ -492,6 +569,7 @@ body{
     justify-content:space-between;
 
     padding:
+
         18px;
 
 }
@@ -526,18 +604,18 @@ body{
     border-radius:50%;
 
     background:
+
         rgba(120,120,128,.12);
 
-    color:
-        var(--text);
+    color:var(--text);
 
     font-size:25px;
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
+
+    justify-content:center;
 
 }
 
@@ -550,6 +628,7 @@ body{
         repeat(7,1fr);
 
     padding:
+
         0 8px;
 
 }
@@ -559,14 +638,14 @@ body{
 
     text-align:center;
 
-    color:
-        var(--secondary);
+    color:var(--secondary);
 
     font-size:12px;
 
     font-weight:600;
 
     padding:
+
         7px 0;
 
 }
@@ -580,14 +659,19 @@ body{
         repeat(7,1fr);
 
     padding:
-        4px 8px 14px;
+
+        4px
+
+        8px
+
+        14px;
 
 }
 
 
 .calendar-cell{
 
-    height:66px;
+    height:75px;
 
     padding:3px;
 
@@ -596,7 +680,7 @@ body{
 
 .calendar-cell-inner{
 
-    height:60px;
+    height:69px;
 
     border-radius:16px;
 
@@ -608,6 +692,8 @@ body{
 
     align-items:center;
 
+    position:relative;
+
 }
 
 
@@ -615,8 +701,8 @@ body{
 .calendar-cell-inner{
 
     outline:
-        2px solid
-        var(--blue);
+
+        2px solid var(--blue);
 
     outline-offset:-2px;
 
@@ -627,7 +713,8 @@ body{
 .calendar-cell-inner{
 
     background:
-        rgba(0,122,255,.1);
+
+        rgba(0,122,255,.10);
 
 }
 
@@ -643,18 +730,62 @@ body{
 
 .calendar-shift{
 
+    margin-top:4px;
+
     font-size:9px;
 
     font-weight:800;
 
-    margin-top:5px;
+}
+
+
+/* =====================================================
+   HOLIDAY MARK
+===================================================== */
+
+.holiday-dot{
+
+    position:absolute;
+
+    top:5px;
+
+    right:6px;
+
+    width:6px;
+
+    height:6px;
+
+    border-radius:50%;
+
+    background:var(--red);
 
 }
 
 
-/* =========================
-   DETAIL SHEET
-========================= */
+.holiday-label{
+
+    max-width:52px;
+
+    margin-top:3px;
+
+    color:var(--red);
+
+    font-size:7px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+
+/* =====================================================
+   DETAIL
+===================================================== */
 
 .detail-card{
 
@@ -665,8 +796,7 @@ body{
 
 .detail-date{
 
-    color:
-        var(--secondary);
+    color:var(--secondary);
 
     font-size:14px;
 
@@ -675,22 +805,115 @@ body{
 
 .detail-shift{
 
+    margin-top:5px;
+
     font-size:30px;
 
     font-weight:800;
 
-    margin-top:5px;
+}
+
+
+.detail-holiday{
+
+    margin-top:18px;
+
+    padding:
+
+        15px;
+
+    border-radius:17px;
+
+    background:
+
+        rgba(255,59,48,.10);
 
 }
 
 
-/* =========================
+.detail-holiday-title{
+
+    color:var(--red);
+
+    font-size:17px;
+
+    font-weight:800;
+
+}
+
+
+.detail-holiday-sub{
+
+    margin-top:5px;
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+
+.detail-note{
+
+    margin-top:15px;
+
+    color:var(--secondary);
+
+    font-size:12px;
+
+    line-height:1.6;
+
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.action-button{
+
+    width:100%;
+
+    margin-top:13px;
+
+    padding:15px;
+
+    border:0;
+
+    border-radius:15px;
+
+    background:var(--blue);
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:700;
+
+}
+
+
+.action-button.secondary{
+
+    background:
+
+        rgba(120,120,128,.12);
+
+    color:var(--text);
+
+}
+
+
+/* =====================================================
    SETTINGS
-========================= */
+===================================================== */
 
 .settings-card{
 
     padding:
+
         0 18px;
 
 }
@@ -699,9 +922,11 @@ body{
 .setting{
 
     padding:
+
         18px 0;
 
     border-bottom:
+
         1px solid var(--separator);
 
 }
@@ -716,14 +941,15 @@ body{
 
 .setting-label{
 
-    font-weight:700;
-
     margin-bottom:10px;
+
+    font-weight:700;
 
 }
 
 
 input,
+
 select{
 
     width:100%;
@@ -736,53 +962,18 @@ select{
 
     padding:13px;
 
-    color:
-        var(--text);
+    color:var(--text);
 
     background:
+
         rgba(120,120,128,.12);
 
 }
 
 
-.action-button{
-
-    width:100%;
-
-    border:0;
-
-    border-radius:14px;
-
-    padding:15px;
-
-    margin-top:12px;
-
-    background:
-        var(--blue);
-
-    color:white;
-
-    font-weight:700;
-
-    font-size:16px;
-
-}
-
-
-.action-button.secondary{
-
-    background:
-        rgba(120,120,128,.12);
-
-    color:
-        var(--text);
-
-}
-
-
-/* =========================
+/* =====================================================
    STATISTICS
-========================= */
+===================================================== */
 
 .stats{
 
@@ -800,8 +991,7 @@ select{
 
     padding:17px;
 
-    background:
-        var(--card);
+    background:var(--card);
 
     border-radius:20px;
 
@@ -810,8 +1000,7 @@ select{
 
 .stat-label{
 
-    color:
-        var(--secondary);
+    color:var(--secondary);
 
     font-size:13px;
 
@@ -820,18 +1009,51 @@ select{
 
 .stat-number{
 
+    margin-top:4px;
+
     font-size:27px;
 
     font-weight:800;
 
-    margin-top:4px;
+}
+
+
+/* =====================================================
+   LABOR LAW
+===================================================== */
+
+.labor-card{
+
+    padding:20px;
 
 }
 
 
-/* =========================
+.labor-title{
+
+    font-size:18px;
+
+    font-weight:800;
+
+}
+
+
+.labor-text{
+
+    margin-top:10px;
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    line-height:1.7;
+
+}
+
+
+/* =====================================================
    TAB BAR
-========================= */
+===================================================== */
 
 .tabbar{
 
@@ -851,23 +1073,34 @@ select{
         repeat(3,1fr);
 
     padding:
+
         7px
+
         18px
-        calc(7px + env(safe-area-inset-bottom));
+
+        calc(
+            7px +
+            env(safe-area-inset-bottom)
+        );
 
     background:
+
         rgba(248,248,250,.88);
 
     border-top:
-        1px solid
-        var(--separator);
+
+        1px solid var(--separator);
 
     backdrop-filter:
+
         blur(25px)
+
         saturate(180%);
 
     -webkit-backdrop-filter:
+
         blur(25px)
+
         saturate(180%);
 
 }
@@ -875,12 +1108,13 @@ select{
 
 @media(prefers-color-scheme:dark){
 
-.tabbar{
+    .tabbar{
 
-    background:
-        rgba(28,28,30,.88);
+        background:
 
-}
+            rgba(28,28,30,.88);
+
+    }
 
 }
 
@@ -891,8 +1125,7 @@ select{
 
     background:none;
 
-    color:
-        var(--secondary);
+    color:var(--secondary);
 
     font-size:11px;
 
@@ -905,28 +1138,27 @@ select{
 
 .tab.active{
 
-    color:
-        var(--blue);
+    color:var(--blue);
 
 }
 
 
 .tab-icon{
 
-    font-size:22px;
-
     display:block;
 
-    line-height:24px;
-
     margin-bottom:2px;
+
+    font-size:22px;
+
+    line-height:24px;
 
 }
 
 
-/* =========================
+/* =====================================================
    TOAST
-========================= */
+===================================================== */
 
 .toast{
 
@@ -935,7 +1167,11 @@ select{
     left:50%;
 
     bottom:
-        calc(95px + env(safe-area-inset-bottom));
+
+        calc(
+            95px +
+            env(safe-area-inset-bottom)
+        );
 
     transform:
         translate(-50%,20px);
@@ -944,22 +1180,22 @@ select{
 
     pointer-events:none;
 
-    background:
-        rgba(30,30,30,.9);
-
-    color:white;
+    z-index:300;
 
     padding:
+
         12px 20px;
 
     border-radius:15px;
 
+    background:
+        rgba(30,30,30,.90);
+
+    color:white;
+
     font-size:14px;
 
-    transition:
-        .25s;
-
-    z-index:300;
+    transition:.25s;
 
 }
 
@@ -974,21 +1210,25 @@ select{
 }
 
 
-/* =========================
-   APP VERSION
-========================= */
+/* =====================================================
+   VERSION
+===================================================== */
 
 .version{
 
+    padding:
+
+        30px
+
+        0
+
+        15px;
+
     text-align:center;
 
-    color:
-        var(--secondary);
+    color:var(--secondary);
 
     font-size:12px;
-
-    padding:
-        30px 0 15px;
 
 }
 
@@ -1003,9 +1243,9 @@ select{
 <div class="app">
 
 
-<!-- ======================
+<!-- =================================================
      HOME
-====================== -->
+================================================= -->
 
 <section
 id="home"
@@ -1015,15 +1255,11 @@ class="page active">
 <div class="header">
 
 <div class="header-title">
-
 我的輪班
-
 </div>
 
 <div class="header-subtitle">
-
 8 天循環輪班
-
 </div>
 
 </div>
@@ -1032,10 +1268,9 @@ class="page active">
 <div class="card today-card">
 
 <div class="today-label">
-
 今天
-
 </div>
+
 
 <div
 id="todayDate"
@@ -1046,6 +1281,11 @@ class="today-date">
 <div
 id="todayShift"
 class="today-shift">
+</div>
+
+
+<div
+id="todayHoliday">
 </div>
 
 
@@ -1063,9 +1303,7 @@ id="tomorrowShift">
 
 
 <div class="section-title">
-
 接下來
-
 </div>
 
 
@@ -1075,13 +1313,56 @@ class="card">
 </div>
 
 
+<div class="section-title">
+勞工國定假日
+</div>
+
+
+<div class="card labor-card">
+
+<div class="labor-title">
+
+🇹🇼 2026 台灣國定假日
+
+</div>
+
+
+<div class="labor-text">
+
+依現行規定，勞工每年共有
+16 日國定假日。
+
+<br><br>
+
+國定假日如遇到勞工原約定的
+例假或休息日，原則上應於其他
+工作日補假；補假日期由勞雇雙方
+協商。
+
+<br><br>
+
+國定假日與工作日對調，須經勞工
+本人同意。
+
+<br><br>
+
+實際輪班的例假、休息日不一定
+落在星期六、星期日，因此本 App
+只標示國定假日，不自動判定你的
+補假日期。
+
+</div>
+
+</div>
+
+
 </section>
 
 
 
-<!-- ======================
+<!-- =================================================
      CALENDAR
-====================== -->
+================================================= -->
 
 <section
 id="calendarPage"
@@ -1091,15 +1372,11 @@ class="page">
 <div class="header">
 
 <div class="header-title">
-
 月曆
-
 </div>
 
 <div class="header-subtitle">
-
-查看每天的輪班
-
+輪班・國定假日
 </div>
 
 </div>
@@ -1121,17 +1398,14 @@ class="calendar-month">
 <button
 id="prevMonth"
 class="circle-button">
-
 ‹
-
 </button>
+
 
 <button
 id="nextMonth"
 class="circle-button">
-
 ›
-
 </button>
 
 </div>
@@ -1142,17 +1416,11 @@ class="circle-button">
 <div class="weekdays">
 
 <div class="weekday">日</div>
-
 <div class="weekday">一</div>
-
 <div class="weekday">二</div>
-
 <div class="weekday">三</div>
-
 <div class="weekday">四</div>
-
 <div class="weekday">五</div>
-
 <div class="weekday">六</div>
 
 </div>
@@ -1185,9 +1453,9 @@ class="card detail-card">
 
 
 
-<!-- ======================
+<!-- =================================================
      SETTINGS
-====================== -->
+================================================= -->
 
 <section
 id="settingsPage"
@@ -1197,24 +1465,18 @@ class="page">
 <div class="header">
 
 <div class="header-title">
-
 設定
-
 </div>
 
 <div class="header-subtitle">
-
 輪班與 App 設定
-
 </div>
 
 </div>
 
 
 <div class="section-title">
-
 輪班設定
-
 </div>
 
 
@@ -1224,9 +1486,7 @@ class="page">
 <div class="setting">
 
 <div class="setting-label">
-
 基準日期
-
 </div>
 
 <input
@@ -1239,60 +1499,41 @@ type="date">
 <div class="setting">
 
 <div class="setting-label">
-
 基準日期班別
-
 </div>
 
-<select
-id="baseShift">
+<select id="baseShift">
 
 <option value="0">
-
 白天1
-
 </option>
 
 <option value="1">
-
 白天2
-
 </option>
 
 <option value="2">
-
 小夜1
-
 </option>
 
 <option value="3">
-
 小夜2
-
 </option>
 
 <option value="4">
-
 休息
-
 </option>
 
 <option value="5">
-
 大夜1
-
 </option>
 
 <option value="6">
-
 大夜2
-
 </option>
 
 <option value="7">
-
 休息
-
 </option>
 
 </select>
@@ -1320,22 +1561,19 @@ class="action-button secondary">
 </div>
 
 
+
 <div class="section-title">
-
 本月統計
-
 </div>
 
 
-<div
-class="stats">
+<div class="stats">
+
 
 <div class="stat">
 
 <div class="stat-label">
-
 白天班
-
 </div>
 
 <div
@@ -1350,9 +1588,7 @@ class="stat-number">
 <div class="stat">
 
 <div class="stat-label">
-
 小夜班
-
 </div>
 
 <div
@@ -1367,9 +1603,7 @@ class="stat-number">
 <div class="stat">
 
 <div class="stat-label">
-
 大夜班
-
 </div>
 
 <div
@@ -1384,9 +1618,7 @@ class="stat-number">
 <div class="stat">
 
 <div class="stat-label">
-
 休息
-
 </div>
 
 <div
@@ -1397,14 +1629,52 @@ class="stat-number">
 
 </div>
 
+
+</div>
+
+
+
+<div class="section-title">
+勞動法規
+</div>
+
+
+<div class="card labor-card">
+
+<div class="labor-title">
+
+國定假日提醒
+
+</div>
+
+
+<div class="labor-text">
+
+本 App 的國定假日資料以 2026
+年度規定為基礎。
+
+<br><br>
+
+國定假日遇到你的例假或休息日，
+補假日期可能依你的輪班制度及
+勞雇協商而不同。
+
+<br><br>
+
+因此「國定假日」與「你的輪班休息日」
+在 App 中會分開顯示。
+
+</div>
+
 </div>
 
 
 <div class="version">
 
-我的輪班 · PWA v2.0
+我的輪班 · PWA v3.0
 
 </div>
+
 
 </section>
 
@@ -1413,9 +1683,9 @@ class="stat-number">
 
 
 
-<!-- ======================
+<!-- =================================================
      TAB BAR
-====================== -->
+================================================= -->
 
 <nav class="tabbar">
 
@@ -1472,10 +1742,9 @@ class="toast">
 
 <script>
 
-
-/* =================================
-   DEFAULT SETTINGS
-================================= */
+/* =====================================================
+   DEFAULT
+===================================================== */
 
 const DEFAULT = {
 
@@ -1487,12 +1756,19 @@ const DEFAULT = {
     shifts:[
 
         "白天1",
+
         "白天2",
+
         "小夜1",
+
         "小夜2",
+
         "休息",
+
         "大夜1",
+
         "大夜2",
+
         "休息"
 
     ]
@@ -1500,9 +1776,97 @@ const DEFAULT = {
 };
 
 
-/* =================================
-   LOAD SETTINGS
-================================= */
+/* =====================================================
+   2026 台灣國定假日
+===================================================== */
+
+/*
+
+  注意：
+
+  這裡標示的是「國定假日／補假日」，
+  不是單純政府機關所有連假日期。
+
+  輪班勞工的例假、休息日可能與
+  週六、週日不同，因此 App 不會
+  自動把所有連假日期視為國定假日。
+
+*/
+
+const TAIWAN_HOLIDAYS = {
+
+    "2026-01-01":
+        "中華民國開國紀念日",
+
+    /*
+      春節：
+      小年夜 2/15
+      除夕 2/16
+      初一 2/17
+      初二 2/18
+      初三 2/19
+
+      2/15 適逢星期日，
+      對固定週休二日且比照政府
+      辦公日曆者，補假可排 2/20。
+
+      因此 2/20 也標示為補假。
+    */
+
+    "2026-02-15":
+        "小年夜",
+
+    "2026-02-16":
+        "除夕",
+
+    "2026-02-17":
+        "春節 初一",
+
+    "2026-02-18":
+        "春節 初二",
+
+    "2026-02-19":
+        "春節 初三",
+
+    "2026-02-20":
+        "小年夜補假",
+
+    "2026-02-28":
+        "和平紀念日",
+
+    "2026-04-04":
+        "兒童節",
+
+    "2026-04-05":
+        "清明節",
+
+    "2026-05-01":
+        "勞動節",
+
+    "2026-06-19":
+        "端午節",
+
+    "2026-09-25":
+        "中秋節",
+
+    "2026-09-28":
+        "孔子誕辰紀念日／教師節",
+
+    "2026-10-10":
+        "國慶日",
+
+    "2026-10-25":
+        "臺灣光復暨金門古寧頭大捷紀念日",
+
+    "2026-12-25":
+        "行憲紀念日"
+
+};
+
+
+/* =====================================================
+   LOAD CONFIG
+===================================================== */
 
 function loadConfig(){
 
@@ -1553,16 +1917,18 @@ let selectedDate =
 
 
 
-/* =================================
+/* =====================================================
    DATE
-================================= */
+===================================================== */
 
 function dateOnly(date){
 
     return new Date(
 
         date.getFullYear(),
+
         date.getMonth(),
+
         date.getDate()
 
     );
@@ -1575,11 +1941,15 @@ function diffDays(a,b){
     return Math.round(
 
         (
+
             dateOnly(a)
             -
             dateOnly(b)
+
         )
+
         /
+
         86400000
 
     );
@@ -1617,11 +1987,19 @@ function formatDate(date){
     return (
 
         date.getFullYear()
-        +"/"+
+
+        + "/"
+
+        +
+
         String(
             date.getMonth()+1
         ).padStart(2,"0")
-        +"/"+
+
+        + "/"
+
+        +
+
         String(
             date.getDate()
         ).padStart(2,"0")
@@ -1633,26 +2011,45 @@ function formatDate(date){
 
 function chineseDate(date){
 
-    const week=[
+    const week = [
 
         "星期日",
+
         "星期一",
+
         "星期二",
+
         "星期三",
+
         "星期四",
+
         "星期五",
+
         "星期六"
 
     ];
 
+
     return (
 
         date.getFullYear()
-        +"年"+
+
+        + "年"
+
+        +
+
         (date.getMonth()+1)
-        +"月"+
+
+        + "月"
+
+        +
+
         date.getDate()
-        +"日 · "+
+
+        + "日 · "
+
+        +
+
         week[date.getDay()]
 
     );
@@ -1660,16 +2057,50 @@ function chineseDate(date){
 }
 
 
-/* =================================
-   SHIFT CALCULATION
-================================= */
+/* =====================================================
+   HOLIDAY
+===================================================== */
+
+function getHoliday(date){
+
+    const key =
+
+        date.getFullYear()
+
+        + "-"
+
+        +
+
+        String(
+            date.getMonth()+1
+        ).padStart(2,"0")
+
+        + "-"
+
+        +
+
+        String(
+            date.getDate()
+        ).padStart(2,"0");
+
+
+    return TAIWAN_HOLIDAYS[key]
+        || null;
+
+}
+
+
+/* =====================================================
+   SHIFT
+===================================================== */
 
 function getShift(date){
 
     const base =
+
         new Date(
             config.baseDate
-            +"T00:00:00"
+            + "T00:00:00"
         );
 
 
@@ -1678,18 +2109,22 @@ function getShift(date){
         (
 
             config.baseShift
+
             +
+
             diffDays(
                 date,
                 base
             )
 
         )
+
         %
+
         config.shifts.length;
 
 
-    if(index<0){
+    if(index < 0){
 
         index +=
             config.shifts.length;
@@ -1702,9 +2137,9 @@ function getShift(date){
 }
 
 
-/* =================================
-   SHIFT STYLE
-================================= */
+/* =====================================================
+   SHIFT COLOR
+===================================================== */
 
 function shiftClass(shift){
 
@@ -1774,10 +2209,9 @@ function shiftColor(shift){
 }
 
 
-
-/* =================================
+/* =====================================================
    HOME
-================================= */
+===================================================== */
 
 function renderHome(){
 
@@ -1820,6 +2254,35 @@ function renderHome(){
         shiftClass(shift);
 
 
+    const holiday =
+        getHoliday(today);
+
+
+    const holidayBox =
+        document.getElementById(
+            "todayHoliday"
+        );
+
+
+    if(holiday){
+
+        holidayBox.innerHTML = `
+
+            <div class="today-holiday">
+
+                🇹🇼 ${holiday}
+
+            </div>
+
+        `;
+
+    }else{
+
+        holidayBox.innerHTML = "";
+
+    }
+
+
     document.getElementById(
         "tomorrowShift"
     ).textContent =
@@ -1832,7 +2295,7 @@ function renderHome(){
         );
 
 
-    container.innerHTML="";
+    container.innerHTML = "";
 
 
     for(
@@ -1852,6 +2315,10 @@ function renderHome(){
 
         const shift =
             getShift(date);
+
+
+        const holiday =
+            getHoliday(date);
 
 
         const row =
@@ -1892,6 +2359,21 @@ function renderHome(){
 
                 </div>
 
+
+                ${
+                    holiday
+
+                    ?
+
+                    `<div class="list-holiday">
+                        🇹🇼 ${holiday}
+                    </div>`
+
+                    :
+
+                    ""
+                }
+
             </div>
 
         `;
@@ -1904,10 +2386,9 @@ function renderHome(){
 }
 
 
-
-/* =================================
+/* =====================================================
    CALENDAR
-================================= */
+===================================================== */
 
 function renderCalendar(){
 
@@ -1922,6 +2403,7 @@ function renderCalendar(){
     document.getElementById(
         "monthTitle"
     ).textContent =
+
         `${year}年${month+1}月`;
 
 
@@ -1931,7 +2413,7 @@ function renderCalendar(){
         );
 
 
-    grid.innerHTML="";
+    grid.innerHTML = "";
 
 
     const first =
@@ -1966,9 +2448,7 @@ function renderCalendar(){
             "calendar-cell";
 
 
-        grid.appendChild(
-            empty
-        );
+        grid.appendChild(empty);
 
     }
 
@@ -1989,6 +2469,10 @@ function renderCalendar(){
 
         const shift =
             getShift(date);
+
+
+        const holiday =
+            getHoliday(date);
 
 
         const cell =
@@ -2034,6 +2518,21 @@ function renderCalendar(){
             <div
                 class="calendar-cell-inner">
 
+
+                ${
+                    holiday
+
+                    ?
+
+                    `<div class="holiday-dot"></div>`
+
+                    :
+
+                    ""
+
+                }
+
+
                 <div
                     class="calendar-number">
 
@@ -2052,12 +2551,29 @@ function renderCalendar(){
 
                 </div>
 
+
+                ${
+                    holiday
+
+                    ?
+
+                    `<div class="holiday-label">
+                        ${holiday}
+                    </div>`
+
+                    :
+
+                    ""
+
+                }
+
+
             </div>
 
         `;
 
 
-        cell.onclick=()=>{
+        cell.onclick = () => {
 
             selectedDate =
                 new Date(date);
@@ -2080,17 +2596,76 @@ function renderCalendar(){
 }
 
 
-
-/* =================================
+/* =====================================================
    DETAIL
-================================= */
+===================================================== */
 
 function renderDetail(){
 
     const shift =
-        getShift(
-            selectedDate
-        );
+        getShift(selectedDate);
+
+
+    const holiday =
+        getHoliday(selectedDate);
+
+
+    let holidayHTML = "";
+
+
+    if(holiday){
+
+        holidayHTML = `
+
+            <div
+                class="detail-holiday">
+
+
+                <div
+                    class="detail-holiday-title">
+
+                    🇹🇼 ${holiday}
+
+                </div>
+
+
+                <div
+                    class="detail-holiday-sub">
+
+                    國定假日
+
+                </div>
+
+
+            </div>
+
+
+            <div
+                class="detail-note">
+
+                國定假日若遇到你的例假或
+                休息日，原則上應於其他
+                工作日補假；實際補假日期
+                需依你的勞動契約、排班及
+                勞雇協商確認。
+
+                <br><br>
+
+                若國定假日原本是你的工作日，
+                經依法徵得同意出勤，工資
+                依《勞動基準法》相關規定
+                辦理。
+
+                <br><br>
+
+                本 App 不會自動判斷你公司的
+                補假日期。
+
+            </div>
+
+        `;
+
+    }
 
 
     document.getElementById(
@@ -2114,15 +2689,17 @@ function renderDetail(){
 
         </div>
 
+
+        ${holidayHTML}
+
     `;
 
 }
 
 
-
-/* =================================
+/* =====================================================
    STATISTICS
-================================= */
+===================================================== */
 
 function renderStats(){
 
@@ -2202,30 +2779,29 @@ function renderStats(){
 
     document.getElementById(
         "dayCount"
-    ).textContent=day;
+    ).textContent = day;
 
 
     document.getElementById(
         "eveningCount"
-    ).textContent=evening;
+    ).textContent = evening;
 
 
     document.getElementById(
         "nightCount"
-    ).textContent=night;
+    ).textContent = night;
 
 
     document.getElementById(
         "restCount"
-    ).textContent=rest;
+    ).textContent = rest;
 
 }
 
 
-
-/* =================================
+/* =====================================================
    SETTINGS
-================================= */
+===================================================== */
 
 function renderSettings(){
 
@@ -2243,10 +2819,9 @@ function renderSettings(){
 }
 
 
-
 document.getElementById(
     "saveSettings"
-).onclick=()=>{
+).onclick = () => {
 
     config.baseDate =
         document.getElementById(
@@ -2285,10 +2860,9 @@ document.getElementById(
 };
 
 
-
 document.getElementById(
     "resetSettings"
-).onclick=()=>{
+).onclick = () => {
 
     if(
         !confirm(
@@ -2301,7 +2875,7 @@ document.getElementById(
     }
 
 
-    config={
+    config = {
 
         ...DEFAULT,
 
@@ -2337,14 +2911,13 @@ document.getElementById(
 };
 
 
-
-/* =================================
+/* =====================================================
    MONTH
-================================= */
+===================================================== */
 
 document.getElementById(
     "prevMonth"
-).onclick=()=>{
+).onclick = () => {
 
     calendarDate =
         new Date(
@@ -2360,13 +2933,14 @@ document.getElementById(
 
     renderCalendar();
 
-};
+    renderDetail();
 
+};
 
 
 document.getElementById(
     "nextMonth"
-).onclick=()=>{
+).onclick = () => {
 
     calendarDate =
         new Date(
@@ -2382,13 +2956,14 @@ document.getElementById(
 
     renderCalendar();
 
-};
+    renderDetail();
 
+};
 
 
 document.getElementById(
     "todayButton"
-).onclick=()=>{
+).onclick = () => {
 
     const today =
         new Date();
@@ -2417,25 +2992,25 @@ document.getElementById(
 };
 
 
-
-/* =================================
+/* =====================================================
    TAB BAR
-================================= */
+===================================================== */
 
 document
 .querySelectorAll(".tab")
-.forEach(tab=>{
+.forEach(tab => {
 
-    tab.onclick=()=>{
+    tab.onclick = () => {
 
         document
         .querySelectorAll(".page")
-        .forEach(
-            page =>
-                page.classList.remove(
-                    "active"
-                )
-        );
+        .forEach(page => {
+
+            page.classList.remove(
+                "active"
+            );
+
+        });
 
 
         document
@@ -2449,12 +3024,13 @@ document
 
         document
         .querySelectorAll(".tab")
-        .forEach(
-            t =>
-                t.classList.remove(
-                    "active"
-                )
-        );
+        .forEach(t => {
+
+            t.classList.remove(
+                "active"
+            );
+
+        });
 
 
         tab.classList.add(
@@ -2490,10 +3066,9 @@ document
 });
 
 
-
-/* =================================
+/* =====================================================
    TOAST
-================================= */
+===================================================== */
 
 function showToast(message){
 
@@ -2512,7 +3087,7 @@ function showToast(message){
     );
 
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         toast.classList.remove(
             "show"
@@ -2523,10 +3098,9 @@ function showToast(message){
 }
 
 
-
-/* =================================
+/* =====================================================
    SERVICE WORKER
-================================= */
+===================================================== */
 
 if(
     "serviceWorker"
@@ -2535,7 +3109,7 @@ if(
 
     window.addEventListener(
         "load",
-        ()=>{
+        () => {
 
             navigator
             .serviceWorker
@@ -2552,10 +3126,9 @@ if(
 }
 
 
-
-/* =================================
+/* =====================================================
    START
-================================= */
+===================================================== */
 
 renderHome();
 
