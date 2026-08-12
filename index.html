@@ -14,634 +14,718 @@ content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,vie
 <meta name="apple-mobile-web-app-title" content="我的輪班">
 
 <style>
-
 :root{
- --bg:#f2f2f7;
- --card:#ffffff;
- --text:#1c1c1e;
- --sub:#8e8e93;
- --blue:#007aff;
- --red:#ff3b30;
- --green:#34c759;
- --orange:#ff9500;
- --purple:#af52de;
- --indigo:#5856d6;
- --line:rgba(60,60,67,.12);
+  --bg:#f2f2f7;
+  --card:#ffffff;
+  --text:#1c1c1e;
+  --sub:#8e8e93;
+  --blue:#007aff;
+  --red:#ff3b30;
+  --green:#34c759;
+  --orange:#ff9500;
+  --purple:#af52de;
+  --indigo:#5856d6;
+  --cyan:#32ade6;
+  --line:rgba(60,60,67,.12);
 }
 
 @media(prefers-color-scheme:dark){
- :root{
-  --bg:#000;
-  --card:#1c1c1e;
-  --text:#fff;
-  --sub:#98989d;
-  --line:rgba(84,84,88,.65);
- }
+  :root{
+    --bg:#000000;
+    --card:#1c1c1e;
+    --text:#ffffff;
+    --sub:#98989d;
+    --line:rgba(84,84,88,.65);
+  }
 }
 
 *{
- box-sizing:border-box;
- -webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
- margin:0;
- background:var(--bg);
- color:var(--text);
- font-family:
- -apple-system,
- BlinkMacSystemFont,
- "SF Pro Display",
- "PingFang TC",
- "Helvetica Neue",
- sans-serif;
- padding:
- calc(12px + env(safe-area-inset-top))
- 0
- calc(90px + env(safe-area-inset-bottom));
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "PingFang TC",
+    "Helvetica Neue",
+    sans-serif;
+  padding:
+    calc(10px + env(safe-area-inset-top))
+    0
+    calc(92px + env(safe-area-inset-bottom));
+}
+
+button,
+input,
+select{
+  font-family:inherit;
+}
+
+button{
+  -webkit-appearance:none;
 }
 
 .app{
- max-width:720px;
- margin:auto;
+  max-width:720px;
+  margin:auto;
 }
 
 .page{
- display:none;
- padding:12px 16px 30px;
+  display:none;
+  padding:12px 16px 30px;
 }
 
 .page.active{
- display:block;
+  display:block;
 }
 
 .header{
- padding:8px 4px;
+  padding:8px 4px;
 }
 
 .title{
- font-size:34px;
- font-weight:800;
- letter-spacing:-1px;
+  font-size:34px;
+  font-weight:800;
+  letter-spacing:-1px;
 }
 
 .subtitle{
- margin-top:5px;
- color:var(--sub);
- font-size:15px;
+  margin-top:5px;
+  color:var(--sub);
+  font-size:15px;
 }
 
 .card{
- background:var(--card);
- border-radius:22px;
- margin-top:16px;
- overflow:hidden;
- box-shadow:0 1px 3px rgba(0,0,0,.05);
+  background:var(--card);
+  border-radius:22px;
+  margin-top:16px;
+  overflow:hidden;
+  box-shadow:0 1px 4px rgba(0,0,0,.05);
 }
 
 .today{
- padding:24px 16px;
+  padding:23px 16px;
 }
 
 .today-label{
- color:var(--sub);
- font-size:15px;
- text-align:center;
+  color:var(--sub);
+  font-size:15px;
+  text-align:center;
 }
 
 .today-date{
- font-size:18px;
- font-weight:700;
- margin-top:5px;
- text-align:center;
+  font-size:18px;
+  font-weight:700;
+  margin-top:5px;
+  text-align:center;
 }
 
 .my-shift{
- margin:18px auto 22px;
- padding:20px;
- border-radius:24px;
- text-align:center;
- background:rgba(0,122,255,.1);
- color:var(--blue);
+  margin:18px auto 22px;
+  padding:20px;
+  border-radius:24px;
+  text-align:center;
+  background:rgba(0,122,255,.10);
 }
 
 .my-label{
- font-size:14px;
- font-weight:700;
+  font-size:14px;
+  font-weight:700;
+  color:var(--blue);
 }
 
 .my-shift-name{
- font-size:34px;
- font-weight:800;
- margin-top:4px;
+  font-size:34px;
+  font-weight:800;
+  margin-top:4px;
 }
 
 .team-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
 .team-card{
- padding:17px 12px;
- border-radius:20px;
- text-align:center;
- background:rgba(120,120,128,.08);
- position:relative;
+  padding:17px 12px;
+  border-radius:20px;
+  text-align:center;
+  background:rgba(120,120,128,.08);
+  position:relative;
 }
 
 .team-card.mine{
- background:rgba(0,122,255,.11);
- outline:2px solid rgba(0,122,255,.25);
+  background:rgba(0,122,255,.11);
+  outline:2px solid rgba(0,122,255,.25);
 }
 
 .team-name{
- font-size:14px;
- color:var(--sub);
- font-weight:700;
+  font-size:14px;
+  color:var(--sub);
+  font-weight:700;
 }
 
 .team-shift{
- margin-top:7px;
- font-size:21px;
- font-weight:800;
+  margin-top:7px;
+  font-size:21px;
+  font-weight:800;
 }
 
 .mine-badge{
- position:absolute;
- top:8px;
- right:8px;
- color:var(--blue);
- font-size:10px;
- font-weight:800;
+  position:absolute;
+  top:8px;
+  right:8px;
+  color:var(--blue);
+  font-size:10px;
+  font-weight:800;
 }
 
 .day{
- color:var(--orange);
+  color:var(--orange);
 }
 
 .eve{
- color:var(--indigo);
+  color:var(--indigo);
 }
 
 .night{
- color:var(--purple);
+  color:var(--purple);
 }
 
 .rest{
- color:var(--green);
+  color:var(--green);
 }
 
 .holiday-home{
- margin-top:16px;
- padding:11px 13px;
- border-radius:14px;
- background:rgba(255,59,48,.1);
- color:var(--red);
- font-weight:700;
- font-size:14px;
- text-align:center;
+  margin-top:16px;
+  padding:11px 13px;
+  border-radius:14px;
+  background:rgba(255,59,48,.10);
+  color:var(--red);
+  font-weight:700;
+  font-size:14px;
+  text-align:center;
 }
 
 .makeup-home{
- margin-top:8px;
- padding:11px 13px;
- border-radius:14px;
- background:rgba(0,122,255,.1);
- color:var(--blue);
- font-weight:700;
- font-size:14px;
- text-align:center;
+  margin-top:8px;
+  padding:11px 13px;
+  border-radius:14px;
+  background:rgba(0,122,255,.10);
+  color:var(--blue);
+  font-weight:700;
+  font-size:14px;
+  text-align:center;
 }
 
 .section-title{
- font-size:21px;
- font-weight:800;
- margin:27px 5px 9px;
+  font-size:21px;
+  font-weight:800;
+  margin:27px 5px 9px;
 }
 
 .next-row{
- display:grid;
- grid-template-columns:55px 1fr;
- align-items:center;
- min-height:70px;
- padding:12px 17px;
- border-bottom:1px solid var(--line);
+  display:grid;
+  grid-template-columns:55px 1fr;
+  align-items:center;
+  min-height:70px;
+  padding:12px 17px;
+  border-bottom:1px solid var(--line);
 }
 
 .next-row:last-child{
- border-bottom:0;
+  border-bottom:0;
 }
 
 .next-date{
- width:43px;
- height:43px;
- border-radius:50%;
- background:rgba(0,122,255,.1);
- color:var(--blue);
- display:flex;
- align-items:center;
- justify-content:center;
- font-weight:800;
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  background:rgba(0,122,255,.10);
+  color:var(--blue);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
 }
 
 .next-info{
- min-width:0;
+  min-width:0;
 }
 
 .next-date-text{
- color:var(--sub);
- font-size:12px;
+  color:var(--sub);
+  font-size:12px;
 }
 
 .next-team{
- display:flex;
- flex-wrap:wrap;
- gap:5px;
- margin-top:5px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:5px;
 }
 
 .mini-shift{
- padding:4px 7px;
- border-radius:8px;
- background:rgba(120,120,128,.09);
- font-size:11px;
- font-weight:700;
+  padding:4px 7px;
+  border-radius:8px;
+  background:rgba(120,120,128,.09);
+  font-size:11px;
+  font-weight:700;
 }
 
 .mini-shift.mine{
- background:rgba(0,122,255,.12);
- color:var(--blue);
+  background:rgba(0,122,255,.12);
+  color:var(--blue);
 }
 
 .holiday-mini{
- color:var(--red);
- font-size:11px;
- font-weight:700;
- margin-top:4px;
+  color:var(--red);
+  font-size:11px;
+  font-weight:700;
+  margin-top:4px;
 }
 
 .makeup-mini{
- color:var(--blue);
- font-size:11px;
- font-weight:700;
- margin-top:3px;
+  color:var(--blue);
+  font-size:11px;
+  font-weight:700;
+  margin-top:3px;
 }
 
-.cal-head{
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:17px;
+/* 月曆 */
+
+.calendar-top{
+  padding:18px 17px 5px;
 }
 
-.month{
- font-size:22px;
- font-weight:800;
+.month-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.month-title{
+  font-size:23px;
+  font-weight:800;
 }
 
 .controls{
- display:flex;
- gap:8px;
+  display:flex;
+  gap:8px;
 }
 
 .circle{
- border:0;
- width:38px;
- height:38px;
- border-radius:50%;
- background:rgba(120,120,128,.12);
- color:var(--text);
- font-size:25px;
+  border:0;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:rgba(120,120,128,.12);
+  color:var(--text);
+  font-size:25px;
+}
+
+.calendar-type{
+  display:flex;
+  margin-top:15px;
+  padding:4px;
+  background:rgba(120,120,128,.10);
+  border-radius:12px;
+}
+
+.calendar-type button{
+  flex:1;
+  border:0;
+  background:transparent;
+  padding:8px;
+  border-radius:9px;
+  color:var(--sub);
+  font-size:13px;
+  font-weight:700;
+}
+
+.calendar-type button.active{
+  background:var(--card);
+  color:var(--blue);
+  box-shadow:0 1px 3px rgba(0,0,0,.12);
 }
 
 .week{
- display:grid;
- grid-template-columns:repeat(7,1fr);
- padding:0 7px;
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  padding:8px 7px 4px;
 }
 
 .week div{
- text-align:center;
- color:var(--sub);
- font-size:12px;
- font-weight:600;
- padding:7px 0;
+  text-align:center;
+  color:var(--sub);
+  font-size:12px;
+  font-weight:600;
+  padding:7px 0;
 }
 
-.grid{
- display:grid;
- grid-template-columns:repeat(7,1fr);
- padding:4px 5px 13px;
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  padding:4px 5px 14px;
 }
 
 .cell{
- height:104px;
- padding:2px;
+  min-width:0;
+  height:100px;
+  padding:2px;
 }
 
 .cellin{
- height:99px;
- border-radius:15px;
- position:relative;
- padding:5px;
+  height:96px;
+  border-radius:15px;
+  position:relative;
+  padding:5px;
+  overflow:hidden;
 }
 
 .cell.today .cellin{
- outline:2px solid var(--blue);
- outline-offset:-2px;
+  outline:2px solid var(--blue);
+  outline-offset:-2px;
 }
 
 .cell.selected .cellin{
- background:rgba(0,122,255,.08);
+  background:rgba(0,122,255,.08);
+}
+
+.cell.other-month{
+  opacity:.25;
 }
 
 .num{
- font-size:14px;
- font-weight:800;
- margin-bottom:3px;
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:3px;
 }
 
-.cal-shift{
- font-size:8px;
- font-weight:700;
- line-height:1.45;
- white-space:nowrap;
+.cal-my-shift{
+  font-size:10px;
+  line-height:1.45;
+  font-weight:800;
+  white-space:nowrap;
+  overflow:hidden;
 }
 
-.cal-shift.mine{
- color:var(--blue);
- font-weight:900;
+.cal-team-shift{
+  font-size:8px;
+  line-height:1.45;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
 }
 
 .holiday-dot{
- position:absolute;
- top:5px;
- right:6px;
- width:7px;
- height:7px;
- border-radius:50%;
- background:var(--red);
+  position:absolute;
+  top:5px;
+  right:6px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--red);
 }
 
 .makeup-dot{
- position:absolute;
- top:5px;
- left:6px;
- width:7px;
- height:7px;
- border-radius:50%;
- background:var(--blue);
+  position:absolute;
+  top:5px;
+  left:6px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--blue);
+}
+
+.my-calendar-label{
+  margin:15px 17px 0;
+  padding:11px 13px;
+  border-radius:14px;
+  background:rgba(0,122,255,.10);
+  color:var(--blue);
+  font-weight:700;
+  font-size:13px;
 }
 
 .detail{
- padding:19px;
+  padding:19px;
 }
 
 .detail-date{
- color:var(--sub);
- font-size:14px;
+  color:var(--sub);
+  font-size:14px;
 }
 
 .detail-title{
- font-size:27px;
- font-weight:800;
- margin-top:4px;
+  font-size:27px;
+  font-weight:800;
+  margin-top:4px;
+}
+
+.detail-my-shift{
+  margin-top:16px;
+  padding:22px;
+  border-radius:20px;
+  text-align:center;
+  background:rgba(0,122,255,.10);
+}
+
+.detail-my-label{
+  color:var(--blue);
+  font-size:13px;
+  font-weight:700;
+}
+
+.detail-my-name{
+  font-size:30px;
+  font-weight:800;
+  margin-top:5px;
 }
 
 .detail-team{
- margin-top:15px;
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:9px;
+  margin-top:15px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
 }
 
 .detail-team-card{
- padding:14px;
- border-radius:15px;
- background:rgba(120,120,128,.08);
+  padding:14px;
+  border-radius:15px;
+  background:rgba(120,120,128,.08);
 }
 
 .detail-team-card.mine{
- background:rgba(0,122,255,.1);
+  background:rgba(0,122,255,.10);
 }
 
 .detail-team-name{
- color:var(--sub);
- font-size:12px;
+  color:var(--sub);
+  font-size:12px;
 }
 
 .detail-team-shift{
- font-size:18px;
- font-weight:800;
- margin-top:3px;
+  font-size:18px;
+  font-weight:800;
+  margin-top:3px;
 }
 
 .info{
- margin-top:16px;
- padding:14px;
- border-radius:16px;
- background:rgba(255,59,48,.1);
+  margin-top:16px;
+  padding:14px;
+  border-radius:16px;
+  background:rgba(255,59,48,.10);
 }
 
 .info.bluebox{
- background:rgba(0,122,255,.1);
+  background:rgba(0,122,255,.10);
 }
 
 .info.graybox{
- background:rgba(120,120,128,.09);
+  background:rgba(120,120,128,.09);
 }
 
 .info-title{
- font-weight:800;
- font-size:16px;
+  font-weight:800;
+  font-size:16px;
 }
 
 .info-text{
- color:var(--sub);
- font-size:12px;
- line-height:1.65;
- margin-top:5px;
+  color:var(--sub);
+  font-size:12px;
+  line-height:1.65;
+  margin-top:5px;
 }
 
 .btn{
- width:100%;
- border:0;
- border-radius:14px;
- padding:14px;
- margin-top:12px;
- background:var(--blue);
- color:#fff;
- font-size:16px;
- font-weight:700;
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:14px;
+  margin-top:12px;
+  background:var(--blue);
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
 }
 
 .btn.gray{
- background:rgba(120,120,128,.12);
- color:var(--text);
+  background:rgba(120,120,128,.12);
+  color:var(--text);
+}
+
+/* 設定 */
+
+.setting{
+  padding:17px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.setting:last-child{
+  border:0;
+}
+
+.setting b{
+  display:block;
+  margin-bottom:9px;
 }
 
 input,
 select{
- width:100%;
- border:0;
- outline:0;
- border-radius:13px;
- padding:13px;
- background:rgba(120,120,128,.12);
- color:var(--text);
- font:inherit;
-}
-
-.setting{
- padding:17px 0;
- border-bottom:1px solid var(--line);
-}
-
-.setting:last-child{
- border:0;
-}
-
-.setting b{
- display:block;
- margin-bottom:9px;
+  width:100%;
+  border:0;
+  outline:0;
+  border-radius:13px;
+  padding:13px;
+  background:rgba(120,120,128,.12);
+  color:var(--text);
+  font:inherit;
 }
 
 .form-note{
- font-size:12px;
- color:var(--sub);
- line-height:1.6;
- margin-top:9px;
+  font-size:12px;
+  color:var(--sub);
+  line-height:1.6;
+  margin-top:9px;
 }
 
 .manage{
- padding:0 17px;
+  padding:0 17px;
 }
 
 .manage-item{
- padding:15px 0;
- border-bottom:1px solid var(--line);
+  padding:15px 0;
+  border-bottom:1px solid var(--line);
 }
 
 .manage-item:last-child{
- border:0;
+  border:0;
 }
 
 .manage-name{
- font-weight:800;
+  font-weight:800;
 }
 
 .manage-date{
- font-size:13px;
- color:var(--sub);
- margin-top:3px;
+  font-size:13px;
+  color:var(--sub);
+  margin-top:3px;
 }
 
 .manage-actions{
- display:flex;
- flex-wrap:wrap;
- gap:8px;
- margin-top:9px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:9px;
 }
 
 .mini-btn{
- border:0;
- border-radius:10px;
- padding:8px 11px;
- font-weight:700;
- background:rgba(120,120,128,.12);
- color:var(--text);
+  border:0;
+  border-radius:10px;
+  padding:8px 11px;
+  font-weight:700;
+  background:rgba(120,120,128,.12);
+  color:var(--text);
 }
 
 .mini-btn.delete{
- color:var(--red);
+  color:var(--red);
 }
 
 .stats{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:10px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
 
 .stat{
- padding:17px;
- background:var(--card);
- border-radius:20px;
+  padding:17px;
+  background:var(--card);
+  border-radius:20px;
 }
 
 .stat span{
- color:var(--sub);
- font-size:13px;
+  color:var(--sub);
+  font-size:13px;
 }
 
 .stat strong{
- display:block;
- font-size:27px;
- margin-top:3px;
+  display:block;
+  font-size:27px;
+  margin-top:3px;
 }
 
+/* 底部 */
+
 .tabs{
- position:fixed;
- z-index:20;
- left:0;
- right:0;
- bottom:0;
- display:grid;
- grid-template-columns:repeat(3,1fr);
- padding:
- 7px 18px
- calc(7px + env(safe-area-inset-bottom));
- background:rgba(248,248,250,.88);
- backdrop-filter:blur(25px) saturate(180%);
- -webkit-backdrop-filter:blur(25px) saturate(180%);
- border-top:1px solid var(--line);
+  position:fixed;
+  z-index:20;
+  left:0;
+  right:0;
+  bottom:0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:
+    7px 12px
+    calc(7px + env(safe-area-inset-bottom));
+  background:rgba(248,248,250,.88);
+  backdrop-filter:blur(25px) saturate(180%);
+  -webkit-backdrop-filter:blur(25px) saturate(180%);
+  border-top:1px solid var(--line);
 }
 
 @media(prefers-color-scheme:dark){
- .tabs{
-  background:rgba(28,28,30,.88);
- }
+  .tabs{
+    background:rgba(28,28,30,.88);
+  }
 }
 
 .tab{
- border:0;
- background:none;
- color:var(--sub);
- font-size:11px;
- font-weight:600;
+  border:0;
+  background:none;
+  color:var(--sub);
+  font-size:10px;
+  font-weight:600;
 }
 
 .tab.active{
- color:var(--blue);
+  color:var(--blue);
 }
 
 .ico{
- display:block;
- font-size:22px;
- line-height:24px;
+  display:block;
+  font-size:21px;
+  line-height:24px;
 }
 
 .toast{
- position:fixed;
- z-index:100;
- left:50%;
- bottom:calc(94px + env(safe-area-inset-bottom));
- transform:translate(-50%,20px);
- opacity:0;
- pointer-events:none;
- background:rgba(30,30,30,.92);
- color:#fff;
- padding:11px 18px;
- border-radius:14px;
- font-size:14px;
- transition:.2s;
+  position:fixed;
+  z-index:100;
+  left:50%;
+  bottom:calc(94px + env(safe-area-inset-bottom));
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  background:rgba(30,30,30,.92);
+  color:#fff;
+  padding:11px 18px;
+  border-radius:14px;
+  font-size:14px;
+  transition:.2s;
+  white-space:nowrap;
 }
 
 .toast.show{
- opacity:1;
- transform:translate(-50%,0);
+  opacity:1;
+  transform:translate(-50%,0);
 }
-
 </style>
 </head>
 
@@ -653,2283 +737,2612 @@ select{
 
 <section id="home" class="page active">
 
-<div class="header">
+  <div class="header">
+    <div class="title">我的輪班</div>
+    <div class="subtitle">四班輪班・8 天循環</div>
+  </div>
 
-<div class="title">
-我的輪班
-</div>
+  <div class="card today">
 
-<div class="subtitle">
-四班輪班・8 天循環
-</div>
+    <div class="today-label">今天</div>
+    <div id="todayDate" class="today-date"></div>
 
-</div>
+    <div class="my-shift">
 
+      <div class="my-label">我的班</div>
 
-<div class="card today">
+      <div id="myShift"
+           class="my-shift-name">
+      </div>
 
-<div class="today-label">
-今天
-</div>
+    </div>
 
-<div id="todayDate" class="today-date"></div>
+    <div class="team-grid">
 
+      <div id="teamA" class="team-card"></div>
+      <div id="teamB" class="team-card"></div>
+      <div id="teamC" class="team-card"></div>
+      <div id="teamD" class="team-card"></div>
 
-<div class="my-shift">
+    </div>
 
-<div class="my-label">
-我的班
-</div>
+    <div id="todayHoliday"></div>
 
-<div
-id="myShift"
-class="my-shift-name">
-</div>
+    <div style="
+      color:var(--sub);
+      font-size:14px;
+      text-align:center;
+      margin-top:16px">
 
-</div>
+      明天我的班：
+      <b id="tomorrowShift"
+         style="color:var(--text)">
+      </b>
 
+    </div>
 
-<div class="team-grid">
+  </div>
 
-<div id="teamA" class="team-card"></div>
+  <div class="section-title">
+    接下來 7 天
+  </div>
 
-<div id="teamB" class="team-card"></div>
+  <div id="upcoming"
+       class="card">
+  </div>
 
-<div id="teamC" class="team-card"></div>
+  <div class="section-title">
+    國定假日
+  </div>
 
-<div id="teamD" class="team-card"></div>
+  <div class="card detail">
 
-</div>
+    <div style="
+      font-weight:800;
+      font-size:18px">
+      🇹🇼 台灣國定假日
+    </div>
 
+    <div class="info-text">
+      App 會在月曆標示國假。
+      輪班人員實際補假依公司排班及適用規定，
+      可以在「設定」自行指定補假日期。
+    </div>
 
-<div id="todayHoliday"></div>
-
-
-<div style="
-color:var(--sub);
-font-size:14px;
-text-align:center;
-margin-top:16px">
-
-明天我的班：
-<b
-id="tomorrowShift"
-style="color:var(--text)">
-</b>
-
-</div>
-
-</div>
-
-
-<div class="section-title">
-接下來 7 天
-</div>
-
-<div id="upcoming" class="card"></div>
-
-
-<div class="section-title">
-國定假日
-</div>
-
-<div class="card detail">
-
-<div style="
-font-weight:800;
-font-size:18px">
-
-🇹🇼 台灣勞工國定假日
-
-</div>
-
-<div class="info-text">
-
-本 App 提供國定假日標記，
-並讓你自行指定公司實際補假日期。
-
-輪班人員的例假、休息日不一定落在週六、
-週日，因此補假不由 App 自動判定。
-
-請依公司排班及勞雇雙方約定設定。
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
-<!-- ================= 月曆 ================= -->
+<!-- ================= 我的月曆 ================= -->
 
-<section id="calendarPage" class="page">
+<section id="myCalendarPage"
+         class="page">
 
-<div class="header">
+  <div class="header">
 
-<div class="title">
-月曆
-</div>
+    <div class="title">
+      我的月曆
+    </div>
 
-<div class="subtitle">
-A / B / C / D 四班
-</div>
+    <div class="subtitle">
+      只顯示我的班別
+    </div>
 
-</div>
+  </div>
+
+  <div class="card">
+
+    <div class="calendar-top">
+
+      <div class="month-row">
+
+        <div id="myMonthTitle"
+             class="month-title">
+        </div>
+
+        <div class="controls">
+
+          <button id="myPrev"
+                  class="circle">
+            ‹
+          </button>
+
+          <button id="myNext"
+                  class="circle">
+            ›
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="my-calendar-label">
+        ⭐ 我的班：
+        <span id="myCalendarTeam"></span>
+      </div>
+
+    </div>
+
+    <div class="week">
+
+      <div>日</div>
+      <div>一</div>
+      <div>二</div>
+      <div>三</div>
+      <div>四</div>
+      <div>五</div>
+      <div>六</div>
+
+    </div>
+
+    <div id="myGrid"
+         class="calendar-grid">
+    </div>
+
+  </div>
+
+  <button id="myTodayBtn"
+          class="btn">
+    回到今天
+  </button>
+
+  <div id="myDetail"
+       class="card detail">
+  </div>
+
+</section>
 
 
-<div class="card">
+<!-- ================= 四班月曆 ================= -->
 
-<div class="cal-head">
+<section id="calendarPage"
+         class="page">
 
-<div id="monthTitle" class="month"></div>
+  <div class="header">
 
-<div class="controls">
+    <div class="title">
+      四班月曆
+    </div>
 
-<button id="prev" class="circle">
-‹
-</button>
+    <div class="subtitle">
+      A / B / C / D
+    </div>
 
-<button id="next" class="circle">
-›
-</button>
+  </div>
 
-</div>
+  <div class="card">
 
-</div>
+    <div class="calendar-top">
 
+      <div class="month-row">
 
-<div class="week">
+        <div id="monthTitle"
+             class="month-title">
+        </div>
 
-<div>日</div>
-<div>一</div>
-<div>二</div>
-<div>三</div>
-<div>四</div>
-<div>五</div>
-<div>六</div>
+        <div class="controls">
 
-</div>
+          <button id="prev"
+                  class="circle">
+            ‹
+          </button>
 
+          <button id="next"
+                  class="circle">
+            ›
+          </button>
 
-<div id="grid" class="grid"></div>
+        </div>
 
-</div>
+      </div>
 
+      <div class="calendar-type">
 
-<button id="todayBtn" class="btn">
-回到今天
-</button>
+        <button id="showMyCalendar">
+          我的班
+        </button>
 
+        <button id="showAllCalendar"
+                class="active">
+          四班
+        </button>
 
-<div id="detail" class="card detail"></div>
+      </div>
+
+    </div>
+
+    <div class="week">
+
+      <div>日</div>
+      <div>一</div>
+      <div>二</div>
+      <div>三</div>
+      <div>四</div>
+      <div>五</div>
+      <div>六</div>
+
+    </div>
+
+    <div id="grid"
+         class="calendar-grid">
+    </div>
+
+  </div>
+
+  <button id="todayBtn"
+          class="btn">
+    回到今天
+  </button>
+
+  <div id="detail"
+       class="card detail">
+  </div>
 
 </section>
 
 
 <!-- ================= 設定 ================= -->
 
-<section id="settingsPage" class="page">
+<section id="settingsPage"
+         class="page">
 
-<div class="header">
+  <div class="header">
 
-<div class="title">
-設定
-</div>
+    <div class="title">
+      設定
+    </div>
 
-<div class="subtitle">
-四班輪班與國假管理
-</div>
+    <div class="subtitle">
+      四班輪班與國假管理
+    </div>
 
-</div>
+  </div>
 
 
-<div class="section-title">
-我的班
-</div>
+  <div class="section-title">
+    我的班
+  </div>
 
-<div class="card" style="padding:0 17px">
+  <div class="card"
+       style="padding:0 17px">
 
-<div class="setting">
+    <div class="setting">
 
-<b>
-我是幾班？
-</b>
+      <b>我是幾班？</b>
 
-<select id="myTeam">
+      <select id="myTeam">
 
-<option value="A">
-A班
-</option>
+        <option value="A">A班</option>
+        <option value="B">B班</option>
+        <option value="C">C班</option>
+        <option value="D">D班</option>
 
-<option value="B">
-B班
-</option>
+      </select>
 
-<option value="C">
-C班
-</option>
+    </div>
 
-<option value="D">
-D班
-</option>
+    <button id="saveTeam"
+            class="btn">
+      儲存我的班
+    </button>
 
-</select>
+  </div>
 
-</div>
 
-<button
-id="saveTeam"
-class="btn">
+  <div class="section-title">
+    輪班基準
+  </div>
 
-儲存我的班
+  <div class="card"
+       style="padding:0 17px">
 
-</button>
+    <div class="setting">
 
-</div>
+      <b>基準日期</b>
 
+      <input id="baseDate"
+             type="date">
 
-<div class="section-title">
-輪班基準
-</div>
+    </div>
 
-<div class="card" style="padding:0 17px">
+    <div class="form-note">
+      預設基準：
+      2026/8/12
+    </div>
 
-<div class="setting">
 
-<b>
-基準日期
-</b>
+    <div class="setting">
 
-<input
-id="baseDate"
-type="date">
+      <b>A班 2026/8/12</b>
 
-</div>
+      <select id="shiftA">
 
+        <option value="0">白天1</option>
+        <option value="1">白天2</option>
+        <option value="2">小夜1</option>
+        <option value="3">小夜2</option>
+        <option value="4">小休</option>
+        <option value="5">大夜1</option>
+        <option value="6">大夜2</option>
+        <option value="7">大休</option>
 
-<div class="form-note">
+      </select>
 
-2026/8/12 已設定為基準日期。
+    </div>
 
-</div>
 
+    <div class="setting">
 
-<div class="setting">
+      <b>B班 2026/8/12</b>
 
-<b>
-A班 2026/8/12
-</b>
+      <select id="shiftB">
 
-<select id="shiftA">
+        <option value="0">白天1</option>
+        <option value="1">白天2</option>
+        <option value="2">小夜1</option>
+        <option value="3">小夜2</option>
+        <option value="4">小休</option>
+        <option value="5">大夜1</option>
+        <option value="6">大夜2</option>
+        <option value="7">大休</option>
 
-<option value="0">白天1</option>
-<option value="1">白天2</option>
-<option value="2">小夜1</option>
-<option value="3">小夜2</option>
-<option value="4">小休</option>
-<option value="5">大夜1</option>
-<option value="6">大夜2</option>
-<option value="7">大休</option>
+      </select>
 
-</select>
+    </div>
 
-</div>
 
+    <div class="setting">
 
-<div class="setting">
+      <b>C班 2026/8/12</b>
 
-<b>
-B班 2026/8/12
-</b>
+      <select id="shiftC">
 
-<select id="shiftB">
+        <option value="0">白天1</option>
+        <option value="1">白天2</option>
+        <option value="2">小夜1</option>
+        <option value="3">小夜2</option>
+        <option value="4">小休</option>
+        <option value="5">大夜1</option>
+        <option value="6">大夜2</option>
+        <option value="7">大休</option>
 
-<option value="0">白天1</option>
-<option value="1">白天2</option>
-<option value="2">小夜1</option>
-<option value="3">小夜2</option>
-<option value="4">小休</option>
-<option value="5">大夜1</option>
-<option value="6">大夜2</option>
-<option value="7">大休</option>
+      </select>
 
-</select>
+    </div>
 
-</div>
 
+    <div class="setting">
 
-<div class="setting">
+      <b>D班 2026/8/12</b>
 
-<b>
-C班 2026/8/12
-</b>
+      <select id="shiftD">
 
-<select id="shiftC">
+        <option value="0">白天1</option>
+        <option value="1">白天2</option>
+        <option value="2">小夜1</option>
+        <option value="3">小夜2</option>
+        <option value="4">小休</option>
+        <option value="5">大夜1</option>
+        <option value="6">大夜2</option>
+        <option value="7">大休</option>
 
-<option value="0">白天1</option>
-<option value="1">白天2</option>
-<option value="2">小夜1</option>
-<option value="3">小夜2</option>
-<option value="4">小休</option>
-<option value="5">大夜1</option>
-<option value="6">大夜2</option>
-<option value="7">大休</option>
+      </select>
 
-</select>
+    </div>
 
-</div>
 
+    <button id="saveConfig"
+            class="btn">
+      儲存輪班設定
+    </button>
 
-<div class="setting">
+    <button id="resetConfig"
+            class="btn gray">
+      恢復預設設定
+    </button>
 
-<b>
-D班 2026/8/12
-</b>
+  </div>
 
-<select id="shiftD">
 
-<option value="0">白天1</option>
-<option value="1">白天2</option>
-<option value="2">小夜1</option>
-<option value="3">小夜2</option>
-<option value="4">小休</option>
-<option value="5">大夜1</option>
-<option value="6">大夜2</option>
-<option value="7">大休</option>
+  <!-- 新增國假 -->
 
-</select>
+  <div class="section-title">
+    新增國假
+  </div>
 
-</div>
+  <div class="card"
+       style="padding:0 17px">
 
+    <div class="setting">
 
-<button
-id="saveConfig"
-class="btn">
+      <b>國假日期</b>
 
-儲存輪班設定
+      <input id="holidayDate"
+             type="date">
 
-</button>
+    </div>
 
+    <div class="setting">
 
-<button
-id="resetConfig"
-class="btn gray">
+      <b>國假名稱</b>
 
-恢復你的預設設定
+      <input id="holidayName"
+             type="text"
+             placeholder="例如：公司紀念日">
 
-</button>
+    </div>
 
-</div>
+    <button id="addHoliday"
+            class="btn">
+      ＋ 新增國假
+    </button>
 
+  </div>
 
-<!-- ================= 新增國假 ================= -->
 
-<div class="section-title">
-新增國假
-</div>
+  <!-- 補假 -->
 
-<div class="card" style="padding:0 17px">
+  <div class="section-title">
+    指定補假
+  </div>
 
-<div class="setting">
+  <div class="card"
+       style="padding:0 17px">
 
-<b>
-國假日期
-</b>
+    <div class="setting">
 
-<input
-id="holidayDate"
-type="date">
+      <b>選擇國假</b>
 
-</div>
+      <select id="holidaySelect">
+      </select>
 
+    </div>
 
-<div class="setting">
+    <div class="setting">
 
-<b>
-國假名稱
-</b>
+      <b>補假日期</b>
 
-<input
-id="holidayName"
-type="text"
-placeholder="例如：公司紀念日">
+      <input id="makeupDate"
+             type="date">
 
-</div>
+    </div>
 
+    <div class="setting">
 
-<button
-id="addHoliday"
-class="btn">
+      <b>補假備註</b>
 
-＋ 新增國假
+      <input id="makeupNote"
+             type="text"
+             placeholder="例如：公司排班補休">
 
-</button>
+    </div>
 
-</div>
+    <button id="addMakeup"
+            class="btn">
+      ＋ 指定補假
+    </button>
 
+    <div class="form-note">
+      🔴 紅點＝國假　
+      🔵 藍點＝補假
+    </div>
 
-<!-- ================= 補假 ================= -->
+  </div>
 
-<div class="section-title">
-指定補假
-</div>
 
-<div class="card" style="padding:0 17px">
+  <div class="section-title">
+    我的國假
+  </div>
 
-<div class="setting">
+  <div id="holidayList"
+       class="card manage">
+  </div>
 
-<b>
-選擇國假
-</b>
 
-<select id="holidaySelect"></select>
+  <div class="section-title">
+    本月輪班統計
+  </div>
 
-</div>
+  <div class="stats">
 
+    <div class="stat">
+      <span>A班工作日</span>
+      <strong id="statA">0</strong>
+    </div>
 
-<div class="setting">
+    <div class="stat">
+      <span>B班工作日</span>
+      <strong id="statB">0</strong>
+    </div>
 
-<b>
-補假日期
-</b>
+    <div class="stat">
+      <span>C班工作日</span>
+      <strong id="statC">0</strong>
+    </div>
 
-<input
-id="makeupDate"
-type="date">
+    <div class="stat">
+      <span>D班工作日</span>
+      <strong id="statD">0</strong>
+    </div>
 
-</div>
-
-
-<div class="setting">
-
-<b>
-補假備註
-</b>
-
-<input
-id="makeupNote"
-type="text"
-placeholder="例如：公司排班補休">
-
-</div>
-
-
-<button
-id="addMakeup"
-class="btn">
-
-＋ 指定補假
-
-</button>
-
-<div class="form-note">
-
-🔴 紅色＝國假
-
-<br>
-
-🔵 藍色＝補假
-
-</div>
-
-</div>
-
-
-<div class="section-title">
-我的國假
-</div>
-
-<div
-id="holidayList"
-class="card manage">
-</div>
-
-
-<div class="section-title">
-本月輪班統計
-</div>
-
-<div class="stats">
-
-<div class="stat">
-<span>A班工作日</span>
-<strong id="statA">0</strong>
-</div>
-
-<div class="stat">
-<span>B班工作日</span>
-<strong id="statB">0</strong>
-</div>
-
-<div class="stat">
-<span>C班工作日</span>
-<strong id="statC">0</strong>
-</div>
-
-<div class="stat">
-<span>D班工作日</span>
-<strong id="statD">0</strong>
-</div>
-
-</div>
+  </div>
 
 </section>
 
 </div>
 
 
-<!-- ================= Tab ================= -->
+<!-- ================= 底部導覽 ================= -->
 
 <nav class="tabs">
 
-<button
-class="tab active"
-data-page="home">
+  <button class="tab active"
+          data-page="home">
 
-<span class="ico">
-⌂
-</span>
+    <span class="ico">⌂</span>
+    首頁
 
-首頁
-
-</button>
+  </button>
 
 
-<button
-class="tab"
-data-page="calendarPage">
+  <button class="tab"
+          data-page="myCalendarPage">
 
-<span class="ico">
-▦
-</span>
+    <span class="ico">★</span>
+    我的月曆
 
-月曆
-
-</button>
+  </button>
 
 
-<button
-class="tab"
-data-page="settingsPage">
+  <button class="tab"
+          data-page="calendarPage">
 
-<span class="ico">
-⚙
-</span>
+    <span class="ico">▦</span>
+    四班月曆
 
-設定
+  </button>
 
-</button>
+
+  <button class="tab"
+          data-page="settingsPage">
+
+    <span class="ico">⚙</span>
+    設定
+
+  </button>
 
 </nav>
 
 
-<div id="toast" class="toast"></div>
+<div id="toast"
+     class="toast">
+</div>
 
 
 <script>
 
-/* =========================================================
-   四班輪班設定
-========================================================= */
+/* =====================================================
+   基本設定
+===================================================== */
 
 const DEFAULT = {
 
- baseDate:"2026-08-12",
+  baseDate:"2026-08-12",
 
- myTeam:"B",
+  myTeam:"B",
 
- teams:{
+  teams:{
+    A:1,
+    B:3,
+    C:5,
+    D:7
+  },
 
-  A:1,
-
-  B:3,
-
-  C:5,
-
-  D:7
-
- },
-
- shifts:[
-
-  "白天1",
-
-  "白天2",
-
-  "小夜1",
-
-  "小夜2",
-
-  "小休",
-
-  "大夜1",
-
-  "大夜2",
-
-  "大休"
-
- ]
+  shifts:[
+    "白天1",
+    "白天2",
+    "小夜1",
+    "小夜2",
+    "小休",
+    "大夜1",
+    "大夜2",
+    "大休"
+  ]
 
 };
 
 
-/* =========================================================
+/* =====================================================
    2026 國定假日
-========================================================= */
+===================================================== */
 
 const DEFAULT_HOLIDAYS = {
 
- "2026-01-01":
- "中華民國開國紀念日",
-
- "2026-02-15":
- "小年夜",
-
- "2026-02-16":
- "除夕",
-
- "2026-02-17":
- "春節",
-
- "2026-02-18":
- "春節",
-
- "2026-02-19":
- "春節",
-
- "2026-02-28":
- "和平紀念日",
-
- "2026-04-04":
- "兒童節",
-
- "2026-04-05":
- "清明節",
-
- "2026-05-01":
- "勞動節",
-
- "2026-06-19":
- "端午節",
-
- "2026-09-25":
- "中秋節",
-
- "2026-09-28":
- "孔子誕辰紀念日／教師節",
-
- "2026-10-10":
- "國慶日",
-
- "2026-10-25":
- "臺灣光復暨金門古寧頭大捷紀念日",
-
- "2026-12-25":
- "行憲紀念日"
+  "2026-01-01":"中華民國開國紀念日",
+  "2026-02-15":"小年夜",
+  "2026-02-16":"除夕",
+  "2026-02-17":"春節",
+  "2026-02-18":"春節",
+  "2026-02-19":"春節",
+  "2026-02-28":"和平紀念日",
+  "2026-04-04":"兒童節",
+  "2026-04-05":"清明節",
+  "2026-05-01":"勞動節",
+  "2026-06-19":"端午節",
+  "2026-09-25":"中秋節",
+  "2026-09-28":"孔子誕辰紀念日／教師節",
+  "2026-10-10":"國慶日",
+  "2026-10-25":"臺灣光復暨金門古寧頭大捷紀念日",
+  "2026-12-25":"行憲紀念日"
 
 };
 
 
-/* =========================================================
-   LocalStorage
-========================================================= */
+/* =====================================================
+   儲存資料
+===================================================== */
 
 let config =
-JSON.parse(
- localStorage.getItem("shift-four-config")
- || "null"
-)
-|| JSON.parse(JSON.stringify(DEFAULT));
+  JSON.parse(
+    localStorage.getItem("shift-four-config")
+    || "null"
+  )
+  || JSON.parse(
+    JSON.stringify(DEFAULT)
+  );
 
 
 let customHolidays =
-JSON.parse(
- localStorage.getItem("custom-holidays")
- || "null"
-)
-|| [];
+  JSON.parse(
+    localStorage.getItem("custom-holidays")
+    || "null"
+  )
+  || [];
 
 
 let makeups =
-JSON.parse(
- localStorage.getItem("shift-makeups")
- || "null"
-)
-|| [];
+  JSON.parse(
+    localStorage.getItem("shift-makeups")
+    || "null"
+  )
+  || [];
 
 
-let cal=new Date();
+/* =====================================================
+   月曆目前位置
+===================================================== */
 
-let selected=new Date();
+let calendarDate = new Date();
+
+let myCalendarDate = new Date();
+
+let selectedDate = new Date();
+
+let mySelectedDate = new Date();
 
 
-/* =========================================================
+/* =====================================================
    儲存
-========================================================= */
+===================================================== */
 
 function saveAll(){
 
- localStorage.setItem(
-  "shift-four-config",
-  JSON.stringify(config)
- );
+  localStorage.setItem(
+    "shift-four-config",
+    JSON.stringify(config)
+  );
 
- localStorage.setItem(
-  "custom-holidays",
-  JSON.stringify(customHolidays)
- );
+  localStorage.setItem(
+    "custom-holidays",
+    JSON.stringify(customHolidays)
+  );
 
- localStorage.setItem(
-  "shift-makeups",
-  JSON.stringify(makeups)
- );
+  localStorage.setItem(
+    "shift-makeups",
+    JSON.stringify(makeups)
+  );
 
 }
 
 
-/* =========================================================
-   日期
-========================================================= */
+/* =====================================================
+   日期工具
+===================================================== */
 
 function dateKey(d){
 
- return d.getFullYear()
- +"-"
- +String(d.getMonth()+1).padStart(2,"0")
- +"-"
- +String(d.getDate()).padStart(2,"0");
+  return d.getFullYear()
+    + "-"
+    + String(d.getMonth()+1).padStart(2,"0")
+    + "-"
+    + String(d.getDate()).padStart(2,"0");
 
 }
 
 
 function parseDate(s){
 
- return new Date(s+"T00:00:00");
+  return new Date(s+"T00:00:00");
 
 }
 
 
-function same(a,b){
+function sameDay(a,b){
 
- return(
-  a.getFullYear()===b.getFullYear()
-  &&
-  a.getMonth()===b.getMonth()
-  &&
-  a.getDate()===b.getDate()
- );
-
-}
-
-
-function diff(a,b){
-
- const aa=
- new Date(
-  a.getFullYear(),
-  a.getMonth(),
-  a.getDate()
- );
-
- const bb=
- new Date(
-  b.getFullYear(),
-  b.getMonth(),
-  b.getDate()
- );
-
- return Math.round(
-  (aa-bb)/86400000
- );
+  return (
+    a.getFullYear()===b.getFullYear()
+    &&
+    a.getMonth()===b.getMonth()
+    &&
+    a.getDate()===b.getDate()
+  );
 
 }
 
 
-function fmt(d){
+function dayDiff(a,b){
 
- return d.getFullYear()
- +"/"
- +String(d.getMonth()+1).padStart(2,"0")
- +"/"
- +String(d.getDate()).padStart(2,"0");
+  const aa = new Date(
+    a.getFullYear(),
+    a.getMonth(),
+    a.getDate()
+  );
 
-}
+  const bb = new Date(
+    b.getFullYear(),
+    b.getMonth(),
+    b.getDate()
+  );
 
-
-function zhDate(d){
-
- return d.getFullYear()
- +"年"
- +(d.getMonth()+1)
- +"月"
- +d.getDate()
- +"日・星期"
- +"日一二三四五六"[d.getDay()];
+  return Math.round(
+    (aa-bb)/86400000
+  );
 
 }
 
 
-/* =========================================================
-   班別
-========================================================= */
+function formatDate(d){
 
-function teamShift(team,d){
-
- let index=
- (
-  config.teams[team]
-  +
-  diff(
-   d,
-   parseDate(config.baseDate)
-  )
- ) % 8;
-
-
- if(index<0)
-  index+=8;
-
-
- return config.shifts[index];
+  return d.getFullYear()
+    + "/"
+    + String(d.getMonth()+1).padStart(2,"0")
+    + "/"
+    + String(d.getDate()).padStart(2,"0");
 
 }
 
 
-function shiftClass(s){
+function chineseDate(d){
 
- if(s.startsWith("白天"))
-  return "day";
+  const weeks =
+    ["日","一","二","三","四","五","六"];
 
- if(s.startsWith("小夜"))
-  return "eve";
-
- if(s.startsWith("大夜"))
-  return "night";
-
- return "rest";
-
-}
-
-
-function shiftColor(s){
-
- if(s.startsWith("白天"))
-  return "var(--orange)";
-
- if(s.startsWith("小夜"))
-  return "var(--indigo)";
-
- if(s.startsWith("大夜"))
-  return "var(--purple)";
-
- return "var(--green)";
+  return d.getFullYear()
+    + "年"
+    + (d.getMonth()+1)
+    + "月"
+    + d.getDate()
+    + "日 星期"
+    + weeks[d.getDay()];
 
 }
 
 
-/* =========================================================
-   國假
-========================================================= */
+/* =====================================================
+   班別計算
+===================================================== */
 
-function holidayMap(){
+function getShift(team,date){
 
- let map={
-  ...DEFAULT_HOLIDAYS
- };
-
- customHolidays.forEach(x=>{
-  map[x.date]=x.name;
- });
-
- return map;
-
-}
+  let index =
+    (
+      config.teams[team]
+      +
+      dayDiff(
+        date,
+        parseDate(config.baseDate)
+      )
+    ) % 8;
 
 
-function holiday(d){
-
- return holidayMap()[dateKey(d)]||null;
-
-}
-
-
-/* =========================================================
-   補假
-========================================================= */
-
-function makeupFor(d){
-
- return makeups.find(
-  x=>x.date===dateKey(d)
- );
-
-}
-
-
-function holidayForMakeup(d){
-
- const m=makeupFor(d);
-
- if(!m)
-  return null;
-
- return holidayMap()[m.holiday]
- ||m.holiday;
-
-}
-
-
-/* =========================================================
-   Toast
-========================================================= */
-
-function toast(message){
-
- const e=
- document.getElementById("toast");
-
- e.textContent=message;
-
- e.classList.add("show");
-
- setTimeout(()=>{
-  e.classList.remove("show");
- },1800);
-
-}
-
-
-/* =========================================================
-   班組卡片
-========================================================= */
-
-function teamCardHTML(team,d){
-
- const s=teamShift(team,d);
-
- const mine=
- team===config.myTeam;
-
- return `
-
- <div class="
-  team-card
-  ${mine?"mine":""}
- ">
-
-  ${
-   mine
-   ?
-   `<div class="mine-badge">
-     我的班
-    </div>`
-   :""
+  if(index<0){
+    index += 8;
   }
 
-  <div class="team-name">
-   ${team}班
-  </div>
 
-  <div
-   class="team-shift ${shiftClass(s)}">
-
-   ${s}
-
-  </div>
-
- </div>
-
- `;
+  return config.shifts[index];
 
 }
 
 
-/* =========================================================
+function shiftClass(shift){
+
+  if(shift.startsWith("白天")){
+    return "day";
+  }
+
+  if(shift.startsWith("小夜")){
+    return "eve";
+  }
+
+  if(shift.startsWith("大夜")){
+    return "night";
+  }
+
+  return "rest";
+
+}
+
+
+function shiftColor(shift){
+
+  if(shift.startsWith("白天")){
+    return "var(--orange)";
+  }
+
+  if(shift.startsWith("小夜")){
+    return "var(--indigo)";
+  }
+
+  if(shift.startsWith("大夜")){
+    return "var(--purple)";
+  }
+
+  return "var(--green)";
+
+}
+
+
+/* =====================================================
+   國假
+===================================================== */
+
+function getHolidayMap(){
+
+  const map = {
+    ...DEFAULT_HOLIDAYS
+  };
+
+  customHolidays.forEach(item=>{
+    map[item.date] = item.name;
+  });
+
+  return map;
+
+}
+
+
+function getHoliday(date){
+
+  return getHolidayMap()[dateKey(date)] || null;
+
+}
+
+
+/* =====================================================
+   補假
+===================================================== */
+
+function getMakeup(date){
+
+  return makeups.find(
+    item=>item.date===dateKey(date)
+  );
+
+}
+
+
+function getHolidayNameForMakeup(date){
+
+  const item=getMakeup(date);
+
+  if(!item){
+    return null;
+  }
+
+  return (
+    getHolidayMap()[item.holiday]
+    || item.holiday
+  );
+
+}
+
+
+/* =====================================================
+   Toast
+===================================================== */
+
+function toast(text){
+
+  const element =
+    document.getElementById("toast");
+
+  element.textContent=text;
+
+  element.classList.add("show");
+
+  setTimeout(()=>{
+    element.classList.remove("show");
+  },1800);
+
+}
+
+
+/* =====================================================
    首頁
-========================================================= */
+===================================================== */
 
 function renderHome(){
 
- const today=new Date();
+  const today = new Date();
 
- const tomorrow=new Date(today);
+  const tomorrow = new Date(today);
 
- tomorrow.setDate(
-  tomorrow.getDate()+1
- );
-
-
- document.getElementById(
-  "todayDate"
- ).textContent=
- zhDate(today);
-
-
- const my=
- teamShift(
-  config.myTeam,
-  today
- );
-
-
- const myElement=
- document.getElementById("myShift");
-
- myElement.textContent=my;
-
- myElement.className=
- "my-shift-name "
- +shiftClass(my);
-
-
- document.getElementById("teamA")
- .outerHTML=
- `<div id="teamA" class="team-card">
-  ${teamCardHTML("A",today)
-   .replace(/^<div class="team-card">|^<div class="team-card mine">|<\/div>$/g,"")}
- </div>`;
-
-
- renderTeamCards(today);
-
-
- document.getElementById(
-  "tomorrowShift"
- ).textContent=
- teamShift(
-  config.myTeam,
-  tomorrow
- );
-
-
- const h=holiday(today);
-
- const mk=makeupFor(today);
-
- const box=
- document.getElementById(
-  "todayHoliday"
- );
-
-
- if(h){
-
-  box.innerHTML=
-  `<div class="holiday-home">
-   🇹🇼 ${h}
-  </div>`;
-
- }
-
- else if(mk){
-
-  box.innerHTML=
-  `<div class="makeup-home">
-   🔵 補假：
-   ${holidayForMakeup(today)||""}
-  </div>`;
-
- }
-
- else{
-
-  box.innerHTML="";
-
- }
-
-
- renderUpcoming();
-
-}
-
-
-/* =========================================================
-   四班首頁
-========================================================= */
-
-function renderTeamCards(d){
-
- ["A","B","C","D"]
- .forEach(team=>{
-
-  const element=
-  document.getElementById(
-   "team"+team
+  tomorrow.setDate(
+    tomorrow.getDate()+1
   );
 
-  const s=
-  teamShift(team,d);
 
-  const mine=
-  team===config.myTeam;
+  document.getElementById(
+    "todayDate"
+  ).textContent =
+    chineseDate(today);
 
-  element.className=
-  "team-card"
-  +(mine?" mine":"");
 
-  element.innerHTML=`
+  const myShift =
+    getShift(
+      config.myTeam,
+      today
+    );
 
-   ${
-    mine
-    ?
-    `<div class="mine-badge">
-      我的班
-     </div>`
-    :""
-   }
 
-   <div class="team-name">
-    ${team}班
-   </div>
+  const myElement =
+    document.getElementById("myShift");
 
-   <div
-    class="team-shift ${shiftClass(s)}">
+  myElement.textContent =
+    myShift;
 
-    ${s}
+  myElement.style.color =
+    shiftColor(myShift);
 
-   </div>
 
-  `;
+  ["A","B","C","D"].forEach(team=>{
 
- });
+    const element =
+      document.getElementById(
+        "team"+team
+      );
+
+    const shift =
+      getShift(team,today);
+
+    const mine =
+      team===config.myTeam;
+
+    element.className =
+      "team-card"
+      + (mine ? " mine" : "");
+
+    element.innerHTML = `
+
+      ${
+        mine
+        ?
+        `<div class="mine-badge">
+          我的班
+         </div>`
+        :
+        ""
+      }
+
+      <div class="team-name">
+        ${team}班
+      </div>
+
+      <div class="team-shift ${shiftClass(shift)}">
+        ${shift}
+      </div>
+
+    `;
+
+  });
+
+
+  const holiday =
+    getHoliday(today);
+
+  const makeup =
+    getMakeup(today);
+
+
+  const holidayBox =
+    document.getElementById(
+      "todayHoliday"
+    );
+
+
+  if(holiday){
+
+    holidayBox.innerHTML =
+      `<div class="holiday-home">
+        🇹🇼 ${holiday}
+       </div>`;
+
+  }
+  else if(makeup){
+
+    holidayBox.innerHTML =
+      `<div class="makeup-home">
+        🔵 補假：
+        ${getHolidayNameForMakeup(today)}
+       </div>`;
+
+  }
+  else{
+
+    holidayBox.innerHTML="";
+
+  }
+
+
+  document.getElementById(
+    "tomorrowShift"
+  ).textContent =
+    getShift(
+      config.myTeam,
+      tomorrow
+    );
+
+
+  renderUpcoming();
 
 }
 
 
-/* =========================================================
-   接下來
-========================================================= */
+/* =====================================================
+   接下來7天
+===================================================== */
 
 function renderUpcoming(){
 
- const today=new Date();
+  const today = new Date();
 
- const box=
- document.getElementById(
-  "upcoming"
- );
+  const box =
+    document.getElementById(
+      "upcoming"
+    );
 
- box.innerHTML="";
-
-
- for(let i=1;i<=7;i++){
-
-  const d=new Date(today);
-
-  d.setDate(
-   d.getDate()+i
-  );
+  box.innerHTML="";
 
 
-  const row=
-  document.createElement("div");
+  for(let i=1;i<=7;i++){
 
-  row.className="next-row";
+    const d =
+      new Date(today);
 
-
-  let shifts="";
-
-
-  ["A","B","C","D"]
-  .forEach(team=>{
-
-   const s=
-   teamShift(team,d);
-
-   const mine=
-   team===config.myTeam;
+    d.setDate(
+      d.getDate()+i
+    );
 
 
-   shifts+=`
+    const row =
+      document.createElement("div");
 
-    <span
-     class="mini-shift
-     ${mine?"mine":""}">
-
-     ${team}
-     ${mine?"★":""}
-     ${s}
-
-    </span>
-
-   `;
-
-  });
+    row.className="next-row";
 
 
-  const h=holiday(d);
-
-  const mk=makeupFor(d);
+    let shifts="";
 
 
-  row.innerHTML=`
+    ["A","B","C","D"].forEach(team=>{
 
-   <div class="next-date">
-    ${d.getDate()}
-   </div>
+      const shift =
+        getShift(team,d);
 
-   <div class="next-info">
-
-    <div class="next-date-text">
-     ${fmt(d)}
-    </div>
-
-    <div class="next-team">
-     ${shifts}
-    </div>
-
-    ${
-     h
-     ?
-     `<div class="holiday-mini">
-       🇹🇼 ${h}
-      </div>`
-     :""
-    }
-
-    ${
-     mk
-     ?
-     `<div class="makeup-mini">
-       🔵 補假：
-       ${holidayForMakeup(d)||""}
-      </div>`
-     :""
-    }
-
-   </div>
-
-  `;
+      const mine =
+        team===config.myTeam;
 
 
-  box.appendChild(row);
+      shifts += `
 
- }
+        <span class="
+          mini-shift
+          ${mine?"mine":""}
+        ">
+
+          ${team}
+          ${mine?"★":""}
+          ${shift}
+
+        </span>
+
+      `;
+
+    });
+
+
+    const holiday =
+      getHoliday(d);
+
+    const makeup =
+      getMakeup(d);
+
+
+    row.innerHTML = `
+
+      <div class="next-date">
+        ${d.getDate()}
+      </div>
+
+      <div class="next-info">
+
+        <div class="next-date-text">
+          ${formatDate(d)}
+        </div>
+
+        <div class="next-team">
+          ${shifts}
+        </div>
+
+        ${
+          holiday
+          ?
+          `<div class="holiday-mini">
+            🇹🇼 ${holiday}
+           </div>`
+          :
+          ""
+        }
+
+        ${
+          makeup
+          ?
+          `<div class="makeup-mini">
+            🔵 補假：
+            ${getHolidayNameForMakeup(d)}
+           </div>`
+          :
+          ""
+        }
+
+      </div>
+
+    `;
+
+
+    box.appendChild(row);
+
+  }
 
 }
 
 
-/* =========================================================
-   月曆
-========================================================= */
+/* =====================================================
+   我的月曆
+===================================================== */
 
-function renderCalendar(){
+function renderMyCalendar(){
 
- document.getElementById(
-  "monthTitle"
- ).textContent=
- cal.getFullYear()
- +"年"
- +(cal.getMonth()+1)
- +"月";
+  const y =
+    myCalendarDate.getFullYear();
 
+  const m =
+    myCalendarDate.getMonth();
 
- const grid=
- document.getElementById("grid");
 
- grid.innerHTML="";
+  document.getElementById(
+    "myMonthTitle"
+  ).textContent =
+    y+"年"+(m+1)+"月";
 
 
- const first=
- new Date(
-  cal.getFullYear(),
-  cal.getMonth(),
-  1
- );
+  document.getElementById(
+    "myCalendarTeam"
+  ).textContent =
+    config.myTeam+"班";
 
 
- const total=
- new Date(
-  cal.getFullYear(),
-  cal.getMonth()+1,
-  0
- ).getDate();
+  const grid =
+    document.getElementById(
+      "myGrid"
+    );
 
+  grid.innerHTML="";
 
- for(
-  let i=0;
-  i<first.getDay();
-  i++
- ){
 
-  grid.appendChild(
-   document.createElement("div")
-  );
+  const first =
+    new Date(y,m,1);
 
- }
-
-
- for(
-  let day=1;
-  day<=total;
-  day++
- ){
-
-  const d=
-  new Date(
-   cal.getFullYear(),
-   cal.getMonth(),
-   day
-  );
-
-
-  const h=holiday(d);
-
-  const mk=makeupFor(d);
-
-
-  const cell=
-  document.createElement("div");
-
-  cell.className="cell";
-
-
-  if(same(d,new Date()))
-   cell.classList.add("today");
-
-
-  if(same(d,selected))
-   cell.classList.add("selected");
-
-
-  let shiftHTML="";
-
-
-  ["A","B","C","D"]
-  .forEach(team=>{
-
-   const s=
-   teamShift(team,d);
-
-   const mine=
-   team===config.myTeam;
-
-
-   shiftHTML+=`
-
-    <div
-     class="
-      cal-shift
-      ${mine?"mine":""}
-     "
-     style="
-      color:${mine
-       ?"var(--blue)"
-       :shiftColor(s)}
-     ">
-
-     ${team}${mine?"★":""}
-     ${s}
-
-    </div>
-
-   `;
-
-  });
-
-
-  cell.innerHTML=`
-
-   <div class="cellin">
-
-    ${
-     h
-     ?
-     `<div class="holiday-dot"></div>`
-     :""
-    }
-
-    ${
-     mk
-     ?
-     `<div class="makeup-dot"></div>`
-     :""
-    }
-
-    <div class="num">
-     ${day}
-    </div>
-
-    ${shiftHTML}
-
-   </div>
-
-  `;
-
-
-  cell.onclick=()=>{
-
-   selected=
-   new Date(d);
-
-   renderCalendar();
-
-   renderDetail();
-
-  };
-
-
-  grid.appendChild(cell);
-
- }
-
-
- renderStats();
-
-}
-
-
-/* =========================================================
-   日期詳細
-========================================================= */
-
-function renderDetail(){
-
- const h=holiday(selected);
-
- const mk=makeupFor(selected);
-
-
- let teamHTML="";
-
-
- ["A","B","C","D"]
- .forEach(team=>{
-
-  const s=
-  teamShift(team,selected);
-
-  const mine=
-  team===config.myTeam;
-
-
-  teamHTML+=`
-
-   <div
-    class="
-     detail-team-card
-     ${mine?"mine":""}
-    ">
-
-    <div class="detail-team-name">
-
-     ${team}班
-     ${mine?"・我的班":""}
-
-    </div>
-
-    <div
-     class="detail-team-shift"
-     style="color:${mine
-      ?"var(--blue)"
-      :shiftColor(s)}">
-
-     ${s}
-
-    </div>
-
-   </div>
-
-  `;
-
- });
-
-
- let extra="";
-
-
- if(h){
-
-  extra+=`
-
-   <div class="info">
-
-    <div class="info-title">
-     🇹🇼 ${h}
-    </div>
-
-    <div class="info-text">
-
-     國定假日。
-
-     若該日依你的排班屬於需要補假的情況，
-     可到「設定」自行指定補假日期。
-
-    </div>
-
-   </div>
-
-  `;
-
- }
-
-
- if(mk){
-
-  extra+=`
-
-   <div class="info bluebox">
-
-    <div class="info-title">
-     🔵 補假
-    </div>
-
-    <div class="info-text">
-
-     ${holidayForMakeup(selected)||mk.holiday}
-
-     <br>
-
-     補假日期：
-     ${fmt(selected)}
-
-     ${
-      mk.note
-      ?
-      `<br>備註：${mk.note}`
-      :""
-     }
-
-    </div>
-
-   </div>
-
-  `;
-
- }
-
-
- if(!extra){
-
-  extra=`
-
-   <div class="info graybox">
-
-    <div class="info-title">
-     沒有國假或補假
-    </div>
-
-   </div>
-
-  `;
-
- }
-
-
- document.getElementById(
-  "detail"
- ).innerHTML=`
-
-  <div class="detail-date">
-   ${zhDate(selected)}
-  </div>
-
-  <div class="detail-title">
-   四班輪班
-  </div>
-
-  <div class="detail-team">
-   ${teamHTML}
-  </div>
-
-  ${extra}
-
- `;
-
-}
-
-
-/* =========================================================
-   統計
-========================================================= */
-
-function renderStats(){
-
- const y=cal.getFullYear();
-
- const m=cal.getMonth();
-
- const total=
- new Date(
-  y,
-  m+1,
-  0
- ).getDate();
-
-
- ["A","B","C","D"]
- .forEach(team=>{
-
-  let work=0;
+  const total =
+    new Date(y,m+1,0).getDate();
 
 
   for(
-   let i=1;
-   i<=total;
-   i++
+    let i=0;
+    i<first.getDay();
+    i++
   ){
 
-   const s=
-   teamShift(
-    team,
-    new Date(y,m,i)
-   );
+    grid.appendChild(
+      document.createElement("div")
+    );
+
+  }
 
 
-   if(!s.includes("休"))
-    work++;
+  for(
+    let day=1;
+    day<=total;
+    day++
+  ){
+
+    const d =
+      new Date(y,m,day);
+
+    const shift =
+      getShift(
+        config.myTeam,
+        d
+      );
+
+
+    const holiday =
+      getHoliday(d);
+
+    const makeup =
+      getMakeup(d);
+
+
+    const cell =
+      document.createElement("div");
+
+    cell.className="cell";
+
+
+    if(sameDay(d,new Date())){
+      cell.classList.add("today");
+    }
+
+    if(sameDay(d,mySelectedDate)){
+      cell.classList.add("selected");
+    }
+
+
+    cell.innerHTML = `
+
+      <div class="cellin">
+
+        ${
+          holiday
+          ?
+          `<div class="holiday-dot"></div>`
+          :
+          ""
+        }
+
+        ${
+          makeup
+          ?
+          `<div class="makeup-dot"></div>`
+          :
+          ""
+        }
+
+        <div class="num">
+          ${day}
+        </div>
+
+        <div
+          class="cal-my-shift ${shiftClass(shift)}"
+          style="color:${shiftColor(shift)}">
+
+          ${shift}
+
+        </div>
+
+        ${
+          holiday
+          ?
+          `<div style="
+            color:var(--red);
+            font-size:8px;
+            margin-top:3px;
+            overflow:hidden;
+            white-space:nowrap">
+            ${holiday}
+           </div>`
+          :
+          ""
+        }
+
+      </div>
+
+    `;
+
+
+    cell.onclick=()=>{
+
+      mySelectedDate =
+        new Date(d);
+
+      renderMyCalendar();
+
+      renderMyDetail();
+
+    };
+
+
+    grid.appendChild(cell);
+
+  }
+
+
+  renderMyDetail();
+
+}
+
+
+/* =====================================================
+   我的月曆詳細
+===================================================== */
+
+function renderMyDetail(){
+
+  const d =
+    mySelectedDate;
+
+  const shift =
+    getShift(
+      config.myTeam,
+      d
+    );
+
+
+  const holiday =
+    getHoliday(d);
+
+  const makeup =
+    getMakeup(d);
+
+
+  let extra="";
+
+
+  if(holiday){
+
+    extra += `
+
+      <div class="info">
+
+        <div class="info-title">
+          🇹🇼 ${holiday}
+        </div>
+
+        <div class="info-text">
+          今天是國定假日。
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  if(makeup){
+
+    extra += `
+
+      <div class="info bluebox">
+
+        <div class="info-title">
+          🔵 補假
+        </div>
+
+        <div class="info-text">
+
+          ${getHolidayNameForMakeup(d)}
+
+          ${
+            makeup.note
+            ?
+            `<br>
+             備註：${makeup.note}`
+            :
+            ""
+          }
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  if(!extra){
+
+    extra = `
+
+      <div class="info graybox">
+
+        <div class="info-title">
+          一般輪班日
+        </div>
+
+      </div>
+
+    `;
 
   }
 
 
   document.getElementById(
-   "stat"+team
-  ).textContent=work;
+    "myDetail"
+  ).innerHTML = `
 
- });
+    <div class="detail-date">
+      ${chineseDate(d)}
+    </div>
 
-}
+    <div class="detail-title">
+      我的班
+    </div>
 
+    <div class="detail-my-shift">
 
-/* =========================================================
-   設定
-========================================================= */
+      <div class="detail-my-label">
+        ${config.myTeam}班
+      </div>
 
-function renderSettings(){
+      <div
+        class="detail-my-name"
+        style="color:${shiftColor(shift)}">
 
- document.getElementById(
-  "myTeam"
- ).value=config.myTeam;
+        ${shift}
 
+      </div>
 
- document.getElementById(
-  "baseDate"
- ).value=config.baseDate;
+    </div>
 
-
- document.getElementById(
-  "shiftA"
- ).value=config.teams.A;
-
-
- document.getElementById(
-  "shiftB"
- ).value=config.teams.B;
-
-
- document.getElementById(
-  "shiftC"
- ).value=config.teams.C;
-
-
- document.getElementById(
-  "shiftD"
- ).value=config.teams.D;
-
-
- const select=
- document.getElementById(
-  "holidaySelect"
- );
-
- select.innerHTML="";
-
-
- Object.entries(
-  holidayMap()
- )
- .sort()
- .forEach(([date,name])=>{
-
-  const option=
-  document.createElement("option");
-
-  option.value=date;
-
-  option.textContent=
-  date+"｜"+name;
-
-  select.appendChild(option);
-
- });
-
-
- const list=
- document.getElementById(
-  "holidayList"
- );
-
- list.innerHTML="";
-
-
- Object.entries(
-  holidayMap()
- )
- .sort()
- .forEach(([date,name])=>{
-
-  const custom=
-  customHolidays.some(
-   x=>x.date===date
-  );
-
-
-  const related=
-  makeups.filter(
-   x=>x.holiday===date
-  );
-
-
-  const item=
-  document.createElement("div");
-
-  item.className=
-  "manage-item";
-
-
-  item.innerHTML=`
-
-   <div class="manage-name">
-
-    ${name}
-
-    ${
-     custom
-     ?
-     `<span style="
-      color:var(--blue);
-      font-size:11px">
-      自訂
-      </span>`
-     :""
-    }
-
-   </div>
-
-
-   <div class="manage-date">
-
-    ${date}
-
-    ${
-     related.length
-     ?
-     " · 補假："+
-     related
-     .map(x=>x.date)
-     .join("、")
-     :""
-    }
-
-   </div>
-
-
-   <div class="manage-actions">
-
-    ${
-     custom
-     ?
-     `<button
-       class="mini-btn delete"
-       data-del="${date}">
-       刪除國假
-      </button>`
-     :""
-    }
-
-
-    ${
-     related
-     .map(x=>
-      `<button
-       class="mini-btn delete"
-       data-mk="${x.id}">
-       刪除補假 ${x.date}
-       </button>`
-     )
-     .join("")
-    }
-
-   </div>
+    ${extra}
 
   `;
 
-
-  list.appendChild(item);
-
- });
+}
 
 
- document
- .querySelectorAll("[data-del]")
- .forEach(button=>{
+/* =====================================================
+   四班月曆
+===================================================== */
 
-  button.onclick=()=>{
+function renderCalendar(){
 
-   const date=
-   button.dataset.del;
+  const y =
+    calendarDate.getFullYear();
 
-
-   customHolidays=
-   customHolidays.filter(
-    x=>x.date!==date
-   );
+  const m =
+    calendarDate.getMonth();
 
 
-   makeups=
-   makeups.filter(
-    x=>x.holiday!==date
-   );
+  document.getElementById(
+    "monthTitle"
+  ).textContent =
+    y+"年"+(m+1)+"月";
 
 
-   saveAll();
+  const grid =
+    document.getElementById(
+      "grid"
+    );
 
-   renderSettings();
-
-   renderHome();
-
-   renderCalendar();
-
-   renderDetail();
-
-   toast("已刪除國假");
-
-  };
-
- });
+  grid.innerHTML="";
 
 
- document
- .querySelectorAll("[data-mk]")
- .forEach(button=>{
+  const first =
+    new Date(y,m,1);
 
-  button.onclick=()=>{
-
-   const id=
-   button.dataset.mk;
+  const total =
+    new Date(y,m+1,0).getDate();
 
 
-   makeups=
-   makeups.filter(
-    x=>x.id!==id
-   );
+  for(
+    let i=0;
+    i<first.getDay();
+    i++
+  ){
+
+    grid.appendChild(
+      document.createElement("div")
+    );
+
+  }
 
 
-   saveAll();
+  for(
+    let day=1;
+    day<=total;
+    day++
+  ){
 
-   renderSettings();
+    const d =
+      new Date(y,m,day);
 
-   renderHome();
+    const holiday =
+      getHoliday(d);
 
-   renderCalendar();
+    const makeup =
+      getMakeup(d);
 
-   renderDetail();
 
-   toast("已刪除補假");
+    const cell =
+      document.createElement("div");
 
-  };
+    cell.className="cell";
 
- });
+
+    if(sameDay(d,new Date())){
+      cell.classList.add("today");
+    }
+
+    if(sameDay(d,selectedDate)){
+      cell.classList.add("selected");
+    }
+
+
+    let html="";
+
+
+    ["A","B","C","D"]
+    .forEach(team=>{
+
+      const shift =
+        getShift(team,d);
+
+      const mine =
+        team===config.myTeam;
+
+
+      html += `
+
+        <div
+          class="cal-team-shift"
+          style="color:${
+            mine
+            ?
+            "var(--blue)"
+            :
+            shiftColor(shift)
+          }">
+
+          ${team}${mine?"★":""}
+          ${shift}
+
+        </div>
+
+      `;
+
+    });
+
+
+    cell.innerHTML = `
+
+      <div class="cellin">
+
+        ${
+          holiday
+          ?
+          `<div class="holiday-dot"></div>`
+          :
+          ""
+        }
+
+        ${
+          makeup
+          ?
+          `<div class="makeup-dot"></div>`
+          :
+          ""
+        }
+
+        <div class="num">
+          ${day}
+        </div>
+
+        ${html}
+
+      </div>
+
+    `;
+
+
+    cell.onclick=()=>{
+
+      selectedDate =
+        new Date(d);
+
+      renderCalendar();
+
+      renderDetail();
+
+    };
+
+
+    grid.appendChild(cell);
+
+  }
+
+
+  renderStats();
 
 }
 
 
-/* =========================================================
-   儲存我的班
-========================================================= */
+/* =====================================================
+   四班詳細
+===================================================== */
 
-document.getElementById(
- "saveTeam"
-).onclick=()=>{
+function renderDetail(){
 
- config.myTeam=
- document.getElementById(
-  "myTeam"
- ).value;
+  const d =
+    selectedDate;
 
 
- saveAll();
+  const holiday =
+    getHoliday(d);
 
- renderHome();
-
- renderCalendar();
-
- renderDetail();
-
- toast("我的班已設定");
-
-};
+  const makeup =
+    getMakeup(d);
 
 
-/* =========================================================
-   儲存四班輪班
-========================================================= */
-
-document.getElementById(
- "saveConfig"
-).onclick=()=>{
-
- config.baseDate=
- document.getElementById(
-  "baseDate"
- ).value;
+  const myShift =
+    getShift(
+      config.myTeam,
+      d
+    );
 
 
- config.teams.A=
- Number(
+  let teams="";
+
+
+  ["A","B","C","D"]
+  .forEach(team=>{
+
+    const shift =
+      getShift(team,d);
+
+    const mine =
+      team===config.myTeam;
+
+
+    teams += `
+
+      <div class="
+        detail-team-card
+        ${mine?"mine":""}
+      ">
+
+        <div class="detail-team-name">
+          ${team}班
+          ${mine?"・我的班":""}
+        </div>
+
+        <div
+          class="detail-team-shift"
+          style="color:${
+            mine
+            ?
+            "var(--blue)"
+            :
+            shiftColor(shift)
+          }">
+
+          ${shift}
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  let extra="";
+
+
+  if(holiday){
+
+    extra += `
+
+      <div class="info">
+
+        <div class="info-title">
+          🇹🇼 ${holiday}
+        </div>
+
+        <div class="info-text">
+          國定假日。
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  if(makeup){
+
+    extra += `
+
+      <div class="info bluebox">
+
+        <div class="info-title">
+          🔵 補假
+        </div>
+
+        <div class="info-text">
+
+          ${getHolidayNameForMakeup(d)}
+
+          ${
+            makeup.note
+            ?
+            `<br>備註：
+             ${makeup.note}`
+            :
+            ""
+          }
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  if(!extra){
+
+    extra = `
+
+      <div class="info graybox">
+
+        <div class="info-title">
+          一般輪班日
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
   document.getElementById(
-   "shiftA"
-  ).value
- );
+    "detail"
+  ).innerHTML = `
+
+    <div class="detail-date">
+      ${chineseDate(d)}
+    </div>
+
+    <div class="detail-title">
+      四班輪班
+    </div>
+
+    <div class="detail-my-shift">
+
+      <div class="detail-my-label">
+        我的班・${config.myTeam}班
+      </div>
+
+      <div
+        class="detail-my-name"
+        style="color:${shiftColor(myShift)}">
+
+        ${myShift}
+
+      </div>
+
+    </div>
+
+    <div class="detail-team">
+      ${teams}
+    </div>
+
+    ${extra}
+
+  `;
+
+}
 
 
- config.teams.B=
- Number(
+/* =====================================================
+   統計
+===================================================== */
+
+function renderStats(){
+
+  const y =
+    calendarDate.getFullYear();
+
+  const m =
+    calendarDate.getMonth();
+
+  const total =
+    new Date(y,m+1,0).getDate();
+
+
+  ["A","B","C","D"]
+  .forEach(team=>{
+
+    let work=0;
+
+
+    for(let day=1;day<=total;day++){
+
+      const shift =
+        getShift(
+          team,
+          new Date(y,m,day)
+        );
+
+
+      if(
+        !shift.includes("休")
+      ){
+        work++;
+      }
+
+    }
+
+
+    document.getElementById(
+      "stat"+team
+    ).textContent=work;
+
+  });
+
+}
+
+
+/* =====================================================
+   設定頁
+===================================================== */
+
+function renderSettings(){
+
   document.getElementById(
-   "shiftB"
-  ).value
- );
+    "myTeam"
+  ).value =
+    config.myTeam;
 
 
- config.teams.C=
- Number(
   document.getElementById(
-   "shiftC"
-  ).value
- );
+    "baseDate"
+  ).value =
+    config.baseDate;
 
 
- config.teams.D=
- Number(
   document.getElementById(
-   "shiftD"
-  ).value
- );
+    "shiftA"
+  ).value =
+    config.teams.A;
 
 
- saveAll();
-
- renderHome();
-
- renderCalendar();
-
- renderDetail();
-
- toast("四班輪班設定已儲存");
-
-};
+  document.getElementById(
+    "shiftB"
+  ).value =
+    config.teams.B;
 
 
-/* =========================================================
-   恢復預設
-========================================================= */
-
-document.getElementById(
- "resetConfig"
-).onclick=()=>{
-
- config=
- JSON.parse(
-  JSON.stringify(DEFAULT)
- );
+  document.getElementById(
+    "shiftC"
+  ).value =
+    config.teams.C;
 
 
- saveAll();
-
- renderSettings();
-
- renderHome();
-
- renderCalendar();
-
- renderDetail();
-
- toast("已恢復預設");
-
-};
+  document.getElementById(
+    "shiftD"
+  ).value =
+    config.teams.D;
 
 
-/* =========================================================
-   新增國假
-========================================================= */
+  const select =
+    document.getElementById(
+      "holidaySelect"
+    );
 
-document.getElementById(
- "addHoliday"
-).onclick=()=>{
-
- const date=
- document.getElementById(
-  "holidayDate"
- ).value;
+  select.innerHTML="";
 
 
- const name=
- document.getElementById(
-  "holidayName"
- ).value.trim();
-
-
- if(!date||!name){
-
-  toast(
-   "請填寫國假日期與名稱"
-  );
-
-  return;
-
- }
-
-
- if(holidayMap()[date]){
-
-  toast(
-   "這一天已經有國假"
-  );
-
-  return;
-
- }
-
-
- customHolidays.push({
-  date:date,
-  name:name
- });
-
-
- saveAll();
-
-
- document.getElementById(
-  "holidayName"
- ).value="";
-
-
- renderSettings();
-
- renderHome();
-
- renderCalendar();
-
- renderDetail();
-
- toast("國假已新增");
-
-};
-
-
-/* =========================================================
-   新增補假
-========================================================= */
-
-document.getElementById(
- "addMakeup"
-).onclick=()=>{
-
- const holiday=
- document.getElementById(
-  "holidaySelect"
- ).value;
-
-
- const date=
- document.getElementById(
-  "makeupDate"
- ).value;
-
-
- const note=
- document.getElementById(
-  "makeupNote"
- ).value.trim();
-
-
- if(!holiday||!date){
-
-  toast(
-   "請選擇國假與補假日期"
-  );
-
-  return;
-
- }
-
-
- if(
-  makeups.some(
-   x=>x.date===date
+  Object.entries(
+    getHolidayMap()
   )
- ){
+  .sort()
+  .forEach(([date,name])=>{
 
-  toast(
-   "這一天已經設定補假"
-  );
+    const option =
+      document.createElement("option");
 
-  return;
+    option.value=date;
 
- }
+    option.textContent =
+      date+"｜"+name;
 
+    select.appendChild(option);
 
- makeups.push({
-
-  id:
-  Date.now().toString(),
-
-  holiday:holiday,
-
-  date:date,
-
-  note:note
-
- });
+  });
 
 
- saveAll();
+  const list =
+    document.getElementById(
+      "holidayList"
+    );
+
+  list.innerHTML="";
 
 
- document.getElementById(
-  "makeupNote"
- ).value="";
+  Object.entries(
+    getHolidayMap()
+  )
+  .sort()
+  .forEach(([date,name])=>{
+
+    const custom =
+      customHolidays.some(
+        x=>x.date===date
+      );
 
 
- renderSettings();
-
- renderHome();
-
- renderCalendar();
-
- renderDetail();
-
- toast("補假已設定");
-
-};
+    const related =
+      makeups.filter(
+        x=>x.holiday===date
+      );
 
 
-/* =========================================================
-   月曆
-========================================================= */
+    const item =
+      document.createElement("div");
+
+    item.className=
+      "manage-item";
+
+
+    item.innerHTML = `
+
+      <div class="manage-name">
+
+        ${name}
+
+        ${
+          custom
+          ?
+          `<span style="
+            color:var(--blue);
+            font-size:11px">
+            自訂
+           </span>`
+          :
+          ""
+        }
+
+      </div>
+
+      <div class="manage-date">
+
+        ${date}
+
+        ${
+          related.length
+          ?
+          " · 補假："
+          +
+          related
+            .map(x=>x.date)
+            .join("、")
+          :
+          ""
+        }
+
+      </div>
+
+      <div class="manage-actions">
+
+        ${
+          custom
+          ?
+          `<button
+            class="mini-btn delete"
+            data-del="${date}">
+            刪除國假
+           </button>`
+          :
+          ""
+        }
+
+        ${
+          related
+          .map(x=>
+            `<button
+              class="mini-btn delete"
+              data-mk="${x.id}">
+              刪除補假 ${x.date}
+             </button>`
+          )
+          .join("")
+        }
+
+      </div>
+
+    `;
+
+
+    list.appendChild(item);
+
+  });
+
+
+  document
+    .querySelectorAll("[data-del]")
+    .forEach(button=>{
+
+      button.onclick=()=>{
+
+        const date =
+          button.dataset.del;
+
+
+        customHolidays =
+          customHolidays.filter(
+            x=>x.date!==date
+          );
+
+
+        makeups =
+          makeups.filter(
+            x=>x.holiday!==date
+          );
+
+
+        saveAll();
+
+        renderSettings();
+        renderHome();
+        renderMyCalendar();
+        renderCalendar();
+        renderDetail();
+
+        toast("已刪除國假");
+
+      };
+
+    });
+
+
+  document
+    .querySelectorAll("[data-mk]")
+    .forEach(button=>{
+
+      button.onclick=()=>{
+
+        const id =
+          button.dataset.mk;
+
+
+        makeups =
+          makeups.filter(
+            x=>x.id!==id
+          );
+
+
+        saveAll();
+
+        renderSettings();
+        renderHome();
+        renderMyCalendar();
+        renderCalendar();
+        renderDetail();
+
+        toast("已刪除補假");
+
+      };
+
+    });
+
+}
+
+
+/* =====================================================
+   我的班
+===================================================== */
 
 document.getElementById(
- "prev"
+  "saveTeam"
 ).onclick=()=>{
 
- cal=
- new Date(
-  cal.getFullYear(),
-  cal.getMonth()-1,
-  1
- );
+  config.myTeam =
+    document.getElementById(
+      "myTeam"
+    ).value;
 
- renderCalendar();
 
- renderDetail();
+  saveAll();
+
+  renderHome();
+  renderMyCalendar();
+  renderCalendar();
+  renderDetail();
+
+  toast("我的班已設定");
+
+};
+
+
+/* =====================================================
+   輪班設定
+===================================================== */
+
+document.getElementById(
+  "saveConfig"
+).onclick=()=>{
+
+  config.baseDate =
+    document.getElementById(
+      "baseDate"
+    ).value;
+
+
+  config.teams.A =
+    Number(
+      document.getElementById(
+        "shiftA"
+      ).value
+    );
+
+
+  config.teams.B =
+    Number(
+      document.getElementById(
+        "shiftB"
+      ).value
+    );
+
+
+  config.teams.C =
+    Number(
+      document.getElementById(
+        "shiftC"
+      ).value
+    );
+
+
+  config.teams.D =
+    Number(
+      document.getElementById(
+        "shiftD"
+      ).value
+    );
+
+
+  saveAll();
+
+  renderHome();
+  renderMyCalendar();
+  renderCalendar();
+  renderDetail();
+
+  toast("輪班設定已儲存");
+
+};
+
+
+/* =====================================================
+   恢復預設
+===================================================== */
+
+document.getElementById(
+  "resetConfig"
+).onclick=()=>{
+
+  config =
+    JSON.parse(
+      JSON.stringify(DEFAULT)
+    );
+
+
+  saveAll();
+
+  renderSettings();
+  renderHome();
+  renderMyCalendar();
+  renderCalendar();
+  renderDetail();
+
+  toast("已恢復預設設定");
+
+};
+
+
+/* =====================================================
+   新增國假
+===================================================== */
+
+document.getElementById(
+  "addHoliday"
+).onclick=()=>{
+
+  const date =
+    document.getElementById(
+      "holidayDate"
+    ).value;
+
+
+  const name =
+    document.getElementById(
+      "holidayName"
+    ).value.trim();
+
+
+  if(!date || !name){
+
+    toast(
+      "請填寫日期與國假名稱"
+    );
+
+    return;
+
+  }
+
+
+  if(getHolidayMap()[date]){
+
+    toast(
+      "這一天已有國假"
+    );
+
+    return;
+
+  }
+
+
+  customHolidays.push({
+
+    date:date,
+    name:name
+
+  });
+
+
+  saveAll();
+
+
+  document.getElementById(
+    "holidayName"
+  ).value="";
+
+
+  renderSettings();
+  renderHome();
+  renderMyCalendar();
+  renderCalendar();
+  renderDetail();
+
+  toast("國假已新增");
+
+};
+
+
+/* =====================================================
+   新增補假
+===================================================== */
+
+document.getElementById(
+  "addMakeup"
+).onclick=()=>{
+
+  const holiday =
+    document.getElementById(
+      "holidaySelect"
+    ).value;
+
+
+  const date =
+    document.getElementById(
+      "makeupDate"
+    ).value;
+
+
+  const note =
+    document.getElementById(
+      "makeupNote"
+    ).value.trim();
+
+
+  if(!holiday || !date){
+
+    toast(
+      "請選擇國假與補假日期"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    makeups.some(
+      x=>x.date===date
+    )
+  ){
+
+    toast(
+      "這一天已經設定補假"
+    );
+
+    return;
+
+  }
+
+
+  makeups.push({
+
+    id:Date.now().toString(),
+
+    holiday:holiday,
+
+    date:date,
+
+    note:note
+
+  });
+
+
+  saveAll();
+
+
+  document.getElementById(
+    "makeupNote"
+  ).value="";
+
+
+  renderSettings();
+  renderHome();
+  renderMyCalendar();
+  renderCalendar();
+  renderDetail();
+
+  toast("補假已設定");
+
+};
+
+
+/* =====================================================
+   四班月曆左右
+===================================================== */
+
+document.getElementById(
+  "prev"
+).onclick=()=>{
+
+  calendarDate =
+    new Date(
+      calendarDate.getFullYear(),
+      calendarDate.getMonth()-1,
+      1
+    );
+
+  renderCalendar();
+  renderDetail();
 
 };
 
 
 document.getElementById(
- "next"
+  "next"
 ).onclick=()=>{
 
- cal=
- new Date(
-  cal.getFullYear(),
-  cal.getMonth()+1,
-  1
- );
+  calendarDate =
+    new Date(
+      calendarDate.getFullYear(),
+      calendarDate.getMonth()+1,
+      1
+    );
 
- renderCalendar();
-
- renderDetail();
+  renderCalendar();
+  renderDetail();
 
 };
 
 
 document.getElementById(
- "todayBtn"
+  "todayBtn"
 ).onclick=()=>{
 
- const d=new Date();
+  const d=new Date();
 
- cal=
- new Date(
-  d.getFullYear(),
-  d.getMonth(),
-  1
- );
+  calendarDate =
+    new Date(
+      d.getFullYear(),
+      d.getMonth(),
+      1
+    );
 
- selected=d;
+  selectedDate=d;
 
- renderCalendar();
-
- renderDetail();
+  renderCalendar();
+  renderDetail();
 
 };
 
 
-/* =========================================================
+/* =====================================================
+   我的月曆左右
+===================================================== */
+
+document.getElementById(
+  "myPrev"
+).onclick=()=>{
+
+  myCalendarDate =
+    new Date(
+      myCalendarDate.getFullYear(),
+      myCalendarDate.getMonth()-1,
+      1
+    );
+
+  renderMyCalendar();
+
+};
+
+
+document.getElementById(
+  "myNext"
+).onclick=()=>{
+
+  myCalendarDate =
+    new Date(
+      myCalendarDate.getFullYear(),
+      myCalendarDate.getMonth()+1,
+      1
+    );
+
+  renderMyCalendar();
+
+};
+
+
+document.getElementById(
+  "myTodayBtn"
+).onclick=()=>{
+
+  const d=new Date();
+
+  myCalendarDate =
+    new Date(
+      d.getFullYear(),
+      d.getMonth(),
+      1
+    );
+
+  mySelectedDate=d;
+
+  renderMyCalendar();
+
+};
+
+
+/* =====================================================
+   四班月曆內的切換
+===================================================== */
+
+document.getElementById(
+  "showMyCalendar"
+).onclick=()=>{
+
+  showPage("myCalendarPage");
+
+};
+
+
+document.getElementById(
+  "showAllCalendar"
+).onclick=()=>{
+
+  renderCalendar();
+
+};
+
+
+/* =====================================================
    Tab
-========================================================= */
+===================================================== */
+
+function showPage(pageId){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page=>{
+      page.classList.remove("active");
+    });
+
+
+  document
+    .getElementById(pageId)
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(tab=>{
+      tab.classList.remove("active");
+
+      if(
+        tab.dataset.page===pageId
+      ){
+        tab.classList.add("active");
+      }
+
+    });
+
+
+  if(pageId==="home"){
+
+    renderHome();
+
+  }
+
+
+  if(pageId==="myCalendarPage"){
+
+    renderMyCalendar();
+
+  }
+
+
+  if(pageId==="calendarPage"){
+
+    renderCalendar();
+    renderDetail();
+
+  }
+
+
+  if(pageId==="settingsPage"){
+
+    renderSettings();
+
+  }
+
+}
+
 
 document
-.querySelectorAll(".tab")
-.forEach(tab=>{
-
- tab.onclick=()=>{
-
-  document
-  .querySelectorAll(".page")
-  .forEach(
-   p=>p.classList.remove("active")
-  );
-
-
-  document
-  .getElementById(
-   tab.dataset.page
-  )
-  .classList.add("active");
-
-
-  document
   .querySelectorAll(".tab")
-  .forEach(
-   t=>t.classList.remove("active")
-  );
+  .forEach(tab=>{
+
+    tab.onclick=()=>{
+
+      showPage(
+        tab.dataset.page
+      );
+
+    };
+
+  });
 
 
-  tab.classList.add("active");
-
-
-  if(
-   tab.dataset.page==="calendarPage"
-  ){
-
-   renderCalendar();
-
-   renderDetail();
-
-  }
-
-
-  if(
-   tab.dataset.page==="settingsPage"
-  ){
-
-   renderSettings();
-
-  }
-
- };
-
-});
-
-
-/* =========================================================
+/* =====================================================
    啟動
-========================================================= */
+===================================================== */
 
 renderHome();
+
+renderMyCalendar();
 
 renderCalendar();
 
