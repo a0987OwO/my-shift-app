@@ -1,1059 +1,1490 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width,
-               initial-scale=1,
-               maximum-scale=1,
-               viewport-fit=cover">
-
-<meta name="theme-color" content="#f5f5f7">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="我的輪班">
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no,
+viewport-fit=cover">
 
 <title>我的輪班</title>
 
+<meta name="theme-color"
+content="#F2F2F7">
+
+<meta name="apple-mobile-web-app-capable"
+content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style"
+content="default">
+
+<meta name="apple-mobile-web-app-title"
+content="我的輪班">
+
+<link rel="manifest"
+href="manifest.json">
+
+<link rel="apple-touch-icon"
+href="icon.svg">
+
+
 <style>
 
-:root {
-    --bg: #f5f5f7;
-    --card: #ffffff;
-    --text: #111111;
-    --secondary: #777777;
-    --border: rgba(0,0,0,0.08);
+:root{
 
-    --blue: #007aff;
+    --background:#F2F2F7;
 
-    --day: #ff9500;
-    --night: #5856d6;
-    --late: #af52de;
-    --rest: #34c759;
+    --card:#FFFFFF;
+
+    --text:#1C1C1E;
+
+    --secondary:#8E8E93;
+
+    --blue:#007AFF;
+
+    --orange:#FF9500;
+
+    --purple:#AF52DE;
+
+    --indigo:#5856D6;
+
+    --green:#34C759;
+
+    --separator:
+        rgba(60,60,67,.12);
+
 }
 
-@media (prefers-color-scheme: dark) {
+@media(prefers-color-scheme:dark){
 
-    :root {
-        --bg: #000000;
-        --card: #1c1c1e;
-        --text: #ffffff;
-        --secondary: #98989d;
-        --border: rgba(255,255,255,0.1);
-    }
+:root{
+
+    --background:#000000;
+
+    --card:#1C1C1E;
+
+    --text:#FFFFFF;
+
+    --secondary:#98989D;
+
+    --separator:
+        rgba(84,84,88,.65);
+
 }
 
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
 }
 
-html {
-    background: var(--bg);
+
+*{
+
+    box-sizing:border-box;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
 }
 
-body {
-    margin: 0;
 
-    background: var(--bg);
-    color: var(--text);
+html{
+
+    background:
+        var(--background);
+
+}
+
+
+body{
+
+    margin:0;
+
+    color:var(--text);
+
+    background:
+        var(--background);
 
     font-family:
         -apple-system,
         BlinkMacSystemFont,
         "SF Pro Display",
+        "SF Pro Text",
         "PingFang TC",
-        "Noto Sans TC",
+        "Helvetica Neue",
         sans-serif;
 
-    padding:
-        calc(18px + env(safe-area-inset-top))
-        16px
-        calc(90px + env(safe-area-inset-bottom));
+    padding-top:
+        env(safe-area-inset-top);
+
+    padding-bottom:
+        calc(82px + env(safe-area-inset-bottom));
+
+    min-height:100vh;
+
 }
 
-button,
-input,
-select {
-    font: inherit;
+
+/* =========================
+   APP
+========================= */
+
+.app{
+
+    width:100%;
+
+    max-width:720px;
+
+    margin:auto;
+
 }
 
-button {
-    -webkit-appearance: none;
-}
-
-.app {
-    width: 100%;
-    max-width: 700px;
-    margin: auto;
-}
 
 /* =========================
    PAGE
 ========================= */
 
-.page {
-    display: none;
+.page{
+
+    display:none;
+
+    padding:
+        18px
+        18px
+        25px;
+
+    animation:
+        pageIn .25s ease;
+
 }
 
-.page.active {
-    display: block;
+
+.page.active{
+
+    display:block;
+
 }
+
+
+@keyframes pageIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(8px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
 
 /* =========================
    HEADER
 ========================= */
 
-.title {
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -1px;
+.header{
 
-    margin-top: 6px;
+    padding:
+        8px
+        3px
+        4px;
+
 }
 
-.subtitle {
-    color: var(--secondary);
-    font-size: 15px;
-    margin-top: 4px;
+
+.header-title{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    letter-spacing:-1.2px;
+
 }
+
+
+.header-subtitle{
+
+    margin-top:3px;
+
+    font-size:15px;
+
+    color:
+        var(--secondary);
+
+}
+
 
 /* =========================
    CARD
 ========================= */
 
-.card {
-    background: var(--card);
+.card{
 
-    border-radius: 26px;
+    background:
+        var(--card);
 
-    padding: 22px;
+    border-radius:22px;
 
-    margin-top: 20px;
+    margin-top:18px;
 
-    border: 1px solid var(--border);
+    overflow:hidden;
 
     box-shadow:
-        0 8px 30px rgba(0,0,0,0.06);
+        0 1px 3px
+        rgba(0,0,0,.05);
+
 }
+
 
 /* =========================
-   TODAY
+   TODAY CARD
 ========================= */
 
-.hero {
-    text-align: center;
+.today-card{
+
+    text-align:center;
+
+    padding:
+        28px
+        20px
+        26px;
+
 }
 
-.today-label {
-    color: var(--secondary);
-    font-size: 15px;
+
+.today-label{
+
+    font-size:15px;
+
+    color:
+        var(--secondary);
+
 }
 
-.today-date {
-    margin-top: 5px;
 
-    font-size: 18px;
-    font-weight: 600;
+.today-date{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    margin-top:5px;
+
 }
 
-.shift-badge {
 
-    display: inline-flex;
+.today-shift{
 
-    min-width: 200px;
-    height: 115px;
+    width:210px;
+
+    height:130px;
 
     margin:
-        22px
-        0
-        12px;
+        22px auto;
 
-    border-radius: 32px;
+    border-radius:32px;
 
-    align-items: center;
-    justify-content: center;
+    display:flex;
 
-    font-size: 38px;
-    font-weight: 800;
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:38px;
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+
 }
 
-.shift-day {
-    color: var(--day);
-    background: rgba(255,149,0,0.12);
+
+.shift-day{
+
+    color:
+        var(--orange);
+
+    background:
+        rgba(255,149,0,.13);
+
 }
 
-.shift-night {
-    color: var(--night);
-    background: rgba(88,86,214,0.12);
+
+.shift-evening{
+
+    color:
+        var(--indigo);
+
+    background:
+        rgba(88,86,214,.13);
+
 }
 
-.shift-late {
-    color: var(--late);
-    background: rgba(175,82,222,0.12);
+
+.shift-night{
+
+    color:
+        var(--purple);
+
+    background:
+        rgba(175,82,222,.13);
+
 }
 
-.shift-rest {
-    color: var(--rest);
-    background: rgba(52,199,89,0.12);
+
+.shift-rest{
+
+    color:
+        var(--green);
+
+    background:
+        rgba(52,199,89,.13);
+
 }
 
-.tomorrow {
-    color: var(--secondary);
+
+.tomorrow{
+
+    color:
+        var(--secondary);
+
+    font-size:15px;
+
 }
 
-.tomorrow strong {
-    color: var(--text);
+
+.tomorrow strong{
+
+    color:
+        var(--text);
+
+    margin-left:5px;
+
 }
+
 
 /* =========================
-   SECTION
+   SECTION TITLE
 ========================= */
 
-.section-title {
-
-    font-size: 21px;
-    font-weight: 800;
+.section-title{
 
     margin:
         28px
-        3px
-        10px;
+        6px
+        9px;
+
+    font-size:21px;
+
+    font-weight:800;
+
+    letter-spacing:-.3px;
+
 }
+
 
 /* =========================
-   UPCOMING
+   LIST
 ========================= */
 
-.upcoming-row {
+.list-row{
 
-    display: flex;
-    align-items: center;
+    min-height:70px;
 
-    min-height: 65px;
+    display:flex;
+
+    align-items:center;
+
+    padding:
+        0 18px;
 
     border-bottom:
-        1px solid var(--border);
+        1px solid var(--separator);
+
 }
 
-.upcoming-row:last-child {
-    border-bottom: none;
+
+.list-row:last-child{
+
+    border-bottom:none;
+
 }
 
-.date-circle {
 
-    width: 42px;
-    height: 42px;
+.date-badge{
 
-    border-radius: 50%;
+    width:45px;
 
-    background: rgba(0,122,255,0.1);
-    color: var(--blue);
+    height:45px;
 
-    display: flex;
+    border-radius:50%;
 
-    align-items: center;
-    justify-content: center;
+    display:flex;
 
-    font-weight: 800;
+    align-items:center;
 
-    margin-right: 14px;
+    justify-content:center;
+
+    margin-right:14px;
+
+    background:
+        rgba(0,122,255,.1);
+
+    color:
+        var(--blue);
+
+    font-weight:800;
+
 }
 
-.grow {
-    flex: 1;
+
+.list-main{
+
+    flex:1;
+
 }
 
-.small {
-    color: var(--secondary);
-    font-size: 13px;
+
+.list-date{
+
+    color:
+        var(--secondary);
+
+    font-size:13px;
+
 }
 
-.shift-text {
-    font-size: 17px;
-    font-weight: 800;
 
-    margin-top: 2px;
+.list-shift{
+
+    font-size:17px;
+
+    font-weight:700;
+
+    margin-top:2px;
+
 }
+
 
 /* =========================
    CALENDAR
 ========================= */
 
-.calendar-header {
+.calendar-top{
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
-    justify-content: space-between;
-}
+    align-items:center;
 
-.month-title {
-
-    font-size: 21px;
-    font-weight: 800;
-}
-
-.month-buttons {
-    display: flex;
-    gap: 6px;
-}
-
-.icon-button {
-
-    width: 38px;
-    height: 38px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: rgba(120,120,128,0.12);
-
-    color: var(--text);
-
-    font-size: 24px;
-}
-
-.weekdays,
-.calendar-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(7,1fr);
-}
-
-.weekday {
-
-    text-align: center;
-
-    color: var(--secondary);
-
-    font-size: 12px;
-
-    font-weight: 600;
+    justify-content:space-between;
 
     padding:
-        14px
-        0
-        7px;
+        18px;
+
 }
 
-.calendar-day {
 
-    height: 68px;
+.calendar-month{
 
-    padding: 3px;
+    font-size:22px;
+
+    font-weight:800;
+
 }
 
-.calendar-inner {
 
-    height: 62px;
+.month-controls{
 
-    border-radius: 14px;
+    display:flex;
 
-    display: flex;
+    gap:8px;
 
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
 }
 
-.calendar-day.today
-.calendar-inner {
 
-    outline:
-        2px solid var(--blue);
+.circle-button{
 
-    outline-offset:
-        -2px;
-}
+    width:38px;
 
-.calendar-day.selected
-.calendar-inner {
+    height:38px;
+
+    border:0;
+
+    border-radius:50%;
 
     background:
-        rgba(0,122,255,0.1);
-}
-
-.day-number {
-    font-size: 15px;
-    font-weight: 700;
-}
-
-.day-shift {
-
-    font-size: 10px;
-
-    font-weight: 800;
-
-    margin-top: 5px;
-
-    white-space: nowrap;
-}
-
-/* =========================
-   DETAIL
-========================= */
-
-.detail-date {
-
-    color: var(--secondary);
-
-    font-size: 14px;
-}
-
-.detail-shift {
-
-    font-size: 28px;
-
-    font-weight: 800;
-
-    margin-top: 5px;
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-.primary-button {
-
-    width: 100%;
-
-    border: none;
-
-    border-radius: 15px;
-
-    padding: 14px;
-
-    margin-top: 12px;
-
-    background:
-        var(--blue);
-
-    color: white;
-
-    font-weight: 800;
-}
-
-.secondary-button {
-
-    background:
-        rgba(120,120,128,0.12);
+        rgba(120,120,128,.12);
 
     color:
         var(--text);
+
+    font-size:25px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
 }
+
+
+.weekdays{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(7,1fr);
+
+    padding:
+        0 8px;
+
+}
+
+
+.weekday{
+
+    text-align:center;
+
+    color:
+        var(--secondary);
+
+    font-size:12px;
+
+    font-weight:600;
+
+    padding:
+        7px 0;
+
+}
+
+
+.calendar{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(7,1fr);
+
+    padding:
+        4px 8px 14px;
+
+}
+
+
+.calendar-cell{
+
+    height:66px;
+
+    padding:3px;
+
+}
+
+
+.calendar-cell-inner{
+
+    height:60px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+
+.calendar-cell.today
+.calendar-cell-inner{
+
+    outline:
+        2px solid
+        var(--blue);
+
+    outline-offset:-2px;
+
+}
+
+
+.calendar-cell.selected
+.calendar-cell-inner{
+
+    background:
+        rgba(0,122,255,.1);
+
+}
+
+
+.calendar-number{
+
+    font-size:15px;
+
+    font-weight:700;
+
+}
+
+
+.calendar-shift{
+
+    font-size:9px;
+
+    font-weight:800;
+
+    margin-top:5px;
+
+}
+
+
+/* =========================
+   DETAIL SHEET
+========================= */
+
+.detail-card{
+
+    padding:20px;
+
+}
+
+
+.detail-date{
+
+    color:
+        var(--secondary);
+
+    font-size:14px;
+
+}
+
+
+.detail-shift{
+
+    font-size:30px;
+
+    font-weight:800;
+
+    margin-top:5px;
+
+}
+
 
 /* =========================
    SETTINGS
 ========================= */
 
-.setting-row {
+.settings-card{
 
-    padding: 17px 0;
+    padding:
+        0 18px;
+
+}
+
+
+.setting{
+
+    padding:
+        18px 0;
 
     border-bottom:
-        1px solid var(--border);
+        1px solid var(--separator);
+
 }
 
-.setting-row:last-child {
-    border-bottom: none;
+
+.setting:last-child{
+
+    border-bottom:none;
+
 }
 
-.setting-label {
 
-    font-weight: 700;
+.setting-label{
 
-    margin-bottom: 9px;
+    font-weight:700;
+
+    margin-bottom:10px;
+
 }
+
 
 input,
-select {
+select{
 
-    width: 100%;
+    width:100%;
 
-    padding: 13px;
+    border:0;
 
-    border-radius: 13px;
+    outline:none;
 
-    border:
-        1px solid var(--border);
+    border-radius:13px;
 
-    background:
-        rgba(120,120,128,0.1);
+    padding:13px;
 
     color:
         var(--text);
 
-    outline: none;
+    background:
+        rgba(120,120,128,.12);
+
 }
 
-.shift-order {
 
-    display: flex;
+.action-button{
 
-    align-items: center;
+    width:100%;
 
-    padding: 8px 0;
-}
+    border:0;
 
-.order-number {
+    border-radius:14px;
 
-    width: 28px;
-    height: 28px;
+    padding:15px;
 
-    border-radius: 50%;
+    margin-top:12px;
 
     background:
-        rgba(120,120,128,0.12);
+        var(--blue);
 
-    display: flex;
+    color:white;
 
-    align-items: center;
-    justify-content: center;
+    font-weight:700;
 
-    margin-right: 10px;
+    font-size:16px;
+
+}
+
+
+.action-button.secondary{
+
+    background:
+        rgba(120,120,128,.12);
 
     color:
-        var(--secondary);
+        var(--text);
 
-    font-size: 12px;
 }
+
 
 /* =========================
    STATISTICS
 ========================= */
 
-.statistics {
+.stats{
 
-    display: grid;
+    display:grid;
 
     grid-template-columns:
         repeat(2,1fr);
 
-    gap: 10px;
+    gap:10px;
+
 }
 
-.stat {
+
+.stat{
+
+    padding:17px;
 
     background:
-        rgba(120,120,128,0.1);
+        var(--card);
 
-    padding: 16px;
+    border-radius:20px;
 
-    border-radius: 18px;
 }
 
-.stat-label {
+
+.stat-label{
 
     color:
         var(--secondary);
 
-    font-size: 13px;
+    font-size:13px;
+
 }
 
-.stat-value {
 
-    font-size: 24px;
+.stat-number{
 
-    font-weight: 800;
+    font-size:27px;
 
-    margin-top: 4px;
+    font-weight:800;
+
+    margin-top:4px;
+
 }
+
 
 /* =========================
-   BOTTOM NAV
+   TAB BAR
 ========================= */
 
-.bottom-nav {
+.tabbar{
 
-    position: fixed;
+    position:fixed;
 
-    left: 0;
-    right: 0;
-    bottom: 0;
+    left:0;
 
-    z-index: 100;
+    right:0;
 
-    display: grid;
+    bottom:0;
+
+    z-index:100;
+
+    display:grid;
 
     grid-template-columns:
         repeat(3,1fr);
 
     padding:
         7px
-        15px
+        18px
         calc(7px + env(safe-area-inset-bottom));
 
     background:
-        rgba(248,248,250,0.9);
-
-    backdrop-filter:
-        blur(20px);
-
-    -webkit-backdrop-filter:
-        blur(20px);
+        rgba(248,248,250,.88);
 
     border-top:
-        1px solid var(--border);
+        1px solid
+        var(--separator);
+
+    backdrop-filter:
+        blur(25px)
+        saturate(180%);
+
+    -webkit-backdrop-filter:
+        blur(25px)
+        saturate(180%);
+
 }
 
-@media (prefers-color-scheme: dark) {
 
-    .bottom-nav {
-        background:
-            rgba(28,28,30,0.9);
-    }
+@media(prefers-color-scheme:dark){
+
+.tabbar{
+
+    background:
+        rgba(28,28,30,.88);
+
 }
 
-.nav-button {
-
-    border: none;
-
-    background: transparent;
-
-    color: var(--secondary);
-
-    padding: 5px;
-
-    font-size: 12px;
 }
 
-.nav-button.active {
 
-    color:
-        var(--blue);
+.tab{
 
-    font-weight: 800;
-}
+    border:0;
 
-.nav-icon {
-
-    display: block;
-
-    font-size: 22px;
-
-    margin-bottom: 3px;
-}
-
-/* =========================
-   VERSION
-========================= */
-
-.version {
-
-    text-align: center;
+    background:none;
 
     color:
         var(--secondary);
 
-    font-size: 12px;
+    font-size:11px;
 
-    margin: 30px 0 10px;
+    font-weight:600;
+
+    padding:3px;
+
+}
+
+
+.tab.active{
+
+    color:
+        var(--blue);
+
+}
+
+
+.tab-icon{
+
+    font-size:22px;
+
+    display:block;
+
+    line-height:24px;
+
+    margin-bottom:2px;
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:
+        calc(95px + env(safe-area-inset-bottom));
+
+    transform:
+        translate(-50%,20px);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    background:
+        rgba(30,30,30,.9);
+
+    color:white;
+
+    padding:
+        12px 20px;
+
+    border-radius:15px;
+
+    font-size:14px;
+
+    transition:
+        .25s;
+
+    z-index:300;
+
+}
+
+
+.toast.show{
+
+    opacity:1;
+
+    transform:
+        translate(-50%,0);
+
+}
+
+
+/* =========================
+   APP VERSION
+========================= */
+
+.version{
+
+    text-align:center;
+
+    color:
+        var(--secondary);
+
+    font-size:12px;
+
+    padding:
+        30px 0 15px;
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="app">
 
-<!-- =========================
+
+<!-- ======================
      HOME
-========================= -->
-
-<section id="homePage" class="page active">
-
-    <div class="title">
-        我的輪班
-    </div>
-
-    <div class="subtitle">
-        8 天循環輪班日曆
-    </div>
-
-    <div class="card hero">
-
-        <div class="today-label">
-            今天
-        </div>
-
-        <div
-            id="todayDate"
-            class="today-date">
-        </div>
-
-        <div
-            id="todayShift"
-            class="shift-badge">
-        </div>
-
-        <div class="tomorrow">
-
-            明天
-
-            <strong id="tomorrowShift">
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <div class="section-title">
-        接下來
-    </div>
-
-    <div
-        id="upcoming"
-        class="card">
-    </div>
-
-</section>
-
-
-<!-- =========================
-     CALENDAR
-========================= -->
+====================== -->
 
 <section
-    id="calendarPage"
-    class="page">
+id="home"
+class="page active">
 
-    <div class="title">
-        月曆
-    </div>
 
-    <div class="subtitle">
-        查看每天的輪班
-    </div>
+<div class="header">
 
+<div class="header-title">
 
-    <div class="card">
+我的輪班
 
-        <div class="calendar-header">
+</div>
 
-            <div
-                id="monthTitle"
-                class="month-title">
-            </div>
+<div class="header-subtitle">
 
-            <div class="month-buttons">
+8 天循環輪班
 
-                <button
-                    id="prevMonth"
-                    class="icon-button">
-                    ‹
-                </button>
-
-                <button
-                    id="nextMonth"
-                    class="icon-button">
-                    ›
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="weekdays">
-
-            <div class="weekday">日</div>
-            <div class="weekday">一</div>
-            <div class="weekday">二</div>
-            <div class="weekday">三</div>
-            <div class="weekday">四</div>
-            <div class="weekday">五</div>
-            <div class="weekday">六</div>
-
-        </div>
-
-
-        <div
-            id="calendarGrid"
-            class="calendar-grid">
-        </div>
-
-    </div>
-
-
-    <button
-        id="todayButton"
-        class="primary-button">
-
-        回到今天
-
-    </button>
-
-
-    <div
-        id="calendarDetail"
-        class="card">
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     SETTINGS
-========================= -->
-
-<section
-    id="settingsPage"
-    class="page">
-
-    <div class="title">
-        設定
-    </div>
-
-    <div class="subtitle">
-        管理你的輪班週期
-    </div>
-
-
-    <div class="card">
-
-        <div class="setting-row">
-
-            <div class="setting-label">
-                基準日期
-            </div>
-
-            <input
-                id="baseDateInput"
-                type="date">
-
-        </div>
-
-
-        <div class="setting-row">
-
-            <div class="setting-label">
-                基準日的班別
-            </div>
-
-            <select id="baseShiftInput">
-
-                <option value="0">
-                    白天1
-                </option>
-
-                <option value="1">
-                    白天2
-                </option>
-
-                <option value="2">
-                    小夜1
-                </option>
-
-                <option value="3">
-                    小夜2
-                </option>
-
-                <option value="4">
-                    休息
-                </option>
-
-                <option value="5">
-                    大夜1
-                </option>
-
-                <option value="6">
-                    大夜2
-                </option>
-
-                <option value="7">
-                    休息
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="setting-row">
-
-            <div class="setting-label">
-                輪班順序
-            </div>
-
-            <div id="shiftList">
-            </div>
-
-        </div>
-
-
-        <div class="setting-row">
-
-            <button
-                id="saveSettings"
-                class="primary-button">
-
-                儲存輪班設定
-
-            </button>
-
-
-            <button
-                id="resetSettings"
-                class="primary-button secondary-button">
-
-                恢復預設設定
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div class="section-title">
-        本月統計
-    </div>
-
-
-    <div class="statistics">
-
-        <div class="stat">
-
-            <div class="stat-label">
-                白天班
-            </div>
-
-            <div
-                id="dayCount"
-                class="stat-value">
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                小夜班
-            </div>
-
-            <div
-                id="eveningCount"
-                class="stat-value">
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                大夜班
-            </div>
-
-            <div
-                id="lateCount"
-                class="stat-value">
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                休息
-            </div>
-
-            <div
-                id="restCount"
-                class="stat-value">
-                0
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="version">
-        我的輪班 v1.0
-    </div>
-
-</section>
+</div>
 
 </div>
 
 
-<!-- =========================
-     NAVIGATION
-========================= -->
+<div class="card today-card">
 
-<nav class="bottom-nav">
+<div class="today-label">
 
-    <button
-        class="nav-button active"
-        data-page="homePage">
+今天
 
-        <span class="nav-icon">
-            ⌂
-        </span>
+</div>
 
-        首頁
-
-    </button>
+<div
+id="todayDate"
+class="today-date">
+</div>
 
 
-    <button
-        class="nav-button"
-        data-page="calendarPage">
-
-        <span class="nav-icon">
-            ▦
-        </span>
-
-        月曆
-
-    </button>
+<div
+id="todayShift"
+class="today-shift">
+</div>
 
 
-    <button
-        class="nav-button"
-        data-page="settingsPage">
+<div class="tomorrow">
 
-        <span class="nav-icon">
-            ⚙
-        </span>
+明天
 
-        設定
+<strong
+id="tomorrowShift">
+</strong>
 
-    </button>
+</div>
+
+</div>
+
+
+<div class="section-title">
+
+接下來
+
+</div>
+
+
+<div
+id="upcoming"
+class="card">
+</div>
+
+
+</section>
+
+
+
+<!-- ======================
+     CALENDAR
+====================== -->
+
+<section
+id="calendarPage"
+class="page">
+
+
+<div class="header">
+
+<div class="header-title">
+
+月曆
+
+</div>
+
+<div class="header-subtitle">
+
+查看每天的輪班
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+
+<div class="calendar-top">
+
+<div
+id="monthTitle"
+class="calendar-month">
+</div>
+
+
+<div class="month-controls">
+
+<button
+id="prevMonth"
+class="circle-button">
+
+‹
+
+</button>
+
+<button
+id="nextMonth"
+class="circle-button">
+
+›
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="weekdays">
+
+<div class="weekday">日</div>
+
+<div class="weekday">一</div>
+
+<div class="weekday">二</div>
+
+<div class="weekday">三</div>
+
+<div class="weekday">四</div>
+
+<div class="weekday">五</div>
+
+<div class="weekday">六</div>
+
+</div>
+
+
+<div
+id="calendarGrid"
+class="calendar">
+</div>
+
+</div>
+
+
+<button
+id="todayButton"
+class="action-button">
+
+回到今天
+
+</button>
+
+
+<div
+id="detail"
+class="card detail-card">
+</div>
+
+
+</section>
+
+
+
+<!-- ======================
+     SETTINGS
+====================== -->
+
+<section
+id="settingsPage"
+class="page">
+
+
+<div class="header">
+
+<div class="header-title">
+
+設定
+
+</div>
+
+<div class="header-subtitle">
+
+輪班與 App 設定
+
+</div>
+
+</div>
+
+
+<div class="section-title">
+
+輪班設定
+
+</div>
+
+
+<div class="card settings-card">
+
+
+<div class="setting">
+
+<div class="setting-label">
+
+基準日期
+
+</div>
+
+<input
+id="baseDate"
+type="date">
+
+</div>
+
+
+<div class="setting">
+
+<div class="setting-label">
+
+基準日期班別
+
+</div>
+
+<select
+id="baseShift">
+
+<option value="0">
+
+白天1
+
+</option>
+
+<option value="1">
+
+白天2
+
+</option>
+
+<option value="2">
+
+小夜1
+
+</option>
+
+<option value="3">
+
+小夜2
+
+</option>
+
+<option value="4">
+
+休息
+
+</option>
+
+<option value="5">
+
+大夜1
+
+</option>
+
+<option value="6">
+
+大夜2
+
+</option>
+
+<option value="7">
+
+休息
+
+</option>
+
+</select>
+
+</div>
+
+
+<button
+id="saveSettings"
+class="action-button">
+
+儲存設定
+
+</button>
+
+
+<button
+id="resetSettings"
+class="action-button secondary">
+
+恢復預設
+
+</button>
+
+</div>
+
+
+<div class="section-title">
+
+本月統計
+
+</div>
+
+
+<div
+class="stats">
+
+<div class="stat">
+
+<div class="stat-label">
+
+白天班
+
+</div>
+
+<div
+id="dayCount"
+class="stat-number">
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-label">
+
+小夜班
+
+</div>
+
+<div
+id="eveningCount"
+class="stat-number">
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-label">
+
+大夜班
+
+</div>
+
+<div
+id="nightCount"
+class="stat-number">
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-label">
+
+休息
+
+</div>
+
+<div
+id="restCount"
+class="stat-number">
+0
+</div>
+
+</div>
+
+</div>
+
+
+<div class="version">
+
+我的輪班 · PWA v2.0
+
+</div>
+
+</section>
+
+
+</div>
+
+
+
+<!-- ======================
+     TAB BAR
+====================== -->
+
+<nav class="tabbar">
+
+
+<button
+class="tab active"
+data-page="home">
+
+<span class="tab-icon">
+⌂
+</span>
+
+首頁
+
+</button>
+
+
+<button
+class="tab"
+data-page="calendarPage">
+
+<span class="tab-icon">
+▦
+</span>
+
+月曆
+
+</button>
+
+
+<button
+class="tab"
+data-page="settingsPage">
+
+<span class="tab-icon">
+⚙
+</span>
+
+設定
+
+</button>
+
 
 </nav>
 
 
+
+<div
+id="toast"
+class="toast">
+</div>
+
+
+
 <script>
 
-/* ======================================
-   預設輪班設定
-====================================== */
 
-const DEFAULT_SETTINGS = {
+/* =================================
+   DEFAULT SETTINGS
+================================= */
+
+const DEFAULT = {
 
     baseDate:
         "2026-08-12",
 
-    baseShiftIndex:
-        3,
+    baseShift:3,
 
-    shifts: [
+    shifts:[
 
         "白天1",
         "白天2",
@@ -1069,87 +1500,69 @@ const DEFAULT_SETTINGS = {
 };
 
 
-/* ======================================
-   讀取設定
-====================================== */
+/* =================================
+   LOAD SETTINGS
+================================= */
 
-function loadSettings() {
+function loadConfig(){
 
-    try {
+    try{
 
         const saved =
             localStorage.getItem(
-                "myShiftSettings"
+                "shift-app-settings"
             );
 
-        if (!saved) {
+        if(saved){
 
             return {
-                ...DEFAULT_SETTINGS,
-                shifts:
-                    [...DEFAULT_SETTINGS.shifts]
+
+                ...DEFAULT,
+
+                ...JSON.parse(saved)
+
             };
 
         }
 
-        const data =
-            JSON.parse(saved);
+    }catch(e){}
 
-        return {
+    return {
 
-            ...DEFAULT_SETTINGS,
+        ...DEFAULT,
 
-            ...data,
+        shifts:[
+            ...DEFAULT.shifts
+        ]
 
-            shifts:
-                data.shifts ||
-                [...DEFAULT_SETTINGS.shifts]
-
-        };
-
-    } catch {
-
-        return {
-
-            ...DEFAULT_SETTINGS,
-
-            shifts:
-                [...DEFAULT_SETTINGS.shifts]
-
-        };
-
-    }
+    };
 
 }
 
 
-let settings =
-    loadSettings();
+let config =
+    loadConfig();
 
-
-/* ======================================
-   月曆狀態
-====================================== */
 
 let calendarDate =
     new Date();
+
 
 let selectedDate =
     new Date();
 
 
-/* ======================================
-   工具
-====================================== */
 
-function dateOnly(date) {
+/* =================================
+   DATE
+================================= */
+
+function dateOnly(date){
 
     return new Date(
 
         date.getFullYear(),
-
         date.getMonth(),
-
         date.getDate()
 
     );
@@ -1157,17 +1570,14 @@ function dateOnly(date) {
 }
 
 
-function daysBetween(
-    date1,
-    date2
-) {
+function diffDays(a,b){
 
     return Math.round(
 
         (
-            dateOnly(date1)
+            dateOnly(a)
             -
-            dateOnly(date2)
+            dateOnly(b)
         )
         /
         86400000
@@ -1177,10 +1587,7 @@ function daysBetween(
 }
 
 
-function sameDate(
-    a,
-    b
-) {
+function sameDate(a,b){
 
     return (
 
@@ -1205,30 +1612,28 @@ function sameDate(
 }
 
 
-function formatDate(date) {
+function formatDate(date){
 
     return (
 
         date.getFullYear()
-        +
-        "/"
-        +
-        (date.getMonth() + 1)
-        +
-        "/"
-        +
-        date.getDate()
+        +"/"+
+        String(
+            date.getMonth()+1
+        ).padStart(2,"0")
+        +"/"+
+        String(
+            date.getDate()
+        ).padStart(2,"0")
 
     );
 
 }
 
 
-function formatChineseDate(
-    date
-) {
+function chineseDate(date){
 
-    const week = [
+    const week=[
 
         "星期日",
         "星期一",
@@ -1243,17 +1648,11 @@ function formatChineseDate(
     return (
 
         date.getFullYear()
-        +
-        "年"
-        +
-        (date.getMonth() + 1)
-        +
-        "月"
-        +
+        +"年"+
+        (date.getMonth()+1)
+        +"月"+
         date.getDate()
-        +
-        "日 "
-        +
+        +"日 · "+
         week[date.getDay()]
 
     );
@@ -1261,87 +1660,77 @@ function formatChineseDate(
 }
 
 
-/* ======================================
-   計算輪班
-====================================== */
+/* =================================
+   SHIFT CALCULATION
+================================= */
 
-function getShift(date) {
+function getShift(date){
 
     const base =
         new Date(
-            settings.baseDate
-            +
-            "T00:00:00"
+            config.baseDate
+            +"T00:00:00"
         );
 
-    const difference =
-        daysBetween(
-            date,
-            base
-        );
-
-    const length =
-        settings.shifts.length;
 
     let index =
+
         (
-            settings.baseShiftIndex
+
+            config.baseShift
             +
-            difference
+            diffDays(
+                date,
+                base
+            )
+
         )
         %
-        length;
+        config.shifts.length;
 
 
-    if (index < 0) {
+    if(index<0){
 
-        index += length;
+        index +=
+            config.shifts.length;
 
     }
 
 
-    return settings.shifts[index];
+    return config.shifts[index];
 
 }
 
 
-/* ======================================
-   班別 CSS
-====================================== */
+/* =================================
+   SHIFT STYLE
+================================= */
 
-function getShiftClass(
-    shift
-) {
+function shiftClass(shift){
 
-    if (
-        shift === "白天1"
-        ||
-        shift === "白天2"
-    ) {
+    if(
+        shift.startsWith("白天")
+    ){
 
         return "shift-day";
 
     }
 
 
-    if (
-        shift === "小夜1"
-        ||
-        shift === "小夜2"
-    ) {
+    if(
+        shift.startsWith("小夜")
+    ){
 
-        return "shift-night";
+        return "shift-evening";
 
     }
 
 
-    if (
-        shift === "大夜1"
-        ||
-        shift === "大夜2"
-    ) {
+    if(
+        shift.startsWith("大夜")
+    ){
 
-        return "shift-late";
+        return "shift-night";
 
     }
 
@@ -1351,92 +1740,84 @@ function getShiftClass(
 }
 
 
-function getShiftColor(
-    shift
-) {
+function shiftColor(shift){
 
-    if (
-        shift === "白天1"
-        ||
-        shift === "白天2"
-    ) {
+    if(
+        shift.startsWith("白天")
+    ){
 
-        return "var(--day)";
+        return "var(--orange)";
 
     }
 
 
-    if (
-        shift === "小夜1"
-        ||
-        shift === "小夜2"
-    ) {
+    if(
+        shift.startsWith("小夜")
+    ){
 
-        return "var(--night)";
+        return "var(--indigo)";
 
     }
 
 
-    if (
-        shift === "大夜1"
-        ||
-        shift === "大夜2"
-    ) {
+    if(
+        shift.startsWith("大夜")
+    ){
 
-        return "var(--late)";
+        return "var(--purple)";
 
     }
 
 
-    return "var(--rest)";
+    return "var(--green)";
 
 }
 
 
-/* ======================================
-   首頁
-====================================== */
 
-function renderHome() {
+/* =================================
+   HOME
+================================= */
+
+function renderHome(){
 
     const today =
         new Date();
 
+
     const tomorrow =
         new Date(today);
 
+
     tomorrow.setDate(
-        tomorrow.getDate() + 1
+        tomorrow.getDate()+1
     );
 
 
-    const todayShift =
+    const shift =
         getShift(today);
-
-    const todayElement =
-        document.getElementById(
-            "todayShift"
-        );
 
 
     document.getElementById(
         "todayDate"
     ).textContent =
-        formatChineseDate(
-            today
+        chineseDate(today);
+
+
+    const badge =
+        document.getElementById(
+            "todayShift"
         );
 
 
-    todayElement.textContent =
-        todayShift;
+    badge.textContent =
+        shift;
 
 
-    todayElement.className =
-        "shift-badge "
+    badge.className =
+        "today-shift "
         +
-        getShiftClass(
-            todayShift
-        );
+        shiftClass(shift);
 
 
     document.getElementById(
@@ -1451,20 +1832,21 @@ function renderHome() {
         );
 
 
-    container.innerHTML = "";
+    container.innerHTML="";
 
 
-    for (
-        let i = 1;
-        i <= 7;
+    for(
+        let i=1;
+        i<=7;
         i++
-    ) {
+    ){
 
         const date =
             new Date(today);
 
+
         date.setDate(
-            date.getDate() + i
+            date.getDate()+i
         );
 
 
@@ -1479,28 +1861,35 @@ function renderHome() {
 
 
         row.className =
-            "upcoming-row";
+            "list-row";
 
 
         row.innerHTML = `
 
-            <div class="date-circle">
+            <div class="date-badge">
+
                 ${date.getDate()}
+
             </div>
 
-            <div class="grow">
 
-                <div class="small">
+            <div class="list-main">
+
+                <div class="list-date">
+
                     ${formatDate(date)}
+
                 </div>
 
+
                 <div
-                    class="shift-text"
+                    class="list-shift"
                     style="
-                        color:${getShiftColor(shift)}
-                    "
-                >
+                    color:${shiftColor(shift)}
+                    ">
+
                     ${shift}
+
                 </div>
 
             </div>
@@ -1515,14 +1904,16 @@ function renderHome() {
 }
 
 
-/* ======================================
-   月曆
-====================================== */
 
-function renderCalendar() {
+/* =================================
+   CALENDAR
+================================= */
+
+function renderCalendar(){
 
     const year =
         calendarDate.getFullYear();
+
 
     const month =
         calendarDate.getMonth();
@@ -1531,7 +1922,7 @@ function renderCalendar() {
     document.getElementById(
         "monthTitle"
     ).textContent =
-        `${year}年${month + 1}月`;
+        `${year}年${month+1}月`;
 
 
     const grid =
@@ -1540,10 +1931,10 @@ function renderCalendar() {
         );
 
 
-    grid.innerHTML = "";
+    grid.innerHTML="";
 
 
-    const firstDay =
+    const first =
         new Date(
             year,
             month,
@@ -1551,38 +1942,42 @@ function renderCalendar() {
         );
 
 
-    const days =
+    const total =
         new Date(
             year,
-            month + 1,
+            month+1,
             0
         ).getDate();
 
 
-    for (
-        let i = 0;
-        i < firstDay.getDay();
+    for(
+        let i=0;
+        i<first.getDay();
         i++
-    ) {
+    ){
 
         const empty =
             document.createElement(
                 "div"
             );
 
-        empty.className =
-            "calendar-day";
 
-        grid.appendChild(empty);
+        empty.className =
+            "calendar-cell";
+
+
+        grid.appendChild(
+            empty
+        );
 
     }
 
 
-    for (
-        let day = 1;
-        day <= days;
+    for(
+        let day=1;
+        day<=total;
         day++
-    ) {
+    ){
 
         const date =
             new Date(
@@ -1603,15 +1998,15 @@ function renderCalendar() {
 
 
         cell.className =
-            "calendar-day";
+            "calendar-cell";
 
 
-        if (
+        if(
             sameDate(
                 date,
                 new Date()
             )
-        ) {
+        ){
 
             cell.classList.add(
                 "today"
@@ -1620,12 +2015,12 @@ function renderCalendar() {
         }
 
 
-        if (
+        if(
             sameDate(
                 date,
                 selectedDate
             )
-        ) {
+        ){
 
             cell.classList.add(
                 "selected"
@@ -1636,19 +2031,25 @@ function renderCalendar() {
 
         cell.innerHTML = `
 
-            <div class="calendar-inner">
-
-                <div class="day-number">
-                    ${day}
-                </div>
+            <div
+                class="calendar-cell-inner">
 
                 <div
-                    class="day-shift"
+                    class="calendar-number">
+
+                    ${day}
+
+                </div>
+
+
+                <div
+                    class="calendar-shift"
                     style="
-                        color:${getShiftColor(shift)}
-                    "
-                >
+                    color:${shiftColor(shift)}
+                    ">
+
                     ${shift}
+
                 </div>
 
             </div>
@@ -1656,19 +2057,17 @@ function renderCalendar() {
         `;
 
 
-        cell.addEventListener(
-            "click",
-            function() {
+        cell.onclick=()=>{
 
-                selectedDate =
-                    new Date(date);
+            selectedDate =
+                new Date(date);
 
-                renderCalendar();
 
-                renderCalendarDetail();
+            renderCalendar();
 
-            }
-        );
+            renderDetail();
+
+        };
 
 
         grid.appendChild(cell);
@@ -1676,16 +2075,17 @@ function renderCalendar() {
     }
 
 
-    renderStatistics();
+    renderStats();
 
 }
 
 
-/* ======================================
-   月曆詳細
-====================================== */
 
-function renderCalendarDetail() {
+/* =================================
+   DETAIL
+================================= */
+
+function renderDetail(){
 
     const shift =
         getShift(
@@ -1694,20 +2094,24 @@ function renderCalendarDetail() {
 
 
     document.getElementById(
-        "calendarDetail"
+        "detail"
     ).innerHTML = `
 
-        <div class="small">
-            ${formatChineseDate(selectedDate)}
+        <div class="detail-date">
+
+            ${chineseDate(selectedDate)}
+
         </div>
+
 
         <div
             class="detail-shift"
             style="
-                color:${getShiftColor(shift)}
-            "
-        >
+            color:${shiftColor(shift)}
+            ">
+
             ${shift}
+
         </div>
 
     `;
@@ -1715,82 +2119,81 @@ function renderCalendarDetail() {
 }
 
 
-/* ======================================
-   統計
-====================================== */
 
-function renderStatistics() {
+/* =================================
+   STATISTICS
+================================= */
+
+function renderStats(){
 
     const year =
         calendarDate.getFullYear();
+
 
     const month =
         calendarDate.getMonth();
 
 
-    const days =
+    const total =
         new Date(
             year,
-            month + 1,
+            month+1,
             0
         ).getDate();
 
 
-    let dayCount = 0;
-    let eveningCount = 0;
-    let lateCount = 0;
-    let restCount = 0;
+    let day=0;
+
+    let evening=0;
+
+    let night=0;
+
+    let rest=0;
 
 
-    for (
-        let day = 1;
-        day <= days;
-        day++
-    ) {
+    for(
+        let i=1;
+        i<=total;
+        i++
+    ){
 
         const shift =
             getShift(
                 new Date(
                     year,
                     month,
-                    day
+                    i
                 )
             );
 
 
-        if (
-            shift === "白天1"
-            ||
-            shift === "白天2"
-        ) {
+        if(
+            shift.startsWith("白天")
+        ){
 
-            dayCount++;
+            day++;
 
         }
 
-        else if (
-            shift === "小夜1"
-            ||
-            shift === "小夜2"
-        ) {
+        else if(
+            shift.startsWith("小夜")
+        ){
 
-            eveningCount++;
+            evening++;
 
         }
 
-        else if (
-            shift === "大夜1"
-            ||
-            shift === "大夜2"
-        ) {
+        else if(
+            shift.startsWith("大夜")
+        ){
 
-            lateCount++;
+            night++;
 
         }
 
-        else {
+        else{
 
-            restCount++;
+            rest++;
 
         }
 
@@ -1799,370 +2202,366 @@ function renderStatistics() {
 
     document.getElementById(
         "dayCount"
-    ).textContent =
-        dayCount;
+    ).textContent=day;
 
 
     document.getElementById(
         "eveningCount"
-    ).textContent =
-        eveningCount;
+    ).textContent=evening;
 
 
     document.getElementById(
-        "lateCount"
-    ).textContent =
-        lateCount;
+        "nightCount"
+    ).textContent=night;
 
 
     document.getElementById(
         "restCount"
-    ).textContent =
-        restCount;
+    ).textContent=rest;
 
 }
 
 
-/* ======================================
-   設定頁
-====================================== */
 
-function renderSettings() {
+/* =================================
+   SETTINGS
+================================= */
 
-    document.getElementById(
-        "baseDateInput"
-    ).value =
-        settings.baseDate;
-
+function renderSettings(){
 
     document.getElementById(
-        "baseShiftInput"
+        "baseDate"
     ).value =
-        settings.baseShiftIndex;
+        config.baseDate;
 
 
-    const list =
-        document.getElementById(
-            "shiftList"
-        );
-
-
-    list.innerHTML = "";
-
-
-    settings.shifts.forEach(
-        function(shift, index) {
-
-            const row =
-                document.createElement(
-                    "div"
-                );
-
-
-            row.className =
-                "shift-order";
-
-
-            row.innerHTML = `
-
-                <div class="order-number">
-                    ${index + 1}
-                </div>
-
-                <div>
-                    ${shift}
-                </div>
-
-            `;
-
-
-            list.appendChild(row);
-
-        }
-    );
+    document.getElementById(
+        "baseShift"
+    ).value =
+        config.baseShift;
 
 }
 
 
-/* ======================================
-   上一個月
-====================================== */
-
-document.getElementById(
-    "prevMonth"
-).addEventListener(
-    "click",
-    function() {
-
-        calendarDate =
-            new Date(
-                calendarDate.getFullYear(),
-                calendarDate.getMonth() - 1,
-                1
-            );
-
-        renderCalendar();
-
-    }
-);
-
-
-/* ======================================
-   下一個月
-====================================== */
-
-document.getElementById(
-    "nextMonth"
-).addEventListener(
-    "click",
-    function() {
-
-        calendarDate =
-            new Date(
-                calendarDate.getFullYear(),
-                calendarDate.getMonth() + 1,
-                1
-            );
-
-        renderCalendar();
-
-    }
-);
-
-
-/* ======================================
-   回到今天
-====================================== */
-
-document.getElementById(
-    "todayButton"
-).addEventListener(
-    "click",
-    function() {
-
-        const today =
-            new Date();
-
-
-        calendarDate =
-            new Date(
-                today.getFullYear(),
-                today.getMonth(),
-                1
-            );
-
-
-        selectedDate =
-            new Date(today);
-
-
-        renderCalendar();
-
-        renderCalendarDetail();
-
-    }
-);
-
-
-/* ======================================
-   儲存設定
-====================================== */
 
 document.getElementById(
     "saveSettings"
-).addEventListener(
-    "click",
-    function() {
+).onclick=()=>{
 
-        settings.baseDate =
+    config.baseDate =
+        document.getElementById(
+            "baseDate"
+        ).value;
+
+
+    config.baseShift =
+        Number(
             document.getElementById(
-                "baseDateInput"
-            ).value;
-
-
-        settings.baseShiftIndex =
-            Number(
-                document.getElementById(
-                    "baseShiftInput"
-                ).value
-            );
-
-
-        localStorage.setItem(
-            "myShiftSettings",
-            JSON.stringify(settings)
+                "baseShift"
+            ).value
         );
 
 
-        renderHome();
+    localStorage.setItem(
 
-        renderCalendar();
+        "shift-app-settings",
 
-        renderCalendarDetail();
+        JSON.stringify(config)
 
-
-        alert(
-            "輪班設定已儲存"
-        );
-
-    }
-);
+    );
 
 
-/* ======================================
-   恢復預設
-====================================== */
+    renderHome();
+
+    renderCalendar();
+
+    renderDetail();
+
+
+    showToast(
+        "已儲存輪班設定"
+    );
+
+};
+
+
 
 document.getElementById(
     "resetSettings"
-).addEventListener(
-    "click",
-    function() {
+).onclick=()=>{
 
-        if (
-            !confirm(
-                "確定恢復預設輪班設定？"
-            )
-        ) {
+    if(
+        !confirm(
+            "確定恢復預設輪班？"
+        )
+    ){
 
-            return;
+        return;
+
+    }
+
+
+    config={
+
+        ...DEFAULT,
+
+        shifts:[
+            ...DEFAULT.shifts
+        ]
+
+    };
+
+
+    localStorage.setItem(
+
+        "shift-app-settings",
+
+        JSON.stringify(config)
+
+    );
+
+
+    renderSettings();
+
+    renderHome();
+
+    renderCalendar();
+
+    renderDetail();
+
+
+    showToast(
+        "已恢復預設"
+    );
+
+};
+
+
+
+/* =================================
+   MONTH
+================================= */
+
+document.getElementById(
+    "prevMonth"
+).onclick=()=>{
+
+    calendarDate =
+        new Date(
+
+            calendarDate.getFullYear(),
+
+            calendarDate.getMonth()-1,
+
+            1
+
+        );
+
+
+    renderCalendar();
+
+};
+
+
+
+document.getElementById(
+    "nextMonth"
+).onclick=()=>{
+
+    calendarDate =
+        new Date(
+
+            calendarDate.getFullYear(),
+
+            calendarDate.getMonth()+1,
+
+            1
+
+        );
+
+
+    renderCalendar();
+
+};
+
+
+
+document.getElementById(
+    "todayButton"
+).onclick=()=>{
+
+    const today =
+        new Date();
+
+
+    calendarDate =
+        new Date(
+
+            today.getFullYear(),
+
+            today.getMonth(),
+
+            1
+
+        );
+
+
+    selectedDate =
+        new Date(today);
+
+
+    renderCalendar();
+
+    renderDetail();
+
+};
+
+
+
+/* =================================
+   TAB BAR
+================================= */
+
+document
+.querySelectorAll(".tab")
+.forEach(tab=>{
+
+    tab.onclick=()=>{
+
+        document
+        .querySelectorAll(".page")
+        .forEach(
+            page =>
+                page.classList.remove(
+                    "active"
+                )
+        );
+
+
+        document
+        .getElementById(
+            tab.dataset.page
+        )
+        .classList.add(
+            "active"
+        );
+
+
+        document
+        .querySelectorAll(".tab")
+        .forEach(
+            t =>
+                t.classList.remove(
+                    "active"
+                )
+        );
+
+
+        tab.classList.add(
+            "active"
+        );
+
+
+        if(
+            tab.dataset.page
+            ===
+            "calendarPage"
+        ){
+
+            renderCalendar();
+
+            renderDetail();
 
         }
 
 
-        settings = {
+        if(
+            tab.dataset.page
+            ===
+            "settingsPage"
+        ){
 
-            ...DEFAULT_SETTINGS,
+            renderSettings();
 
-            shifts:
-                [
-                    ...DEFAULT_SETTINGS.shifts
-                ]
+        }
 
-        };
+    };
+
+});
 
 
-        localStorage.setItem(
-            "myShiftSettings",
-            JSON.stringify(settings)
+
+/* =================================
+   TOAST
+================================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
         );
 
 
-        renderSettings();
-
-        renderHome();
-
-        renderCalendar();
-
-        renderCalendarDetail();
+    toast.textContent =
+        message;
 
 
-        alert(
-            "已恢復預設設定"
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(()=>{
+
+        toast.classList.remove(
+            "show"
         );
 
-    }
-);
+    },1800);
+
+}
 
 
-/* ======================================
-   底部導航
-====================================== */
 
-document
-    .querySelectorAll(
-        ".nav-button"
-    )
-    .forEach(
-        function(button) {
+/* =================================
+   SERVICE WORKER
+================================= */
 
-            button.addEventListener(
-                "click",
-                function() {
+if(
+    "serviceWorker"
+    in navigator
+){
 
-                    document
-                        .querySelectorAll(
-                            ".page"
-                        )
-                        .forEach(
-                            function(page) {
+    window.addEventListener(
+        "load",
+        ()=>{
 
-                                page.classList.remove(
-                                    "active"
-                                );
-
-                            }
-                        );
-
-
-                    document
-                        .getElementById(
-                            button.dataset.page
-                        )
-                        .classList.add(
-                            "active"
-                        );
-
-
-                    document
-                        .querySelectorAll(
-                            ".nav-button"
-                        )
-                        .forEach(
-                            function(btn) {
-
-                                btn.classList.remove(
-                                    "active"
-                                );
-
-                            }
-                        );
-
-
-                    button.classList.add(
-                        "active"
-                    );
-
-
-                    if (
-                        button.dataset.page
-                        ===
-                        "calendarPage"
-                    ) {
-
-                        renderCalendar();
-
-                        renderCalendarDetail();
-
-                    }
-
-
-                    if (
-                        button.dataset.page
-                        ===
-                        "settingsPage"
-                    ) {
-
-                        renderSettings();
-
-                    }
-
-                }
+            navigator
+            .serviceWorker
+            .register(
+                "service-worker.js"
+            )
+            .catch(
+                console.error
             );
 
         }
     );
 
+}
 
-/* ======================================
-   初始化
-====================================== */
+
+
+/* =================================
+   START
+================================= */
 
 renderHome();
 
 renderCalendar();
 
-renderCalendarDetail();
+renderDetail();
 
 renderSettings();
 
