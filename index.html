@@ -726,7 +726,13 @@ select{
   opacity:1;
   transform:translate(-50%,0);
 }
+/* 發薪日 */
+.payday-home{margin-top:8px;padding:11px 13px;border-radius:14px;background:rgba(52,199,89,.12);color:var(--green);font-weight:700;font-size:14px;text-align:center;}
+.payday-mini{color:var(--green);font-size:11px;font-weight:700;margin-top:4px;}
+.payday-dot{position:absolute;bottom:6px;right:6px;font-size:10px;line-height:1;}
 </style>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icon-192.png">
 </head>
 
 <body>
@@ -767,6 +773,7 @@ select{
     </div>
 
     <div id="todayHoliday"></div>
+    <div id="todayPayday"></div>
 
     <div style="
       color:var(--sub);
@@ -1324,6 +1331,7 @@ select{
 
 /* =====================================================
    基本設定
+
 ===================================================== */
 
 const DEFAULT = {
@@ -1621,6 +1629,40 @@ function getHoliday(date){
 
 
 /* =====================================================
+   發薪日
+   每月15日；若15日為週六或週日，提前至前一個週五
+===================================================== */
+
+function getPaydayDate(year,month){
+
+  const d = new Date(year,month,15);
+  const day = d.getDay();
+
+  if(day===6){
+    d.setDate(14);
+  }else if(day===0){
+    d.setDate(13);
+  }
+
+  return d;
+
+}
+
+
+function isPayday(date){
+
+  return sameDay(
+    date,
+    getPaydayDate(
+      date.getFullYear(),
+      date.getMonth()
+    )
+  );
+
+}
+
+
+/* =====================================================
    補假
 ===================================================== */
 
@@ -1755,11 +1797,23 @@ function renderHome(){
   const makeup =
     getMakeup(today);
 
+  const payday =
+    isPayday(today);
+
 
   const holidayBox =
     document.getElementById(
       "todayHoliday"
     );
+
+  const paydayBox =
+    document.getElementById(
+      "todayPayday"
+    );
+
+  paydayBox.innerHTML = payday
+    ? `<div class="payday-home">💰 今天是發薪日</div>`
+    : "";
 
 
   if(holiday){
@@ -1867,6 +1921,9 @@ function renderUpcoming(){
 
     const makeup =
       getMakeup(d);
+
+    const payday =
+      isPayday(d);
 
 
     row.innerHTML = `
@@ -1993,6 +2050,9 @@ function renderMyCalendar(){
     const makeup =
       getMakeup(d);
 
+    const payday =
+      isPayday(d);
+
 
     const cell =
       document.createElement("div");
@@ -2029,6 +2089,14 @@ function renderMyCalendar(){
           ""
         }
 
+        ${
+          payday
+          ?
+          `<div class="payday-dot" title="發薪日">💰</div>`
+          :
+          ""
+        }
+
         <div class="num">
           ${day}
         </div>
@@ -2051,6 +2119,20 @@ function renderMyCalendar(){
             overflow:hidden;
             white-space:nowrap">
             ${holiday}
+           </div>`
+          :
+          ""
+        }
+
+        ${
+          payday
+          ?
+          `<div style="
+            color:var(--green);
+            font-size:8px;
+            margin-top:3px;
+            font-weight:800">
+            💰 發薪日
            </div>`
           :
           ""
@@ -2105,8 +2187,20 @@ function renderMyDetail(){
   const makeup =
     getMakeup(d);
 
+  const payday =
+    isPayday(d);
+
 
   let extra="";
+
+  if(payday){
+    extra += `
+      <div class="info bluebox">
+        <div class="info-title">💰 發薪日</div>
+        <div class="info-text">本月薪資發放日。</div>
+      </div>
+    `;
+  }
 
 
   if(holiday){
@@ -2276,6 +2370,9 @@ function renderCalendar(){
     const makeup =
       getMakeup(d);
 
+    const payday =
+      isPayday(d);
+
 
     const cell =
       document.createElement("div");
@@ -2347,6 +2444,14 @@ function renderCalendar(){
           ""
         }
 
+        ${
+          payday
+          ?
+          `<div class="payday-dot" title="發薪日">💰</div>`
+          :
+          ""
+        }
+
         <div class="num">
           ${day}
         </div>
@@ -2395,6 +2500,9 @@ function renderDetail(){
 
   const makeup =
     getMakeup(d);
+
+  const payday =
+    isPayday(d);
 
 
   const myShift =
@@ -2451,6 +2559,15 @@ function renderDetail(){
 
 
   let extra="";
+
+  if(payday){
+    extra += `
+      <div class="info bluebox">
+        <div class="info-title">💰 發薪日</div>
+        <div class="info-text">本月薪資發放日。</div>
+      </div>
+    `;
+  }
 
 
   if(holiday){
@@ -3349,6 +3466,19 @@ renderCalendar();
 renderDetail();
 
 renderSettings();
+
+
+/* =====================================================
+   離線 PWA
+===================================================== */
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./sw.js")
+      .then(()=>console.log("離線功能已啟用"))
+      .catch(err=>console.warn("Service Worker 註冊失敗",err));
+  });
+}
 
 </script>
 
